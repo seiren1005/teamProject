@@ -25,6 +25,8 @@
 	<!-- @Controller annotation scan path -->
 	<context:component-scan base-package="com.globalin.teamproject com.globalin.bulletincontroller" />
 	
+	<!-- @Controller annotation scan path -->
+	<context:component-scan base-package="com.globalin.teamproject com.globalin.detailcontroller" />
 	
 	<!-- Add bean for helping file upload -->
 	<beans:bean id="multipartResolver"
