@@ -7,14 +7,16 @@
 <!DOCTYPE html>
 <html lang="en-US" dir="ltr">
 
- 
+ <a href="/detail/detail-TCP">detail-TCP</a>
+ <a href="/detail/detail-Tohoho">detail-Tohoho</a>
+ <a href="/detail/detail-LifeCoding">detail-lifeCoding</a>
       <section class="pt-6 bg-600" id="home">
         <div class="container">
           <div class="row align-items-center">
             <div class="col-md-5 col-lg-6 order-0 order-md-1 text-end"><img class="pt-7 pt-md-0 w-100" src="/resources/public/assets/img/gallery/hero-header.png" width="470" alt="hero-header" /></div>
             <div class="col-md-7 col-lg-6 text-md-start text-center py-6">
               <h4 class="fw-bold font-sans-serif">Become Master</h4>
-              <h1 class="fs-6 fs-xl-7 mb-5">Learn New Skills Online Find Best Courses</h1><a class="btn btn-primary me-2" href="#!" role="button">Get A Quote</a><a class="btn btn-outline-secondary" href="#!" role="button">Read more</a>
+              <h1 class="fs-6 fs-xl-7 mb-5">Learn New Skills Online Find Best Courses</h1><a class="btn btn-primary me-2" href="/detail/detail-TCP" role="button">Get A Quote</a><a class="btn btn-outline-secondary" href="#!" role="button">Read more</a>
             </div>
           </div>
         </div>
