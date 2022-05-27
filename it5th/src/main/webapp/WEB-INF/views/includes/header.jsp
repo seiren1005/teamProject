@@ -21,7 +21,7 @@
     <!-- ===============================================-->
     <!--    Document Title-->
     <!-- ===============================================-->
-    <title>little squirrel | Landing, Responsive &amp; Business Templatee</title>
+    <title>Header</title>
 
 
     <!-- ===============================================-->
@@ -59,7 +59,7 @@
         <div class="container">
           <div class="row align-items-center">
             <div class="col-auto d-none d-lg-block">
-              <p class="my-2 fs--1"><i class="fas fa-map-marker-alt me-3"></i><span>1600 Amphitheatre Parkway, CA 94043 </span></p>
+              <p class="my-2 fs--1"><i class="fas fa-map-marker-alt me-3"></i><span>서울시 영등포구 영중로 56 신한빌딩 4, 5층 주식회사 글로벌인 </span></p>
             </div>
             <div class="col-auto ms-md-auto order-md-2 d-none d-sm-block">
               <ul class="list-unstyled list-inline my-2">
@@ -70,7 +70,7 @@
               </ul>
             </div>
             <div class="col-auto">
-              <p class="my-2 fs--1"><i class="fas fa-envelope me-3"></i><a class="text-900" href="mailto:vctung@outlook.com">vctung@outlook.com </a></p>
+              <p class="my-2 fs--1"><i class="fas fa-envelope me-3"></i><a class="text-900" href="mailto:vctung@outlook.com">Itproject5@samplmail.com </a></p>
             </div>
           </div>
         </div>
@@ -82,15 +82,15 @@
 
 
       <nav class="navbar navbar-expand-lg navbar-light sticky-top py-3 d-block" data-navbar-on-scroll="data-navbar-on-scroll">
-        <div class="container"><a class="navbar-brand" href="index.html"><img src="/resources/public/assets/img/gallery/logo-n.png" height="45" alt="logo" /></a>
+        <div class="container"><a class="navbar-brand" href="/mainpage"><img src="resources/img/Logo.png" height="60" alt="logo" /></a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"> </span></button>
           <div class="collapse navbar-collapse border-top border-lg-0 mt-4 mt-lg-0" id="navbarSupportedContent">
             <ul class="navbar-nav ms-auto pt-2 pt-lg-0 font-base">
-              <li class="nav-item px-2"><a class="nav-link active" aria-current="page" href="index.html">Home</a></li>
-              <li class="nav-item px-2"><a class="nav-link" aria-current="page" href="pricing.html">Pricing</a></li>
-              <li class="nav-item px-2"><a class="nav-link" aria-current="page" href="web-development.html">Web Development</a></li>
-              <li class="nav-item px-2"><a class="nav-link" aria-current="page" href="user-research.html">User Research</a></li>
-            </ul><a class="btn btn-primary order-1 order-lg-0" href="#!">Sign Up</a>
+              <li class="nav-item px-2"><a class="nav-link active" aria-current="page" href="/mainpage">메인화면</a></li>
+              <li class="nav-item px-2"><a class="nav-link" aria-current="page" href="/infopage">사이트소개</a></li>
+              <li class="nav-item px-2"><a class="nav-link" aria-current="page" href="web-development.html">코딩사이트</a></li>
+              <li class="nav-item px-2"><a class="nav-link" aria-current="page" href="user-research.html">게시판</a></li>
+            </ul><a class="btn btn-primary order-1 order-lg-0" href="#!">로그인</a>
             <form class="d-flex my-3 d-block d-lg-none">
               <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
               <button class="btn btn-outline-primary" type="submit">Search</button>

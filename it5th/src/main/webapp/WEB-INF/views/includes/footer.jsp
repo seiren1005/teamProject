@@ -7,10 +7,10 @@
 
         <div class="container">
           <div class="row">
-            <div class="col-12 col-sm-12 col-lg-6 mb-4 order-0 order-sm-0"><a class="text-decoration-none" href="#"><img src="/resources/public/assets/img/gallery/footer-logo.png" height="51" alt="" /></a>
-              <p class="text-light my-4"> <i class="fas fa-map-marker-alt me-3"></i><span class="text-light">1500 Treat Ave, Suite 200  &nbsp;</span><a class="text-light" href="tel:+604-680-9785">+604-680-9785</a><br />San Francisco, CA 94110</p>
-              <p class="text-light"> <i class="fas fa-envelope me-3"> </i><a class="text-light" href="mailto:vctung@outlook.com">vctung@outlook.com </a></p>
-              <p class="text-light"> <i class="fas fa-phone-alt me-3"></i><a class="text-light" href="tel:1-800-800-2299">1-800-800-2299 (Support)</a></p>
+            <div class="col-12 col-sm-12 col-lg-6 mb-4 order-0 order-sm-0"><a class="text-decoration-none" href="/mainpage"><img src="resources/img/Logo.png" height="70" alt="" /></a>
+              <p class="text-light my-4"> <i class="fas fa-map-marker-alt me-3"></i><span class="text-light">서울시 영등포구 영중로 56 신한빌딩 4,  &nbsp;</span><a class="text-light" href="tel:+000-000-0000">+000-000-0000</a><br />5층 주식회사 글로벌인</p>
+              <p class="text-light"> <i class="fas fa-envelope me-3"> </i><a class="text-light" href="mailto:Itproject5@samplmail.com">Itproject5@samplmail.com </a></p>
+              <p class="text-light"> <i class="fas fa-phone-alt me-3"></i><a class="text-light" href="tel:1-000-000-0000">1-000-000-0000 (Support)</a></p>
             </div>
             <div class="col-6 col-sm-4 col-lg-2 mb-3 order-2 order-sm-1">
               <h5 class="lh-lg fw-bold mb-4 text-light font-sans-serif">Community </h5>
@@ -63,7 +63,7 @@
         <div class="container bg-primary">
           <div class="row justify-content-md-between justify-content-evenly py-4">
             <div class="col-12 col-sm-8 col-md-6 col-lg-auto text-center text-md-start">
-              <p class="fs--1 my-2 fw-bold">All rights Reserved &copy; Your Company, 2021</p>
+              <p class="fs--1 my-2 fw-bold">All rights Reserved &copy; ITproject, 2022</p>
             </div>
             <div class="col-12 col-sm-8 col-md-6">
               <p class="fs--1 my-2 text-center text-md-end"> Made with&nbsp;
