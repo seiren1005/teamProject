@@ -7,7 +7,7 @@
 
         <div class="container">
           <div class="row">
-            <div class="col-12 col-sm-12 col-lg-6 mb-4 order-0 order-sm-0"><a class="text-decoration-none" href="/mainpage"><img src="resources/img/Logo.png" height="70" alt="" /></a>
+            <div class="col-12 col-sm-12 col-lg-6 mb-4 order-0 order-sm-0"><a class="text-decoration-none" href="/mainpage"><img src="/resources/img/Logo.png" height="70" alt="" /></a>
               <p class="text-light my-4"> <i class="fas fa-map-marker-alt me-3"></i><span class="text-light">서울시 영등포구 영중로 56 신한빌딩 4,  &nbsp;</span><a class="text-light" href="tel:+000-000-0000">+000-000-0000</a><br />5층 주식회사 글로벌인</p>
               <p class="text-light"> <i class="fas fa-envelope me-3"> </i><a class="text-light" href="mailto:Itproject5@samplmail.com">Itproject5@samplmail.com </a></p>
               <p class="text-light"> <i class="fas fa-phone-alt me-3"></i><a class="text-light" href="tel:1-000-000-0000">1-000-000-0000 (Support)</a></p>

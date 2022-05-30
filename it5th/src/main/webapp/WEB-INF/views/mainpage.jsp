@@ -34,13 +34,30 @@
 				<img src="../resources/img/sample3.jpg">
 			</a>
 		</div>
-		</div>
-					<h2 style="font-family: 'Nanum Gothic', sans-serif;">추천 동영상</h2>
+		</div> 
+					<!-- 글자 꾸미기 -->
+					<div style="text-align:center">
+					<a style=
+					"text-decoration:none; 
+					font-family: 'Comic Sans MS', 'Comic Sans', 'Independence_hall'; 
+					color: black; 
+					font-weight: bold; 
+					padding: 8px; 
+					background: gold; 
+					line-height: 170%; 
+					border: 1px solid black; 
+					box-shadow: -2px 2px 0px black; 
+					display:inline-block; 
+					margin: 7px 7px 7px 7px; 
+					font-variant:small-caps;">추천 동영상</a>
+					
 					<!-- 유튜브 영상 -->
 					<div class="video-container">
-					<iframe width="560" height="315" src="https://www.youtube.com/embed/wpUiN5hBnyc" title="YouTube video player" 
+					<p align="middle">
+					<iframe width="1120" height="630" src="https://www.youtube.com/embed/wpUiN5hBnyc" title="YouTube video player" 
 					frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
 					allowfullscreen></iframe>
+					</p>
 				</div>
 		</div>
 
