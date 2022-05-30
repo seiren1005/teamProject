@@ -22,7 +22,7 @@
     <!--    Document Title-->
     <!-- ===============================================-->
     <title>Header</title>
-
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css">
 
     <!-- ===============================================-->
     <!--    Favicons-->
