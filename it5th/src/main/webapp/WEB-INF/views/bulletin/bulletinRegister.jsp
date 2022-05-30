@@ -17,9 +17,7 @@
 			<!-- register form -->
 				<form action="/bulletin/bulletinRegister" method="post" 
 					class="registerForm" enctype="multipart/form-data">
-					
-					<input type="hidden" id="pathInput" name="fileName" />
-					
+										
 					<div class="">
 						<select name="purpose" class="purposeBox">
 							<option value="N">=====</option>
@@ -46,17 +44,30 @@
 					<div class="uploadDiv">
 						<label>FILE UPLOAD</label>
 						<input type="file" id="uploadInput" name="attachFile" multiple />
-						<button id="uploadBtn">UPLOAD</button>
 					</div>
+					
+					<button id="uploadBtn" type="button">UPLOAD</button> 
+					
 					<div id="uploadResult">
 						<ul>
 							<!-- view upload files -->
 						</ul>
 					</div>
 					
-					<button type="submit" class="registerBtn">SUBMIT</button>
-					<button type="reset" class="">RESET</button>				
+					<hr />
+					<button class="registerBtn">SUBMIT</button>
+					<button class="listBtn">LIST</button>
 				</form>
+					<!-- upload button 이 폼 안에 있으면 이벤트가 한번만 발생하고 그 뒤로는
+						아무 이벤트도 발생하지 않거나 submit 이벤트가 발생하는 에러가 발생
+						
+						+ form 안에 버튼이 있을 경우 default type 은 submit 가 됨 주의!
+						
+						해결: 폼 밖으로 버튼을 빼니 해결됨
+						
+						파이널: <input> tag 등 데이터를 같이 전달하는 tag 가 있을 경우 
+						처음은 지정한 이벤트로 작동하지만 두번째부터 submit 이벤트로 작동함
+						-->
 									
 			<!-- register form -->
 			
@@ -68,6 +79,8 @@
 <script type="text/javascript">
 	
 	$(document).ready(function() {
+		
+		let infoValue;
 		
 	/* 업로드 파일 삭제 */
 	$("#uploadResult").on("click", "span", function(e){				
@@ -93,14 +106,15 @@
 				
 	})	
 	/* /.업로드 파일 삭제 */
-		
+
+	
+		var registerForm = $(".registerForm");
+	
 		
 		$(".registerBtn").on("click", function(e) {
 			
 			e.preventDefault();
-			
-			var registerForm = $(".registerForm");
-			
+						
 			// console.log(registerForm.find(".purposeBox").val());
 			
 			if(registerForm.find(".purposeBox").val() == "N") {
@@ -113,6 +127,33 @@
 		registerForm.submit();
 
 		}); // end $(".registerBtn").on()
+		
+		
+		$("#listBtn").on("click", function(e) {
+			
+			registerForm.attr("action", "/bulletin/bulletinList").attr("method", "get");
+			
+			var pageNumTag = $("input[name='pageNum']").clone();
+			// tag 자체를 복사
+			var amountTag = $("input[name='amount']").clone();
+			
+			var searchTypeTag = $("input[name='searchType']").clone();
+			
+			var keywordTag = $("input[name='keyword']").clone();
+			
+			var purposeTag = $("input[name='purpose']").clone();
+			
+			registerForm.empty();
+			// formObj 입력 정보 초기화
+			
+			// 모두 지운 상태에서 page 정보 가진 input tag 만 추가
+			registerForm.append(pageNumTag).append(amountTag)
+				.append(searchTypeTag)
+				.append(keywordTag)
+				.append(purposeTag)
+							
+		})
+		
 		
 		/* upload file and show */
 			// 파일 확장자 제한
@@ -127,13 +168,12 @@
 				
 		function showUploadFile(uploadArr) {			
 			
-			let uploadHtml = "";
-			let infoValue = "";
+			let uploadHtml = "";			
 			
 			// 업로드 파일 한개 당 li tag 한 개
 			for(let i = 0; i < uploadArr.length; i++) {
 				
-				if(uploadArr[i].imageCheck == false) {
+				if(uploadArr[i].imageChecker == false) {
 					// 이미지 파일이 아님
 					// li tag 앞에 파일 아이콘
 					let fileCallPath = encodeURIComponent("/" + uploadArr[i].uuid
@@ -144,12 +184,11 @@
 						+ uploadArr[i].fileName
 						+ "<span data-file=\'" + fileCallPath + "\' data-type='file'>"
 						+ " x </span>"
+						+ "<input type='hidden' name='fileName' value='" + uploadArr[i].fileName + "' />"
+						+ "<input type='hidden' name='uuid' value='" + uploadArr[i].uuid + "' />"
+						+ "<input type='hidden' name='imageChecker' value='" + uploadArr[i].imageChecker + "' />"
 						+ "</li>";
-						
-					infoValue += "{" + "uuid:" + uploadArr[i].uuid
-					+ "_" + ",filename:" + uploadArr[i].fileName + "}/";
-					
-					
+										
 				} else {
 					// 이미지 파일
 					// thumbnail 이미지 사용
@@ -164,23 +203,21 @@
 							+ uploadArr[i].fileName
 							+ "<img src='/display?fileName=" + fileCallPath + "'>"
 							+ "<span data-file=\'" + fileCallPath + "\' data-type='image'>"
-							+ " x </span></li>";
-							
-					//infoValue += "{" + "uuid:" + uploadArr[i].uuid
-					//+ "_" + ",filename:" + uploadArr[i].fileName + "}/";
-					infoValue = "uuid:" + uploadArr[i].uuid
-					+ "_" + ",filename:" + uploadArr[i].fileName + "/";
+							+ " x </span>"
+							+ "<input type='hidden' name='fileName' value='" + uploadArr[i].fileName + "' />"
+							+ "<input type='hidden' name='uuid' value='" + uploadArr[i].uuid + "' />"
+							+ "<input type='hidden' name='imageChecker' value='" + uploadArr[i].imageChecker + "' />"
+							+ "</li>";
 					
 				}
 								
 			}
-			
-				uploadResult.append(uploadHtml);
-				$("#pathInput").val(infoValue);
+						
+			uploadResult.append(uploadHtml);
 			
 		} // end function showUploadFile()
 		
-		
+				
 		/* inpect files */
 		function checkFile(fileName, fileSize) {
 			// 파일 크기 검사
@@ -204,9 +241,11 @@
 		}
 		
 		
-		$("#uploadBtn").on("click", function(e) {
+		$("#uploadBtn").on("click", function() {
 			
-			e.preventDefault();
+			console.log("clicked");
+			
+			//e.preventDefault();
 			
 			// form tag 없이 form 보내기
 			let formData = new FormData();
@@ -223,7 +262,7 @@
 					return false;
 					
 				}
-				
+								
 				formData.append("uploadFile", files[i]);
 				
 			}

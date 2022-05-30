@@ -40,6 +40,7 @@
     <!--    Stylesheets-->
     <!-- ===============================================-->
     <link href="/resources/public/assets/css/theme.css" rel="stylesheet" /> 
+    <link href="/resources/css/style.css" rel="stylesheet" /> 
    
   </head>
 

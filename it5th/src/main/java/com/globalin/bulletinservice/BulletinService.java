@@ -28,9 +28,6 @@ public interface BulletinService {
 	
 	// Get total count at board
 	public int getTotal(BulletinCriteria cri);
-	
-	// insert file info
-	public void registerFile(BulletinFileVO fvo);
-	
+		
 
 }

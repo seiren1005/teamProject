@@ -37,9 +37,6 @@ public interface BulletinMapper {
 	// Update reply count
 	public void updateReplyCnt(@Param("bno") int bno,
 			@Param("amount") int amount);
-	
-	// 첨부파일 정보 저장
-	public void insertFile(BulletinFileVO fvo);
 		
 	
 }

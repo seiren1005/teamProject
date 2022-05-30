@@ -103,14 +103,4 @@ public class BulletinServiceImpl implements BulletinService {
 	}
 	
 	
-	@Override
-	public void registerFile(BulletinFileVO fvo) {
-		// TODO Auto-generated method stub
-		log.info("Register file info: " + fvo);
-		
-		mapper.insertFile(fvo);
-		
-	}
-	
-	
 }

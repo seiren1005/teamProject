@@ -43,7 +43,7 @@ public class BulletinUploadController {
 	// remove attached file
 	@PostMapping("/deleteFile")
 	@ResponseBody
-	public ResponseEntity<String> deleteFile(String fileName, String type) {
+	public ResponseEntity<String> deleteFile(String[] fileName, String[] type) {
 		
 		log.info("Delete attached files: " + fileName);
 		
@@ -51,20 +51,27 @@ public class BulletinUploadController {
 		File file;
 		
 		try {
-			file = new File("c:\\temp\\"
-					+ URLDecoder.decode(fileName, "UTF-8"));
 			
-			// remove original files
-			file.delete();
-			
-			if(type.equals("image")) {
+			for(int i = 0; i < fileName.length; i++) {
 				
-				String sName = file.getAbsolutePath().replace("s_", "");
+				file = new File("c:\\temp\\"
+						+ URLDecoder.decode(fileName[i], "UTF-8"));
 				
-				// remove thumbnail files
-				file = new File(sName);
+				// remove original files
 				file.delete();
+				
+				if(type[i].equals("image")) {
+					
+					String sName = file.getAbsolutePath().replace("s_", "");
+					
+					// remove thumbnail files
+					file = new File(sName);
+					file.delete();
+					
+				}
+				
 			}
+			
 			
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
@@ -175,10 +182,9 @@ public class BulletinUploadController {
 			
 			UUID uuid = UUID.randomUUID();
 			
-			BulletinFileVO attach = new BulletinFileVO();
-			attach.setFileName(uploadFileName);
-			attach.setUuid(uuid.toString());
-			attach.setUploadPath(uploadPath);
+			BulletinFileVO fvo = new BulletinFileVO();
+			fvo.setFileName(file.getOriginalFilename());;
+			fvo.setUuid(uuid.toString());
 			
 			// 저장할 파일 이름에 uuid_filename 형식으로 저장
 			uploadFileName = uuid.toString() + "_" + uploadFileName;			
@@ -193,7 +199,7 @@ public class BulletinUploadController {
 				// create thumbnail when file is an image type
 				if(checkImageType(saveFile) == true) {
 					
-					attach.setImageCheck(true);
+					fvo.setImageChecker("true");
 					
 					FileOutputStream thumbnail = new FileOutputStream(
 							new File(uploadPath, "s_" + uploadFileName));
@@ -206,7 +212,7 @@ public class BulletinUploadController {
 					
 				}
 				
-				list.add(attach);
+				list.add(fvo);
 				
 			} catch (IllegalStateException e) {
 				// TODO Auto-generated catch block

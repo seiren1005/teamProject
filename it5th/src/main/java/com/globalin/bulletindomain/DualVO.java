@@ -2,8 +2,7 @@ package com.globalin.bulletindomain;
 
 import java.util.Date;
 
-// 게시판 글 정보 저장
-public class BulletinVO {
+public class DualVO {
 
 	private int bno, replyCnt, viewCnt;
 	private String purpose, title, content, writer;
@@ -12,25 +11,17 @@ public class BulletinVO {
 	private String secret = "no";
 	
 	private Date regDate, modDate;
-		
 	
-	public int getViewCnt() {
-		return viewCnt;
+	// upload file
+	private int fno;
+	private String fileName, uuid, imageChecker;
+	
+	
+	public int getBno() {
+		return bno;
 	}
-	public void setViewCnt(int viewCnt) {
-		this.viewCnt = viewCnt;
-	}
-	public String getSecret() {
-		return secret;
-	}
-	public void setSecret(String secret) {
-		this.secret = secret;
-	}
-	public String getPurpose() {
-		return purpose;
-	}
-	public void setPurpose(String purpose) {
-		this.purpose = purpose;
+	public void setBno(int bno) {
+		this.bno = bno;
 	}
 	public int getReplyCnt() {
 		return replyCnt;
@@ -38,11 +29,17 @@ public class BulletinVO {
 	public void setReplyCnt(int replyCnt) {
 		this.replyCnt = replyCnt;
 	}
-	public int getBno() {
-		return bno;
+	public int getViewCnt() {
+		return viewCnt;
 	}
-	public void setBno(int bno) {
-		this.bno = bno;
+	public void setViewCnt(int viewCnt) {
+		this.viewCnt = viewCnt;
+	}
+	public String getPurpose() {
+		return purpose;
+	}
+	public void setPurpose(String purpose) {
+		this.purpose = purpose;
 	}
 	public String getTitle() {
 		return title;
@@ -62,6 +59,12 @@ public class BulletinVO {
 	public void setWriter(String writer) {
 		this.writer = writer;
 	}
+	public String getSecret() {
+		return secret;
+	}
+	public void setSecret(String secret) {
+		this.secret = secret;
+	}
 	public Date getRegDate() {
 		return regDate;
 	}
@@ -74,13 +77,38 @@ public class BulletinVO {
 	public void setModDate(Date modDate) {
 		this.modDate = modDate;
 	}
+	public int getFno() {
+		return fno;
+	}
+	public void setFno(int fno) {
+		this.fno = fno;
+	}
+	public String getFileName() {
+		return fileName;
+	}
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
+	}
+	public String getUuid() {
+		return uuid;
+	}
+	public void setUuid(String uuid) {
+		this.uuid = uuid;
+	}
+	public String getImageChecker() {
+		return imageChecker;
+	}
+	public void setImageChecker(String imageChecker) {
+		this.imageChecker = imageChecker;
+	}
 	
 	
 	@Override
 	public String toString() {
-		return "BulletinVO [bno=" + bno + ", replyCnt=" + replyCnt + ", viewCnt=" + viewCnt + ", purpose=" + purpose
+		return "DualVO [bno=" + bno + ", replyCnt=" + replyCnt + ", viewCnt=" + viewCnt + ", purpose=" + purpose
 				+ ", title=" + title + ", content=" + content + ", writer=" + writer + ", secret=" + secret
-				+ ", regDate=" + regDate + ", modDate=" + modDate + "]";
-	}		
+				+ ", regDate=" + regDate + ", modDate=" + modDate + ", fno=" + fno + ", fileName=" + fileName
+				+ ", uuid=" + uuid + ", imageChecker=" + imageChecker + "]";
+	}	
 	
 }

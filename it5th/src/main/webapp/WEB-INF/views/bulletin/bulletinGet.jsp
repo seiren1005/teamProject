@@ -3,17 +3,51 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ include file="../includes/header.jsp" %>
 
+<style>
+	
+	.bigPictureWrapper {
+		position: absolute;
+		display: none;
+		justify-content: center;
+		align-items: center;
+		top: 0;
+		width: 100%;
+		height: 100%;
+		background-color: gray;
+		z-index: 100;
+	}
+	
+	.bigPicture {
+		position: realative;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+	
+	.bigPicture img {
+		width: 600px;
+	}
+	
+	.uploadResult ul li span {
+		color: white;
+	}
+	
+</style>
 
 <div class="">
-	<div class="">
-		<h1 class="">Board</h1>
-	</div>
+	<h1 class="">Board</h1>
 </div>
 
 <div class="">
 	<div class="">
-		<div class="">
-			<div class="">Board2</div>
+		<c:if test="${board.purpose eq 'Q' }">
+		Q&A Board
+		</c:if>
+		<c:if test="${board.purpose eq 'F' }">
+		Free Board
+		</c:if>		
+		</div>
+		<hr>
 			
 			<div class="">
 				<div class="">
@@ -32,7 +66,7 @@
 					<label>CONTENT</label>
 					<textarea class="" name="content"
 						rows="3" readonly >
-						<c:out value='${board.bno }' />
+						<c:out value='${board.content }' />
 					</textarea>
 				</div>
 				<div class="">
@@ -40,6 +74,16 @@
 					<input class="" name="writer" 
 						value="<c:out value='${board.writer }' />" 
 						readonly />
+				</div>
+				<div id="uploadResult">
+					<ul>
+						<!-- view upload files -->
+					</ul>
+				</div>
+				<div class="bigPictureWrapper">
+					<div class="bigPicture">
+						
+					</div>
 				</div>
 				
 				<!-- Button for locating to modify.jsp -->
@@ -69,12 +113,9 @@
 		
 					<input type="hidden" name="boardPurpose" 
 						value="<c:out value='${board.purpose }' />" />	
-					
+															
 				</form>
-				<!-- /.Hidden information -->					
-				
-			</div>
-		</div>
+				<!-- /.Hidden information -->			
 	</div>
 </div>
 
@@ -139,10 +180,12 @@
 	$(document).ready(function() {
 		
 		var bnoValue = '<c:out value="${board.bno}" />';
+		var uploadResult = $("#uploadResult ul");
 		
 		// console.log("bno " + bnoValue);
 		
 		showList(1);
+		showUploadFile();
 		
 		/* Dynamic reply lists */
 		function showList(page)	{
@@ -520,8 +563,98 @@
 	/* /.Select reply as a answer of question */
 	
 	
+	/* show files attaced */	
+	function showUploadFile() {			
+		
+		let uploadHtml = "";
+		
+		let nameArr = '${fvo.fileName}';		
+		let uuidArr = '${fvo.uuid}';		
+		let checkArr = '${fvo.imageChecker}';
+		
+		
+		if (nameArr == '') {
+						
+		} else {
+
+			nameArr = nameArr.split("/");			
+			uuidArr = uuidArr.split("/");			
+			checkArr = checkArr.split("/");
+			
+			// 업로드 파일 한개 당 li tag 한 개
+			for(let i = 0; i < nameArr.length; i++) {
+											
+				if(checkArr[i] == "false") {
+					// 이미지 파일이 아님
+					// li tag 앞에 파일 아이콘
+					let fileCallPath = encodeURIComponent("/" + uuidArr[i]
+							+ "_" + nameArr[i]);
+					
+					uploadHtml += "<li class='uploadLi'>"
+						+ "<img src='/resources/img/file_icon2.png'><li class='uploadLi'>"
+						+"<a href='/download?fileName=" + fileCallPath + "'>"
+						+ nameArr[i] + "</a>"
+						+ "<span data-file=\'" + fileCallPath + "\' data-type='file'></span>"
+						+ "</li>";				
+					
+				} else {
+					// 이미지 파일
+					// thumbnail 이미지 사용
+					let fileCallPath = encodeURIComponent("/s_" + uuidArr[i]
+							+ "_" + nameArr[i]);
+					
+					let originPath = uuidArr[i] + "_" + nameArr[i];
+					
+					originPath = originPath.replace(new RegExp(/\\/g), "/");
+					
+					uploadHtml += "<li class='uploadLi'>"
+						+"<a href='/download?fileName=" + originPath + "'>"
+						+ nameArr[i] + "</a>"
+						+ "<a href=\"javascript:showImage(\'" + originPath + "\')\">"
+						+ "<img src='/display?fileName=" + fileCallPath + "'></a>"
+						+ "<span data-file=\'" + fileCallPath + "\' data-type='image'>"
+						+ "</span></li>";
+					
+				}
+												
+			}
+			
+		}
+		
+		uploadResult.append(uploadHtml);
+		
+	} // end function showUploadFile()
+	
+	/* /.show files attaced */
+	
 	
 	}); // end ready(function())
+	
+	
+	function showImage(filePath) {
+		// alert(filePath);
+		$(".bigPictureWrapper").css("display", "flex").show();
+		
+		// html 코드로 img tag 삽입
+		$(".bigPicture").html(
+				"<img src='/display?fileName="
+				+ encodeURI(filePath) + "'>"
+				)
+				.stop().animate({width: '100%', height:'100%'}, 1000);
+		
+		$(".bigPictureWrapper").on("click", function(e) {
+			// 이미지 크기만 0 으로 줄이고
+			$(".bigPicture").stop().animate({width: '0%', height: '0%'}
+				, 1000);
+			
+			// 1 초 후에 숨기기
+			setTimeout(function () {
+				$(".bigPictureWrapper").hide();
+			}, 1000);
+			
+		});
+		
+	} // end showImage() function
 	
 </script>
 

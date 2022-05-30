@@ -20,8 +20,8 @@
 		
 		<property name ="driverClassName" value="oracle.jdbc.driver.OracleDriver"></property>
 	 	<property name ="url" value="jdbc:oracle:thin:@Localhost:1521:XE"></property>
-	 	<property name ="username" value="c##project5"></property>
-	 	<property name ="password" value="1234"></property>
+	 	<property name ="username" value="admin"></property>
+	 	<property name ="password" value="0000"></property>
 	</bean>
 	<!-- /.Information about connecting DB -->
 

@@ -54,38 +54,17 @@
 		<!-- /.Insert SQL according to searchType -->
 		 
 	</sql>
-	
-	
-	<sql id="secretCheck">
-		<if test="secret == 'yes'.toString()">
-			
-		</if>		
-	</sql>
-			
+				
 	<!-- /.SQL template -->
 	
 	
 	<!-- Implement insert method at BoardMapper interface -->	
 	<insert id="insert">
-		INSERT INTO tbl_board(bno, purpose, title, content, writer, secret)
-		VALUES (seq_board.NEXTVAL, #{purpose}, #{title}, #{content}, #{writer}, #{secret})
+		INSERT INTO tbl_board(bno, purpose, title, content, writer, secret, regdate, moddate)
+		VALUES (seq_board.NEXTVAL, #{purpose}, #{title}, #{content}, #{writer}, #{secret}, SYSDATE, SYSDATE)
 	</insert>
 	<!-- /.Implement insert method at BoardMapper interface -->
-	
-	
-	<!-- 첨부파일 정보 추가 -->
-	<insert id="insertFile">
-		<selectKey keyProperty="bno" order="BEFORE" resultType="int">
-			SELECT last_number
-			FROM user_sequences
-			WHERE sequence_name='SEQ_BOARD'
-		</selectKey>
 		
-		INSERT INTO tbl_file(filename, bno)
-		VALUES(#{fileName}, #{bno})
-	</insert>	
-	<!-- /.첨부파일 정보 추가 -->
-	
 	
 	<!-- Implement insertSelectKey method at BoardMapper interface -->
 	<insert id="insertSelectKey">
@@ -96,8 +75,8 @@
 			<!-- dual 은 가상 테이블 -->
 		</selectKey>
 		
-		INSERT INTO tbl_board(bno, purpose, title, content, writer, secret)
-		VALUES(#{bno}, #{purpose}, #{title}, #{content}, #{writer}, #{secret})
+		INSERT INTO tbl_board(bno, purpose, title, content, writer, secret, regdate, moddate)
+		VALUES (seq_board.NEXTVAL, #{purpose}, #{title}, #{content}, #{writer}, #{secret}, SYSDATE, SYSDATE)
 	</insert>
 	
 	
