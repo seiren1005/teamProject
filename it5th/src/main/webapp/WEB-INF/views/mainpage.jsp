@@ -20,18 +20,18 @@
 		<!-- 슬라이드쇼 -->
 		<div class="slide_div">
 			<div>
-				<a>
-					<img src="../resources/img/sample1.jpg">
+				<a> <!-- 첫번째 슬라이드: TCP -->
+					<a href="/detail/detail-TCP"><img src="../resources/img/sample1.jpg">
 				</a>
 			</div>
 			<div>
-				<a>
-					<img src="../resources/img/sample2.jpg">
+				<a> <!-- 두번째 슬라이드: 토호호 -->
+					<a href="/detail/detail-Tohoho"><img src="../resources/img/sample2.jpg">
 				</a>
 			</div>
 		<div>
-			<a>
-				<img src="../resources/img/sample3.jpg">
+			<a> <!-- 세번째 슬라이드: 생활코딩 -->
+				<a href="/detail/detail-LifeCoding"><img src="../resources/img/sample3.jpg">
 			</a>
 		</div>
 		</div> 
