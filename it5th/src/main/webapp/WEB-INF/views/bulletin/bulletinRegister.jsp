@@ -4,50 +4,46 @@
 
 
 <div class="">
-	<div class="">
-		<h1 class="">Board Register</h1>
-	</div>
+	<h1 class="">Board Register</h1>
 </div>
 
 <div class="">
-	<div class="">
-		<div class="">
 			<div class="">board register</div>
 			<div class="">
 			<!-- register form -->
 				<form action="/bulletin/bulletinRegister" method="post" 
-					class="registerForm" enctype="multipart/form-data">
-										
-					<div class="">
-						<select name="purpose" class="purposeBox">
-							<option value="N">=====</option>
-							<option value="Q">Q&A</option>
-							<option value="F">FREE</option>						
-						</select>
+					class="registerForm" enctype="multipart/form-data">					
+					<div class="btn-group">
+					  <select name="purpose" class="purposeBox btn btn-sm dropdown-toggle border border-primary" data-bs-toggle="dropdown" >
+					    <option class="dropdown-item" value="N">=====</option>
+							<option class="dropdown-item" value="Q">Q&A</option>
+							<option class="dropdown-item" value="F">FREE</option>		
+					  </select>
+					</div>
+					<div class="input-group mb-3">
+					  <span class="input-group-text boardTitle" id="basic-addon1">TITLE</span>
+					  <input type="text" class="form-control boardTitle" name="title" />
+					</div>
+					
+					<div class="form-check form-switch">
+					  <input class="form-check-input" type="checkbox" role="switch" class="secretBox" name="secret" id="flexSwitchCheckDefault" value="yes">
+					  <label class="form-check-label" for="flexSwitchCheckDefault">비밀글</label>
+					</div>
+					<div class="input-group mb-3">
+					  <span class="input-group-text boardTitle" id="basic-addon1">WRITER</span>
+					  <input type="text" class="form-control boardTitle boardWriter" name="writer" />
+					</div>
+					<div class="input-group">
+					  <span class="input-group-text">CONTENT</span>
+					  <textarea class="form-control boardContent" name="content" aria-label="CONTENT"></textarea>
 					</div>
 					<div class="">
-						<label>TITLE</label><input class="boardTitle" name="title" />
-					</div>
-					<div class="">
-						비밀글<input type="checkbox" name="secret" 
-							class="secretBox" value="yes" />
-					</div>
-					<div class="">
-						<label>WRITER</label><input class="boardWriter" name="writer" 
-							value="" />
-					</div>
-					<div class="">
-						<label>CONTENT</label>
-						<textarea class="boardContent" name="content" rows="3" >
-						</textarea>
-					</div>
-					<div class="uploadDiv">
 						<label>FILE UPLOAD</label>
-						<input type="file" id="uploadInput" name="attachFile" multiple />
 					</div>
-					
-					<button id="uploadBtn" type="button">UPLOAD</button> 
-					
+					<div class="input-group uploadDiv">
+					  <input type="file" class="form-control" name="attachFile" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04" aria-label="Upload" multiple />
+					  <button class="btn btn-outline-secondary uploadBtn" type="button" id="inputGroupFileAddon04">UPLOAD</button>
+					</div>					
 					<div id="uploadResult">
 						<ul>
 							<!-- view upload files -->
@@ -55,8 +51,8 @@
 					</div>
 					
 					<hr />
-					<button class="registerBtn">SUBMIT</button>
-					<button class="listBtn">LIST</button>
+					<button type="button" class="btn btn-outline-warning registerBtn">SUBMIT</button>
+					<button type="button" class="btn btn-outline-warning listBtn">LIST</button>
 				</form>
 					<!-- upload button 이 폼 안에 있으면 이벤트가 한번만 발생하고 그 뒤로는
 						아무 이벤트도 발생하지 않거나 submit 이벤트가 발생하는 에러가 발생
@@ -69,10 +65,7 @@
 						처음은 지정한 이벤트로 작동하지만 두번째부터 submit 이벤트로 작동함
 						-->
 									
-			<!-- register form -->
-			
-			</div>
-		</div>
+			<!-- /.register form -->
 	</div>
 </div>
 
@@ -241,7 +234,7 @@
 		}
 		
 		
-		$("#uploadBtn").on("click", function() {
+		$(".uploadBtn").on("click", function() {
 			
 			console.log("clicked");
 			
@@ -294,7 +287,7 @@
 			/* /.File upload and initialize input tag */
 			
 						
-		}); // end $("#uploadBtn").on()	
+		}); // end $(".uploadBtn").on()	
 		
 			
 	}); // end $(document).ready()

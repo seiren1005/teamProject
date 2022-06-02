@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.globalin.bulletinmapper.LikeMapper">
+
+	<insert id="clickGood">
+		INSERT INTO tbl_like(bno, good)
+		VALUES(#{bno}, 1)
+	</insert>
+	
+	<insert id="clickBad">
+		INSERT INTO tbl_like(bno, bad)
+		VALUES(#{bno}, 1)
+	</insert>
+	
+	<select id="countGood" resultType="int">
+		SELECT SUM(good)
+		FROM tbl_like
+		WHERE bno = #{bno}
+	</select>
+	
+	<select id="countBad" resultType="int">
+		SELECT SUM(bad)
+		FROM tbl_like
+		WHERE bno = #{bno}
+	</select>
+	
+	<select id="nullChecker" resultType="int">
+		SELECT COUNT(*)
+		FROM tbl_like
+		WHERE bno = #{bno}
+	</select>
+	
+	<delete id="deleteRec">
+		DELETE 
+		FROM tbl_like
+		WHERE bno = #{bno}
+	</delete>
+
+</mapper>

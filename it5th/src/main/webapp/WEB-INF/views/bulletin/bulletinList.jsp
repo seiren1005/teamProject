@@ -10,13 +10,13 @@
 <div>
 	<form method="get" class="purposeForm" action="/bulletin/bulletinList">
 	<div class="btn-group" role="group">
-    <button type="submit" class="btn btn-outline-primary" data-oper="all">
+    <button type="submit" class="btn btn-outline-primary purposeBtn" data-oper="all">
     ALL
     </button>
-    <button type="submit" class="btn btn-outline-primary" data-oper="qna">
+    <button type="submit" class="btn btn-outline-primary purposeBtn" data-oper="qna">
     Q&A
     </button>
-    <button type="submit" class="btn btn-outline-primary" data-oper="free">
+    <button type="submit" class="btn btn-outline-primary purposeBtn" data-oper="free">
     FREE
     </button>
   </div>  
@@ -207,7 +207,7 @@
 
 							if (parseInt(result) > 0) {
 
-								alert("게시글" + (parseInt(result) + 1)
+								alert("게시글" + (parseInt(result))
 										+ " 번이 등록되었습니다.");
 
 							}

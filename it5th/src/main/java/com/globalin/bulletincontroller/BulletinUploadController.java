@@ -214,6 +214,10 @@ public class BulletinUploadController {
 				
 				list.add(fvo);
 				
+				System.out.println("upload controller test");
+				System.out.println(fvo);
+				System.out.println(list);
+				
 			} catch (IllegalStateException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

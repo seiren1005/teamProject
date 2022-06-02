@@ -4,6 +4,15 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ include file="../includes/header.jsp" %>
 
+<style>
+
+.modifyPageForm span {
+	
+	padding: 5px;
+	
+}
+
+</style>
 
 <div class="">
 	<div class="">
@@ -23,50 +32,60 @@
 		<input type="hidden" name="keyword" value="<c:out value='${cri.keyword }' />" />
 		<!-- /.hidden input tag -->
 	
-		<div class="">
-			<label>BNo. </label> <input id="back-bno" class="" name="bno" 
-				value="<c:out value='${board.bno }' />" readonly />
-		</div>
-		<div class="">
-			<label>TITLE</label> <input id="" class="" name="title" 
-				value="<c:out value='${board.title }' />" />
-		</div>
-		<div class="">
-			<label>CONTENT</label> 
-			<textarea class="" name="content" rows="3" >
-				<c:out value='${board.content }' />
-			</textarea>
-		</div>
-		<div class="">
-			<label>WRITER</label> <input id="" class="" name="writer" 
-				value="<c:out value='${board.writer }' />" />
-		</div>
-		<div class="">
-			<label>REGDATE</label> <input id="" class="" name="regDate" 
-				value="<fmt:formatDate pattern='yyyy/MM/dd HH:mm:ss' 
-				value='${board.regDate }' />" readonly />
-		</div>
-		<div class="">
-			<label>MODDATE</label> <input id="" class="" name="modDate" 
-				value="<fmt:formatDate pattern='yyyy/MM/dd HH:mm:ss' 
-				value='${board.modDate }' />" readonly />
-		</div>
+		<hr>
 		
-		<div class="uploadDiv">
-			<label>FILE UPLOAD</label>
-			<input type="file" id="uploadInput" name="attachFile" multiple />
-		</div>
-		<button id="uploadBtn">UPLOAD</button>
+		<div class="modifyPageForm">
+				<div class="input-group mb-3">
+				  <span class="input-group-text col-2" id="basic-addon1">no.</span>
+				  <input type="text" class="form-control boardTitle" name="bno" 
+						value="<c:out value='${board.bno }' />" 
+						readonly />
+				</div>
+				<div class="input-group mb-3">
+				  <span class="input-group-text col-2" id="basic-addon1">TITLE</span>
+				  <input type="text" class="form-control boardTitle" name="title" value="<c:out value='${board.title }' />" />
+				</div>
+				<div class="input-group mb-3">
+					  <span class="input-group-text col-2" id="basic-addon1">WRITER</span>
+					  <input type="text" class="form-control boardTitle boardWriter" name="writer" 
+						value="<c:out value='${board.writer }' />" 
+						readonly />
+					</div>
+				<div class="input-group mb-3">
+				  <span class="input-group-text col-2">CONTENT</span>
+				  <textarea class="form-control boardContent" name="content" aria-label="CONTENT"><c:out value='${board.content }' /></textarea>
+				</div>
+				<div class="input-group mb-3">
+					  <span class="input-group-text col-2" id="basic-addon1">REGDATE</span>
+					  <input type="text" class="form-control boardTitle" name="regDate" 
+						value="<fmt:formatDate pattern='yyyy/MM/dd HH:mm:ss' 
+						value='${board.regDate }' />" readonly />
+					</div>
+					<div class="input-group mb-3">
+					  <span class="input-group-text col-2" id="basic-addon1">MODDATE</span>
+					  <input type="text" class="form-control boardTitle" name="modDate" 
+						value="<fmt:formatDate pattern='yyyy/MM/dd HH:mm:ss' 
+						value='${board.regDate }' />" readonly />
+					</div>
+				</div>
+		
+		<div class="">
+						<label>FILE UPLOAD</label>
+					</div>
+					<div class="input-group uploadDiv">
+					  <input type="file" class="form-control" name="attachFile" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04" aria-label="Upload" multiple />
+					  <button class="btn btn-outline-secondary uploadBtn" type="button" id="inputGroupFileAddon04">UPLOAD</button>
+					</div>
 		<div id="uploadResult">
 			<ul>
 				<!-- view previous upload files -->
 			</ul>
 		</div>
 	
-		<button data-oper="update" type="submit" class="submitBtn">UPDATE</button>
-		<button data-oper="delete" type="submit" class="submitBtn">DELETE</button>
-		<button data-oper="get" type="submit" class="submitBtn">GO BACK</button>
-		<button data-oper="list" type="submit" class="submitBtn">LIST</button>
+		<button type="button" data-oper="update" class="btn btn-outline-warning submitBtn">UPDATE</button>
+		<button type="button" data-oper="delete" class="btn btn-outline-warning submitBtn">DELETE</button>
+		<button type="button" data-oper="get" class="btn btn-outline-warning submitBtn">GO BACK</button>
+		<button type="button" data-oper="list" class="btn btn-outline-warning submitBtn">LIST</button>
 		
 	</form>
 </div>
@@ -97,24 +116,23 @@
 			
 			if (operation === "update") {
 				// 기존 action 그대로				
+				
+				if(targetFile.length > 0) {
 					
-				console.log("targetFile");
-				console.log(targetFile);
-				console.log("type");
-				console.log(type);
-				
-		$.ajax({
-			url: '/deleteFile',
-			type: 'POST',
-			traditional: true, // ajax 배열 넘기기 옵션!
-			data : {fileName:targetFile, type:type},
-			dataType : 'text',
-			success : function(result){
-				alert(result);
-				
-			}
-			
-		})
+					$.ajax({
+						url: '/deleteFile',
+						type: 'POST',
+						traditional: true, // ajax 배열 넘기기 옵션!
+						data : {fileName:targetFile, type:type},
+						dataType : 'text',
+						success : function(result){
+							alert(result);
+							
+						}
+						
+					})
+					
+				}	
 		
 		formObj.attr("action", "/bulletin/bulletinModify").attr("method", "post");
 								
@@ -168,7 +186,7 @@
 				
 		function showUploadFile() {		
 			
-			let nameArr = '${fvo.fileName}';		
+			let nameArr = '${fvo.fileName}';
 			let uuidArr = '${fvo.uuid}';		
 			let checkArr = '${fvo.imageChecker}';
 			

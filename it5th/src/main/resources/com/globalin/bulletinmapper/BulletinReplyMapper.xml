@@ -39,8 +39,10 @@
 	<update id="update">
 		UPDATE tbl_reply
 		SET reply = #{reply}, 
-			replymoddate = SYSDATE,
-			adoption = #{adoption}					
+			replymoddate = SYSDATE
+			<if test="adoption != null">
+			, adoption = #{adoption}
+		</if>
 		WHERE rno = #{rno}
 	</update>	
 	<!-- /.update method at ReplyMapper -->

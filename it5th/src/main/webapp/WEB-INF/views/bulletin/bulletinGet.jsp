@@ -46,51 +46,52 @@
 		<c:if test="${board.purpose eq 'F' }">
 		Free Board
 		</c:if>		
-		</div>
-		<hr>
+	</div>
+	<hr>
 			
 			<div class="">
-				<div class="">
-					<label>Bno.	</label>
-					<input class="" name="bno" 
+				<div class="input-group mb-3">
+				  <span class="input-group-text boardBno" id="basic-addon1">no.</span>
+				  <input type="text" class="form-control boardTitle" name="bno" 
 						value="<c:out value='${board.bno }' />" 
 						readonly />
 				</div>
-				<div class="">
-					<label>TITLE</label>
-					<input class="" name="title" 
-						value="<c:out value='${board.title }' />" 
+				<div class="input-group mb-3">
+				  <span class="input-group-text boardTitle" id="basic-addon1">TITLE</span>
+				  <input type="text" class="form-control boardTitle" name="title" value="<c:out value='${board.title }' />" 
 						readonly />
 				</div>
-				<div class="">
-					<label>CONTENT</label>
-					<textarea class="" name="content"
-						rows="3" readonly >
-						<c:out value='${board.content }' />
-					</textarea>
-				</div>
-				<div class="">
-					<label>WRITER</label>
-					<input class="" name="writer" 
+				<div class="input-group mb-3">
+					  <span class="input-group-text boardTitle" id="basic-addon1">WRITER</span>
+					  <input type="text" class="form-control boardTitle boardWriter" name="writer" 
 						value="<c:out value='${board.writer }' />" 
 						readonly />
+					</div>
+				<div class="input-group">
+				  <span class="input-group-text">CONTENT</span>
+				  <textarea class="form-control boardContent" name="content" aria-label="CONTENT" readonly><c:out value='${board.content }' /></textarea>
 				</div>
+				<hr>
 				<div id="uploadResult">
 					<ul>
 						<!-- view upload files -->
 					</ul>
 				</div>
 				<div class="bigPictureWrapper">
-					<div class="bigPicture">
+					<div class="bigPicture">						
 						
 					</div>
 				</div>
 				
+				<hr>
+				
+				<div>
 				<!-- Button for locating to modify.jsp -->
-				<button data-oper="update" class="">MODIFY</button>
+				<button type="button" data-oper="update" class="btn btn-outline-warning">MODIFY</button>
 				
 				<!-- Button for going back to list.jsp -->
-				<button data-oper="list" class="">LIST</button>
+				<button type="button" data-oper="list" class="btn btn-outline-warning">LIST</button>
+				</div>
 				
 				<!-- Hidden information -->
 				<form id="operForm" action="/bulletin/bulletinModify" method="get">
@@ -119,23 +120,43 @@
 	</div>
 </div>
 
+
+<!-- recommendation button -->
+<div class="recommendDiv">
+	<button type="button" class="btn btn-outline-primary recommendBtn good">GOOD</button>
+	
+	<span class="recommendCnt h1">
+		<c:if test="${recommendSec.totalRec != null }">
+			<c:out value="${recommendSec.totalRec }" />	
+		</c:if>
+		<c:if test="${recommendSec.totalRec == null }">	
+			<c:out value="${recommend.totalRec }" />	
+		</c:if>		
+	</span>
+	
+	<button type="button" class="btn btn-outline-danger recommendBtn bad">BAD</button>
+</div>
+<!-- /.recommendation button -->
+
+
 <!-- Reply lists in board -->
 <div class="">
 	<div class="">
 		<div class="">
 		
 		<div class="">
-			<!-- icon tag -->
-			<i class=""></i>REPLY			
+			<img src=''>REPLY			
 		</div>
 			<!-- Register reply form -->
 			<div class="replyForm">
-				<i class=""></i>
-				<input class="reply_replyer" name="replyer"
-					placeholder="replyer" /> <br>
-				<textarea class="" rows="3" name="reply" 
-					placeholder="New reply!" ></textarea>		
-				<button id="registerReplyBtn" type="button" class="">REGISTER</button>
+			<div class="input-group mb-3">
+			  <input type="text" class="form-control" name="replyer" placeholder="Replyer" aria-label="Replyer" value="" />
+			</div>
+			<div class="form-floating">
+			  <textarea class="form-control" placeholder=" " name="reply" id="floatingTextarea2" style="height: 100px"></textarea>
+			  <label for="floatingTextarea2">Comments</label>
+			</div>
+				<button id="registerReplyBtn" type="button" class="btn btn-outline-primary">REGISTER</button>
 				<hr>
 			</div>
 			<!-- /.Register reply form -->
@@ -175,8 +196,7 @@
 	var replyUL = $(".chat");
 	var updateRno = -1;
 	// console.log("updateRno 0: " + updateRno);
-	
-	
+		
 	$(document).ready(function() {
 		
 		var bnoValue = '<c:out value="${board.bno}" />';
@@ -248,8 +268,8 @@
 						}
 						
 						comments += "<div class=''>";
-						comments += list[i].rno;
-						comments += ". <strong class='replyReplyerInfo'>" + list[i].replyer + "</strong>";
+						comments += i+1;
+						comments += ". <strong class='replyReplyerInfo'>" + list[i].replyer + "  </strong>";
 						comments += "<small class=''>";
 						comments += replyService.displayTime(list[i].replyRegDate);
 						comments += "</small></div>";
@@ -258,8 +278,8 @@
 							
 							comments += "<p class=''>" + list[i].reply + "</p></div>";
 							comments += "<div class='btnDiv'>"
-							comments += "<button id='updateReplyFormBtn' type='button' class='" + i + "'>UPDATE</button>"
-							comments += "<button id='deleteReplyBtn' type='button' class=''>REMOVE</button>"
+							comments += "<button id='updateReplyFormBtn' type='button' class='btn btn-outline-primary' name='" + list[i].rno + "'>UPDATE</button>"
+							comments += "<button id='deleteReplyBtn' type='button' class='btn btn-outline-primary'>REMOVE</button>"
 							
 							
 							
@@ -267,7 +287,7 @@
 								
 								if (checkValue != 1) {
 									
-									comments += "<button id='selectReplyBtn' class='" + list[i].rno + "'>SELECT</button></li>"
+									comments += "<button id='selectReplyBtn' class='btn btn-outline-primary' name='" + list[i].rno + "'>SELECT</button></li>"
 									// comments += "<button id='cancelSelectBtn' class=''>CANCEL</button></li>"
 									
 								}
@@ -277,11 +297,14 @@
 								
 						} else {
 							
-							comments += "<textarea class='' rows='3' name='reply' placeholder='New reply!'>";
-							comments += list[i].reply + "</textarea></div>";
+							comments += "<div class='form-floating'>"
+							comments += "<textarea class='form-control' placeholder='' name='reply' id='floatingTextarea2' style='height: 100px'>";
+							  
+							comments += list[i].reply + "</textarea>"
+							comments += "<label for='floatingTextarea2'>Comments</label></div>";
 							comments += "<div class='btnDiv'>"
-							comments += "<button id='updateReplyBtn' type='button' class='" + list[i].rno + "'>UPDATE</button>"
-							comments += "<button id='cancelBtn' type='button' class=''>CANCEL</button>";
+							comments += "<button id='updateReplyBtn' type='button' class='btn btn-outline-primary' value='" + list[i].rno + "'>UPDATE</button>"
+							comments += "<button id='cancelBtn' type='button' class='btn btn-outline-primary'>CANCEL</button>";
 							updateRno = -1;
 							
 						}											
@@ -343,14 +366,14 @@
 		} 
 		
 		// 댓글 페이지 html 코드 조립
-		let pageHtml = "<ul class=''>";
+		let pageHtml = "<div class='btn-toolbar mb-3' role='toolbar' aria-label='Toolbar with button groups'>";
+		pageHtml += "<div class='btn-group me-2' role='group' aria-label='First group'>"
 		
 		// prev 보이기 여부
 		if (prev) {
 			
-			pageHtml += "<li class=''>";
-			pageHtml += "<a class='' href='" + (startNum - 1) + "'>";
-			pageHtml += "PREV</a></li>";
+			pageHtml += "<button type='button' class='btn btn-outline-secondary' onclick='location.href='";
+			pageHtml += (startNum - 1) + "''>PREV</button>";
 			
 		}
 		
@@ -358,22 +381,20 @@
 		for(let i = startNum; i <= endNum; i++) {
 			// active: 현재 클릭한 페이지 번호
 			let active = pageNum == i ? "active" : "";
-			pageHtml += "<li class='" + active + "'>";
-			pageHtml += "<a class='' href='" + i + "'>";
-			pageHtml += i + "</a></li>";			
+			pageHtml += "<button type='button' class='btn btn-outline-secondary'";
+			pageHtml +=  active + "onclick='loaction.href='" + i + "''>" + i + "</button>";
 			
 		}
 		
 		// NEXT 버튼 활성화
 		if(next) {
-			
-			pageHtml += "<li class=''>";
-			pageHtml += "<a class='' href='" + (endNum + 1) + "'>";
-			pageHtml += "NEXT</a></li>";
+
+			pageHtml += "<button type='button' class='btn btn-outline-secondary' onclick='loaction.href='";
+			pageHtml += (endNum + 1) + "''>NEXT</button>";
 			
 		}
 		
-		pageHtml += "</ul>";
+		pageHtml += "</div></div>";
 		
 		// html 코드 삽입
 		replyPageFooter.html(pageHtml);		
@@ -425,9 +446,9 @@
 		// 나중에 동적으로 생기는 #updateReplyFormBtn tag 에 
 		// 이벤트 대상 변경
 		
-		updateRno = $(this).attr("class");
+		updateRno = $(this).attr("name");
 		
-		// console.log("updateRno 2: " + updateRno);
+		console.log("updateRno 2: " + updateRno);
 		
 		showList(pageNum);
 		
@@ -436,6 +457,8 @@
 	
 		replyUL.on("click", "#updateReplyBtn", function(e) {
 		// 댓글 수정
+		
+		console.log("button clicked")
 		
 		// let originalReplyer = formInputReplyer.val();
 		
@@ -524,11 +547,13 @@
 	// 동적으로 생성된 태그에는 직접 이벤트를 달아줄 수 없음
 	// 상위나 형제 tag 에 달아주고 나중에 이벤트 대상을 변경
 	
-	replyPageFooter.on("click", "li a", function(e)	{
+	replyPageFooter.on("click", "div button", function(e)	{
 		// remove a tag event
 		e.preventDefault();
 		
-		let target = $(this).attr("href");
+		let target = e.target.innerText;
+		console.log("target")
+		console.log(target)
 		pageNum = target;
 		showList(pageNum);
 		
@@ -568,7 +593,9 @@
 		
 		let uploadHtml = "";
 		
-		let nameArr = '${fvo.fileName}';		
+		let nameArr = '${fvo.fileName}';
+		console.log(nameArr);
+		console.log(nameArr);
 		let uuidArr = '${fvo.uuid}';		
 		let checkArr = '${fvo.imageChecker}';
 		
@@ -608,10 +635,11 @@
 					originPath = originPath.replace(new RegExp(/\\/g), "/");
 					
 					uploadHtml += "<li class='uploadLi'>"
-						+"<a href='/download?fileName=" + originPath + "'>"
-						+ nameArr[i] + "</a>"
 						+ "<a href=\"javascript:showImage(\'" + originPath + "\')\">"
 						+ "<img src='/display?fileName=" + fileCallPath + "'></a>"
+						+ "<br>"
+						+"<a href='/download?fileName=" + originPath + "'>"
+						+ nameArr[i] + "</a>"
 						+ "<span data-file=\'" + fileCallPath + "\' data-type='image'>"
 						+ "</span></li>";
 					
@@ -628,19 +656,62 @@
 	/* /.show files attaced */
 	
 	
+	/* recommendation button */
+	$(".recommendBtn").on("click", function() {
+			
+			let lvo;
+			
+			if($(this).hasClass("good") == true) {
+				
+				lvo = {
+					bno: '${board.bno }',
+					isLike: 'true'
+				}
+				
+			}
+			
+			if($(this).hasClass("bad") == true) {
+				
+				lvo = {
+					
+						bno: '${board.bno }',
+						isLike: 'false'
+						
+				}				
+				
+			}
+			
+			var element = document.getElementsByClassName('recommendCnt');
+			
+			$.ajax({
+				url: '/bulletin/bulletinRecommend',
+				type: 'GET',
+				data : lvo,
+				dataType : 'text',
+				success : function(result){
+					
+					alert(result);
+					location.replace(location.href);
+					
+				}			
+			
+		});
+		
+	});
+	
+	/* /.recommendation button */
+	
+	
 	}); // end ready(function())
 	
 	
 	function showImage(filePath) {
-		// alert(filePath);
+		// alert(filePath);		
 		$(".bigPictureWrapper").css("display", "flex").show();
 		
 		// html 코드로 img tag 삽입
-		$(".bigPicture").html(
-				"<img src='/display?fileName="
-				+ encodeURI(filePath) + "'>"
-				)
-				.stop().animate({width: '100%', height:'100%'}, 1000);
+		$(".bigPicture").html("<img src='/display?fileName=" + encodeURI(filePath) + "' class='img-fluid'>")
+			.stop().animate({width: '100%', height:'100%'}, 1000);
 		
 		$(".bigPictureWrapper").on("click", function(e) {
 			// 이미지 크기만 0 으로 줄이고

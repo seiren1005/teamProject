@@ -1,7 +1,6 @@
 package com.globalin.bulletincontroller;
 
 
-import java.util.Arrays;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -13,15 +12,18 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.globalin.bulletindomain.BulletinPage;
 import com.globalin.bulletindomain.BulletinVO;
+import com.globalin.bulletindomain.LikeVO;
 import com.globalin.bulletindomain.BulletinCriteria;
 import com.globalin.bulletindomain.BulletinFileVO;
 import com.globalin.bulletinservice.BulletinService;
 import com.globalin.bulletinservice.BulletinUploadService;
+import com.globalin.bulletinservice.LikeService;
 
 @Controller
 @RequestMapping("/bulletin/*")
@@ -37,6 +39,9 @@ public class BulletinController {
 	
 	@Autowired
 	private BulletinUploadService uService;
+	
+	@Autowired
+	private LikeService lService;
 	
 	
 	// /board/list get 요청
@@ -91,7 +96,7 @@ public class BulletinController {
 			// diposable storage object
 			rttr.addFlashAttribute("result", bvo.getBno());
 			
-			fvo.setBno((bvo.getBno() + 1));
+			fvo.setBno(bvo.getBno());
 			
 			uService.insert(fvo);
 			
@@ -127,9 +132,30 @@ public class BulletinController {
 		// 페이지 정보 전달
 		model.addAttribute("cri", cri);
 		
-		// 첨부파일 정보 전달
+		// 첨부파일 정보 전달			
 		BulletinFileVO fvo = uService.get(bno);
-		model.addAttribute("fvo", fvo); 
+		model.addAttribute("fvo", fvo);
+		
+		System.out.println("fvo checker1");
+		System.out.println(fvo);
+		
+		LikeVO lvo = new LikeVO();	
+		
+		if(lService.nullCheck(bno) == true) {
+			
+			int good = lService.countGood(bno);
+			int bad = lService.countBad(bno);
+			
+			lvo.setTotalRec(good-bad);
+			
+		} else {
+			
+			lvo.setTotalRec(0);
+			
+		}
+				
+		model.addAttribute("recommend", lvo);
+		
 		
 	}
 	
@@ -137,7 +163,7 @@ public class BulletinController {
 	// /board/update post request
 	@PostMapping("/bulletinModify")
 	public String modify(BulletinVO bvo, BulletinCriteria cri, BulletinFileVO fvo,
-			RedirectAttributes rttr) {
+			RedirectAttributes rttr, HttpServletRequest req) {
 		
 		log.info("update: " + bvo);
 
@@ -148,18 +174,59 @@ public class BulletinController {
 			
 			rttr.addFlashAttribute("result", "success");
 			
-			if(fvo != null) {
+			if(uService.get(bvo.getBno()) == null) {
 				
-				uService.update(fvo);
+				if(fvo.getFileName() != null) {
+					
+					String[] nameArr = req.getParameterValues("fileName");
+					String[] uuidArr = req.getParameterValues("uuid");
+					String[] checkArr = req.getParameterValues("imageChecker");
+										
+					fvo.setFileName(String.join("/", nameArr));
+					fvo.setUuid(String.join("/", uuidArr));
+					fvo.setImageChecker(String.join("/", checkArr));
+					log.info("modify: " + fvo);
 				
-			}
-						
+					System.out.println("modify , check");
+					System.out.println(fvo);
+					
+					// diposable storage object
+					rttr.addFlashAttribute("result", bvo.getBno());
+					
+					fvo.setBno(bvo.getBno());
+					
+					uService.insert(fvo);					
+					
+				}
+											
+			} else {
+				
+				String[] nameArr = req.getParameterValues("fileName");
+				String[] uuidArr = req.getParameterValues("uuid");
+				String[] checkArr = req.getParameterValues("imageChecker");
+									
+				fvo.setFileName(String.join("/", nameArr));
+				fvo.setUuid(String.join("/", uuidArr));
+				fvo.setImageChecker(String.join("/", checkArr));
+				log.info("modify: " + fvo);
+			
+				System.out.println("modify , check");
+				System.out.println(fvo);
+				
+				// diposable storage object
+				rttr.addFlashAttribute("result", bvo.getBno());				
+				fvo.setBno(bvo.getBno());
+				
+				uService.update(fvo);	
+				
+			}			
+			
 		}
 		
 		// 페이지 정보 전달
 		rttr.addFlashAttribute("cri", cri);
-		
-		return "redirect:/bulletin/bulletinList";
+				
+		return "redirect:/bulletin/bulletinGet?bno=" + bvo.getBno();
 		
 	}
 	
@@ -177,9 +244,7 @@ public class BulletinController {
 			
 			uService.delete(bno);
 			
-		}
-		
-		
+		}		
 		
 		// 페이지, 검색 정보 전달
 		rttr.addFlashAttribute("cri", cri);
@@ -187,6 +252,6 @@ public class BulletinController {
 		return "redirect:/bulletin/bulletinList";
 		
 	}
-	
+
 	
 }
