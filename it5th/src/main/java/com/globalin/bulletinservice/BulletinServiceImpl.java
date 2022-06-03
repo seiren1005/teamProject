@@ -101,6 +101,29 @@ public class BulletinServiceImpl implements BulletinService {
 		return mapper.getTotalCount(cri);
 		
 	}
+
+	@Override
+	public boolean updateHit(int bno) {
+		// TODO Auto-generated method stub
+		if(mapper.updateHit(bno) == 1) {
+			
+			return true;
+		}
+		
+		return false;
+	}
+
+	@Override
+	public boolean updateTotalRec(BulletinVO bvo) {
+		// TODO Auto-generated method stub
+		if(mapper.updateTotalRec(bvo) == 1) {
+			
+			return true;
+			
+		}
+		
+		return false;
+	}
 	
 	
 }

@@ -48,8 +48,8 @@
 	<sql id="purposeCriteria">
 	
 		<!-- Insert SQL according to searchType -->
-		<if test="purpose != 'A'.toString()">
-			(purpose = #{purpose}) AND
+		<if test="pagePurpose != 'A'.toString()">
+			(purpose = #{pagePurpose}) AND
 		</if>
 		<!-- /.Insert SQL according to searchType -->
 		 
@@ -98,9 +98,9 @@
 	<!-- Implement selectAll page processed method at BoardMapper interface -->
 	<select id="selectAllWithPage" resultType="com.globalin.bulletindomain.BulletinVO">
 	<![CDATA[
-		SELECT bno, purpose, title, content, writer, secret, regdate, moddate, replycnt
+		SELECT bno, purpose, title, content, writer, secret, regdate, moddate, replycnt, hit, totalrec
 		FROM (SELECT /*+ INDEX_DESC(tbl_board pk_board) */
-					rownum rn, bno, purpose, title, content, writer, secret, regdate, moddate, replycnt
+					rownum rn, bno, purpose, title, content, writer, secret, regdate, moddate, replycnt, hit, totalrec
 				FROM tbl_board
 				WHERE
 	]]>
@@ -137,8 +137,7 @@
 	<!-- Implement update method at BoardMapper interface -->
 	<update id="update">
 		UPDATE tbl_board
-		SET purpose = #{purpose},
-			title = #{title},
+		SET title = #{title},
 			content = #{content},
 			writer = #{writer},
 			secret = #{secret},
@@ -164,5 +163,24 @@
 		WHERE bno = #{bno}
 	</update>	
 	<!-- /.update updateReplyCnt -->
+	
+	
+	<!-- update hit -->
+	<update id="updateHit">
+		UPDATE tbl_board
+		SET hit = hit + 1
+		WHERE bno = #{bno}
+	</update>
+	<!-- /.update hit -->
+	
+	
+	<!-- update total recommend -->
+		<update id="updateTotalRec">
+			UPDATE tbl_board
+			SET totalrec = #{totalRec}
+			WHERE bno = #{bno}
+		</update>
+	<!-- /.update total recommend -->
+	
 
 </mapper>

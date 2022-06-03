@@ -12,7 +12,24 @@
 			<div class="">
 			<!-- register form -->
 				<form action="/bulletin/bulletinRegister" method="post" 
-					class="registerForm" enctype="multipart/form-data">					
+					class="registerForm" enctype="multipart/form-data">
+					
+					
+					<!-- Information for paging processing -->
+					<input type="hidden" name="pageNum" 
+						value="<c:out value='${cri.pageNum }' />" />
+					<input type="hidden" name="amount" 
+						value="<c:out value='${cri.amount }' />" />
+					<input type="hidden" name="pagePurpose" 
+						value="<c:out value='${cri.pagePurpose }' />" />
+						
+					<!-- Remain search information -->
+					<input type="hidden" name="searchType" 
+						value="<c:out value='${cri.searchType }' />" />
+					<input type="hidden" name="keyword" 
+						value="<c:out value='${cri.keyword }' />" />
+					
+										
 					<div class="btn-group">
 					  <select name="purpose" class="purposeBox btn btn-sm dropdown-toggle border border-primary" data-bs-toggle="dropdown" >
 					    <option class="dropdown-item" value="N">=====</option>
@@ -122,7 +139,7 @@
 		}); // end $(".registerBtn").on()
 		
 		
-		$("#listBtn").on("click", function(e) {
+		$(".listBtn").on("click", function(e) {
 			
 			registerForm.attr("action", "/bulletin/bulletinList").attr("method", "get");
 			
@@ -134,7 +151,7 @@
 			
 			var keywordTag = $("input[name='keyword']").clone();
 			
-			var purposeTag = $("input[name='purpose']").clone();
+			var pagePurposeTag = $("input[name='pagePurpose']").clone();
 			
 			registerForm.empty();
 			// formObj 입력 정보 초기화
@@ -143,7 +160,7 @@
 			registerForm.append(pageNumTag).append(amountTag)
 				.append(searchTypeTag)
 				.append(keywordTag)
-				.append(purposeTag)
+				.append(pagePurposeTag);
 							
 		})
 		

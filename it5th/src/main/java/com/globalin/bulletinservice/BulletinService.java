@@ -28,6 +28,12 @@ public interface BulletinService {
 	
 	// Get total count at board
 	public int getTotal(BulletinCriteria cri);
+	
+	// update hit
+	public boolean updateHit(int bno);
+	
+	// update total recommend
+	public boolean updateTotalRec(BulletinVO bvo);
 		
 
 }

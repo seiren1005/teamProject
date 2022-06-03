@@ -9,7 +9,9 @@ import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.globalin.bulletindomain.BulletinVO;
 import com.globalin.bulletindomain.LikeVO;
+import com.globalin.bulletinservice.BulletinService;
 import com.globalin.bulletinservice.LikeService;
 
 @RestController
@@ -21,6 +23,9 @@ public class CommonRestController {
 	@Autowired
 	private LikeService service;
 	
+	@Autowired
+	private BulletinService bService;
+	
 	
 	@GetMapping(value="/bulletin/bulletinRecommend", 
 			produces="text/plain; charset=UTF-8")
@@ -29,6 +34,9 @@ public class CommonRestController {
 		int good = 0;
 		int bad = 0;
 		int bno = lvo.getBno();
+		int totalRec = bService.get(bno).getTotalRec();
+		System.out.println("board totalRec test");
+		System.out.println(totalRec);
 		
 		String result = "";
 				
@@ -40,6 +48,7 @@ public class CommonRestController {
 				
 				good = service.countGood(bno);				
 				result = "좋아요!";
+				totalRec = totalRec + 1;
 				
 			}
 			 			
@@ -51,14 +60,23 @@ public class CommonRestController {
 				
 				bad = service.countBad(bno);				
 				result = "싫어요!";
+				totalRec = totalRec - 1;
 						
 			}
 			
 		}
 		
+		BulletinVO bvo = new BulletinVO();
+		bvo.setBno(bno);
+		bvo.setTotalRec(totalRec);
+		
+		bService.updateTotalRec(bvo);
+		
 		lvo.setTotalRec(good-bad);
 		
 		model.addAttribute("recommendSec", lvo);
+//		System.out.println("recommendSec test");
+//		System.out.println(lvo);
 		
 		return result;
 		// restcontroller 의 경우 페이지 이동을 하지 않으므로 데이터를

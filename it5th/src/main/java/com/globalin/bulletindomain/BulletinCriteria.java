@@ -7,7 +7,7 @@ public class BulletinCriteria {
 	private int pageNum;
 	private int amount;
 	
-	private String purpose = "A";
+	private String pagePurpose = "A";
 	private String searchType;
 	private String keyword;
 	
@@ -20,11 +20,11 @@ public class BulletinCriteria {
 	}
 
 	
-	public String getPurpose() {
-		return purpose;
+	public String getPagePurpose() {
+		return pagePurpose;
 	}
-	public void setPurpose(String purpose) {
-		this.purpose = purpose;
+	public void setPagePurpose(String pagePurpose) {
+		this.pagePurpose = pagePurpose;
 	}
 	public int getPageNum() {
 		return pageNum;
@@ -54,7 +54,7 @@ public class BulletinCriteria {
 	
 	@Override
 	public String toString() {
-		return "Criteria [pageNum=" + pageNum + ", amount=" + amount + ", purpose=" + purpose + ", searchType="
+		return "Criteria [pageNum=" + pageNum + ", amount=" + amount + ", pagePurpose=" + pagePurpose + ", searchType="
 				+ searchType + ", keyword=" + keyword + "]";
 	}
 	

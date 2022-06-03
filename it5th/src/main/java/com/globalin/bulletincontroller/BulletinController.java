@@ -125,6 +125,9 @@ public class BulletinController {
 		log.info("Get or update: " + bno);
 		log.info("cri: " + cri);
 		
+		// update hit
+		service.updateHit(bno);
+		
 		// 게시글 정보 전달
 		BulletinVO bvo = service.get(bno);
 		model.addAttribute("board", bvo);
@@ -155,7 +158,6 @@ public class BulletinController {
 		}
 				
 		model.addAttribute("recommend", lvo);
-		
 		
 	}
 	

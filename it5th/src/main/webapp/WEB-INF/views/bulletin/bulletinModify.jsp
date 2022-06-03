@@ -8,7 +8,8 @@
 
 .modifyPageForm span {
 	
-	padding: 5px;
+	text-align: center;
+	display: inline-block;
 	
 }
 
@@ -26,7 +27,7 @@
 		<!-- hidden input tag -->
 		<input type="hidden" name="pageNum"	value="<c:out value='${cri.pageNum }' />" />
 		<input type="hidden" name="amount" value="<c:out value='${cri.amount }' />" />
-		<input type="hidden" name="purpose" value="<c:out value='${cri.purpose }' />" />
+		<input type="hidden" name="pagePurpose" value="<c:out value='${cri.pagePurpose }' />" />
 	
 		<input type="hidden" name="searchType" value="<c:out value='${cri.searchType }' />" />
 		<input type="hidden" name="keyword" value="<c:out value='${cri.keyword }' />" />
@@ -37,7 +38,7 @@
 		<div class="modifyPageForm">
 				<div class="input-group mb-3">
 				  <span class="input-group-text col-2" id="basic-addon1">no.</span>
-				  <input type="text" class="form-control boardTitle" name="bno" 
+				  <input type="text" class="form-control boardTitle" name="bno" id="back-bno"
 						value="<c:out value='${board.bno }' />" 
 						readonly />
 				</div>
@@ -138,12 +139,20 @@
 								
 			} else if (operation === "delete") {
 				
-				formObj.attr("action", "/bulletin/bulletinDelete");
-				// 기존 action 대신 새 action attribute 지정 
+				if(confirm("Really want to delete this content?")) {
+					
+					formObj.attr("action", "/bulletin/bulletinDelete");
+					// 기존 action 대신 새 action attribute 지정 
+					
+				} else {
+					
+					formObj.attr("action", "/bulletin/bulletinModify").attr("method", "get");
+					
+				}				
 				
 			} else if (operation === "get") {
 				
-				var back_bno = $("back-bno").val();
+				var back_bno = $("#back-bno").val();
 				
 				// url 로 파라미터 전달
 				$(location).attr("href", "/bulletin/bulletinGet?bno=" + back_bno);
@@ -162,7 +171,7 @@
 				
 				var keywordTag = $("input[name='keyword']").clone();
 				
-				var purposeTag = $("input[name='purpose']").clone();
+				var pagePurposeTag = $("input[name='pagePurpose']").clone();
 				
 				formObj.empty();
 				// formObj 입력 정보 초기화
@@ -171,7 +180,7 @@
 				formObj.append(pageNumTag).append(amountTag)
 					.append(searchTypeTag)
 					.append(keywordTag)
-					.append(purposeTag)
+					.append(pagePurposeTag)
 					
 			}
 			

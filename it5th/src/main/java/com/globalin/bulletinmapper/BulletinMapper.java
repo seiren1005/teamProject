@@ -37,6 +37,12 @@ public interface BulletinMapper {
 	// Update reply count
 	public void updateReplyCnt(@Param("bno") int bno,
 			@Param("amount") int amount);
+	
+	// update hit
+	public int updateHit(int bno);
+	
+	// update total recommend
+	public int updateTotalRec(BulletinVO bvo);
 		
 	
 }

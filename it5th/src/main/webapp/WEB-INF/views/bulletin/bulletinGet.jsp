@@ -4,6 +4,12 @@
 <%@ include file="../includes/header.jsp" %>
 
 <style>
+
+	li {
+		
+		list-style: none;
+		
+	}
 	
 	.bigPictureWrapper {
 		position: absolute;
@@ -32,6 +38,13 @@
 		color: white;
 	}
 	
+	.getPageForm span {
+	
+	text-align: center;
+	display: inline-block;
+	
+	}
+	
 </style>
 
 <div class="">
@@ -49,26 +62,26 @@
 	</div>
 	<hr>
 			
-			<div class="">
+			<div class="getPageForm">
 				<div class="input-group mb-3">
-				  <span class="input-group-text boardBno" id="basic-addon1">no.</span>
+				  <span class="input-group-text boardBno col-2" id="basic-addon1">no.</span>
 				  <input type="text" class="form-control boardTitle" name="bno" 
 						value="<c:out value='${board.bno }' />" 
 						readonly />
 				</div>
 				<div class="input-group mb-3">
-				  <span class="input-group-text boardTitle" id="basic-addon1">TITLE</span>
+				  <span class="input-group-text boardTitle col-2" id="basic-addon1">TITLE</span>
 				  <input type="text" class="form-control boardTitle" name="title" value="<c:out value='${board.title }' />" 
 						readonly />
 				</div>
 				<div class="input-group mb-3">
-					  <span class="input-group-text boardTitle" id="basic-addon1">WRITER</span>
+					  <span class="input-group-text boardTitle col-2" id="basic-addon1">WRITER</span>
 					  <input type="text" class="form-control boardTitle boardWriter" name="writer" 
 						value="<c:out value='${board.writer }' />" 
 						readonly />
 					</div>
 				<div class="input-group">
-				  <span class="input-group-text">CONTENT</span>
+				  <span class="input-group-text col-2">CONTENT</span>
 				  <textarea class="form-control boardContent" name="content" aria-label="CONTENT" readonly><c:out value='${board.content }' /></textarea>
 				</div>
 				<hr>
@@ -103,17 +116,14 @@
 						value="<c:out value='${cri.pageNum }' />" />
 					<input type="hidden" name="amount" 
 						value="<c:out value='${cri.amount }' />" />
-					<input type="hidden" name="purpose" 
-						value="<c:out value='${cri.purpose }' />" />
+					<input type="hidden" name="pagePurpose" 
+						value="<c:out value='${cri.pagePurpose }' />" />
 						
-					<!-- Ramain search information -->
+					<!-- Reserve search information -->
 					<input type="hidden" name="searchType" 
 						value="<c:out value='${cri.searchType }' />" />
 					<input type="hidden" name="keyword" 
 						value="<c:out value='${cri.keyword }' />" />
-		
-					<input type="hidden" name="boardPurpose" 
-						value="<c:out value='${board.purpose }' />" />	
 															
 				</form>
 				<!-- /.Hidden information -->			
@@ -283,7 +293,7 @@
 							
 							
 							
-							if($("input[name='boardPurpose']").val() == "Q") {
+							if($("input[name='pagePurpose']").val() == "Q") {
 								
 								if (checkValue != 1) {
 									
@@ -666,6 +676,7 @@
 				lvo = {
 					bno: '${board.bno }',
 					isLike: 'true'
+						
 				}
 				
 			}
@@ -695,7 +706,7 @@
 					
 				}			
 			
-		});
+			});
 		
 	});
 	

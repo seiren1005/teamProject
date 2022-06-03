@@ -2,6 +2,15 @@
 	pageEncoding="UTF-8"%>
 <%@ include file="../includes/header.jsp"%>
 
+<style>
+
+li {
+	
+	list-style: none;
+	
+}
+
+</style>
 
 <div class="">
 	<h1>Board List</h1>
@@ -20,7 +29,7 @@
     FREE
     </button>
   </div>  
-		<input type="hidden" name="purpose" /> 
+		<input type="hidden" name="pagePurpose" /> 
 		<input type="hidden"
 			name="pageNum" value="${pageMaker.cri.pageNum }" /> 
 			<input
@@ -38,8 +47,9 @@
 		<tr>
 			<th scope="col">Bno.</th>
 			<th scope="col">Tag</th>
-			<th scope="col"></th>
+			<th class="col-1" scope="col"></th>
 			<th scope="col">TITLE</th>
+			<th scope="col">HIT</th>
 			<th scope="col">WRITER</th>
 			<th scope="col">REGDATE</th>
 		</tr>
@@ -57,24 +67,44 @@
 											FREE
 										</c:otherwise>
 					</c:choose></td>
-				<c:if test="${board.secret eq 'yes'}">
-					<td><img class="secretIcon" src="/resources/img/lock_02.png" />
+				
+					<c:choose>
+						<c:when test="${board.secret eq 'yes' }">
+					<td>					
+						<img class="secretIcon" src="/resources/img/lock_02.png" />
+					</td>					
+					<td><a style="color:black;" class="moveDetails"
+						href="<c:out value='${board.bno }' />"> 비밀글입니다.</a>
+						<c:if test="${board.replyCnt > 0 }">
+									<b>[<c:out value="${board.replyCnt }" />]</b>
+								</c:if>
+						<c:if test="${board.totalRec > 0 }">
+							<b style="color:blue;">[+<c:out value="${board.totalRec }" />]</b>
+						</c:if>
+						<c:if test="${board.totalRec < 0 }">
+							<b style="color:red;">[<c:out value="${board.totalRec }" />]</b>
+						</c:if>
 					</td>
-					<td><a class="moveDetails"
-						href="<c:out value='${board.bno }' />"> 비밀글입니다. <b>[<c:out
-									value="${board.replyCnt }" />]
-						</b>
-					</a></td>
-				</c:if>
-				<c:if test="${board.secret eq 'no' }">
+					</c:when>					
+				<c:otherwise>
 					<td></td>
-					<td><a class="moveDetails"
+					<td><a style="color:black;" class="moveDetails"
 						href="<c:out value='${board.bno }' />"> <c:out
-								value="${board.title }" /> <b>[<c:out
-									value="${board.replyCnt }" />]
-						</b>
-					</a></td>
-				</c:if>
+								value="${board.title }" /></a> 
+								<c:if test="${board.replyCnt > 0 }">
+									<b>[<c:out value="${board.replyCnt }" />]</b>
+								</c:if>
+						<c:if test="${board.totalRec > 0 }">
+							<b style="color:blue;">[+<c:out value="${board.totalRec }" />]</b>
+						</c:if>
+						<c:if test="${board.totalRec < 0 }">
+							<b style="color:red;">[<c:out value="${board.totalRec }" />]</b>
+						</c:if>						
+					</td>
+					</c:otherwise>
+					</c:choose>
+					
+					<td><c:out value="${board.hit }" /></td>				
 				<td><c:out value="${board.writer }" /></td>
 				<td><fmt:formatDate pattern="yyyy-MM-dd"
 						value="${board.regDate }" /></td>
@@ -92,25 +122,25 @@
         <div class="input-group-prepend">
 
           <select class="btn btn-outlin-secondary dropdown-toggle" name="searchType">
-            <option value="T" <c:out value="${pageMaker.cri.searchType eq 'T' ? 
+            <option class="searchOption" value="T" <c:out value="${pageMaker.cri.searchType eq 'T' ? 
           'selected' : '' }" /> >Title
             </option>
-            <option value="C" <c:out value="${pageMaker.cri.searchType eq 'C' ? 
+            <option class="searchOption" value="C" <c:out value="${pageMaker.cri.searchType eq 'C' ? 
           'selected' : '' }" /> >Content
             </option>
-            <option value="W" <c:out value="${pageMaker.cri.searchType eq 'W' ?
+            <option class="searchOption" value="W" <c:out value="${pageMaker.cri.searchType eq 'W' ?
           'selected' : '' }" /> >Writer
             </option>
-            <option value="TC" <c:out value="${pageMaker.cri.searchType eq 'TC' ? 
+            <option class="searchOption" value="TC" <c:out value="${pageMaker.cri.searchType eq 'TC' ? 
           'selected' : '' }" /> >T+C
             </option>
-            <option value="TW" <c:out value="${pageMaker.cri.searchType eq 'TW' ? 
+            <option class="searchOption" value="TW" <c:out value="${pageMaker.cri.searchType eq 'TW' ? 
           'selected' : '' }" /> >T+W
             </option>
-            <option value="CW" <c:out value="${pageMaker.cri.searchType eq 'CW' ? 
+            <option class="searchOption" value="CW" <c:out value="${pageMaker.cri.searchType eq 'CW' ? 
           'selected' : '' }" /> >C+W
             </option>
-            <option value="TCW" <c:out value="${pageMaker.cri.searchType eq 'CW' ? 
+            <option class="searchOption" value="TCW" <c:out value="${pageMaker.cri.searchType eq 'CW' ? 
           'selected' : '' }" /> >T+C+W
             </option>
           </select>
@@ -118,7 +148,7 @@
           <!-- page info -->
           <input type="hidden" name="pageNum" value="${pageMaker.cri.pageNum }" />
           <input type="hidden" name="amount" value="${pageMaker.cri.amount }" />
-          <input type="hidden" name="purpose" value="${pageMaker.cri.purpose }" />
+          <input type="hidden" name="pagePurpose" value="${pageMaker.cri.pagePurpose }" />
 
         </div>
         <input type="text" class="form-control" name="keyword"
@@ -145,9 +175,9 @@
 		type="hidden" name="keyword"
 		value="<c:out 
 								value='${pageMaker.cri.keyword }' />" /> <input
-		type="hidden" name="purpose"
+		type="hidden" name="pagePurpose"
 		value="<c:out 
-								value='${pageMaker.cri.purpose }' />" />
+								value='${pageMaker.cri.pagePurpose }' />" />
 </form>
 <!-- /.Transport page date -->
 
@@ -262,19 +292,19 @@
 									if (operation === "all") {
 
 										purposeForm.find(
-												"input[name='purpose']").val(
+												"input[name='pagePurpose']").val(
 												"A");
 
 									} else if (operation === "qna") {
 
 										purposeForm.find(
-												"input[name='purpose']").val(
+												"input[name='pagePurpose']").val(
 												"Q");
 
 									} else if (operation === "free") {
 
 										purposeForm.find(
-												"input[name='purpose']").val(
+												"input[name='pagePurpose']").val(
 												"F");
 
 									}
