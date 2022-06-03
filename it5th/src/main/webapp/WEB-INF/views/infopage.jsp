@@ -9,6 +9,40 @@
 </head>
 <body>
 <%@include file="/WEB-INF/views/includes/header.jsp" %>
+<!-- 안내박스 -->
+		<div class="container">
+			<div style="text-align:center">
+			<h2 style=
+			"text-decoration:none; 
+			font-family: 'Comic Sans MS', 'Comic Sans', 'Independence_hall'; 
+			color: black; 
+			font-weight: bold; 
+			padding: 8px; 
+			background: gold; 
+			line-height: 170%; 
+			border: 1px solid black; 
+			box-shadow: -2px 2px 0px black; 
+			display:inline-block; 
+			margin: 7px 7px 7px 7px; 
+			font-variant:small-caps;">웹사이트 소개</h2>
+			
+			<br>
+			<div style="text-align:center">
+     		<h2 style=
+     		"font-family: 'Nanum Myeongjo'; 
+     		color: black; 
+		     text-decoration:none; 
+		     font-style: font-weight: bold; 
+		     padding: 8px 12px; 
+		     background: #ffffff; 
+		     line-height: 170%; 
+		     border: 2px solid black; 
+		     box-shadow: 2px 2px 0px ; 
+		     display: inline-block;">이 웹 사이트는 글로벌인 IT 5기 팀프로젝트로 만든 <br>
+		     							 코딩 학습 사이트 안내 웹 사이트입니다.</h2>
+					<br>
+				</div>
+			</div>
 <!-- gnb부터 메뉴바까지 헤더로 묶어서 인클루드로 가져오기 -->
 		<div class="content_area">
 		<!-- 글자 꾸미기 -->
