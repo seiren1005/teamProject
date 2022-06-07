@@ -28,6 +28,8 @@
 	<!-- @Controller annotation scan path -->
 	<context:component-scan base-package="com.globalin.teamproject com.globalin.detailcontroller" />
 	
+	<context:component-scan base-package="com.globalin.itTeamProject" />
+	
 	<!-- Add bean for helping file upload -->
 	<beans:bean id="multipartResolver"
 		class="org.springframework.web.multipart.support.StandardServletMultipartResolver">
