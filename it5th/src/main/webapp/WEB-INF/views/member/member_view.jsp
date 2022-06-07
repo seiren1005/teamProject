@@ -4,7 +4,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>회원정보 상세 페이지</title>
-<%@ include file="../include/member_header.jsp" %>
+<%@ include file="../includes/header.jsp" %>
 <script>
 	$(document).ready(function(){
 		$("#btnUpdate").click(function(){

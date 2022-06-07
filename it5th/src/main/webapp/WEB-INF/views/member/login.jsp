@@ -4,7 +4,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>로그인페이지</title>
-<%@ include file="../include/member_header.jsp" %>
+<%@ include file="../includes/header.jsp" %>
 <script>
 	$(document).ready(function(){
 		$("#btnLogin").click(function(){
