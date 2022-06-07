@@ -16,32 +16,32 @@ import com.globalin.model.dto.MemberVO;
 public class MemberDAOImpl implements MemberDAO {
 	
 	@Inject
-	SqlSession sqlSession;
+	SqlSession SqlSession;
 
 	@Override
 	public List<MemberVO> memberList() {
-		return sqlSession.selectList("member.memberList");
+		return SqlSession.selectList("member.memberList");
 	}
 	
 	@Override
 	public void insertMember(MemberVO vo) {
-		sqlSession.insert("member.insertMember", vo);
+		SqlSession.insert("member.insertMember", vo);
 		
 	}
 
 	@Override
 	public MemberVO viewMember(String userId) {
-		return sqlSession.selectOne("member.viewMember", userId);
+		return SqlSession.selectOne("member.viewMember", userId);
 	}
 
 	@Override
 	public void deleteMember(String userId) {
-		sqlSession.delete("member.deleteMember",userId);
+		SqlSession.delete("member.deleteMember",userId);
 	}
 
 	@Override
 	public void updateMember(MemberVO vo) {
-		sqlSession.update("member.updateMember", vo);
+		SqlSession.update("member.updateMember", vo);
 		
 	}
 
@@ -51,20 +51,20 @@ public class MemberDAOImpl implements MemberDAO {
 		Map<String, String> map = new HashMap<String, String>();
 		map.put("userId", userId);
 		map.put("userPw", userPw);
-		int count = sqlSession.selectOne("member.checkPw", map);
+		int count = SqlSession.selectOne("member.checkPw", map);
 		if(count == 1) result= true;
 		return result;
 	}
 	// 01_01. 회원 로그인체크
 		@Override
 		public boolean loginCheck(MemberVO vo) {
-			String name = sqlSession.selectOne("member.loginCheck", vo);
+			String name = SqlSession.selectOne("member.loginCheck", vo);
 			return (name == null) ? false : true;
 		}
 		// 01_02. 회원 로그인 정보
 		@Override
 		public MemberVO viewMember(MemberVO vo) {
-			return sqlSession.selectOne("member.viewMember", vo);
+			return SqlSession.selectOne("member.viewMember", vo);
 		}
 		// 02. 회원 로그아웃
 		@Override
