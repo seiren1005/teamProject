@@ -31,13 +31,37 @@
 		class="org.mybatis.spring.SqlSessionFactoryBean">
 	
 		<property name="dataSource" ref="dataSource"></property>
+			  <!-- mybtis 환경설정파일 위치 참조 -->
+        <property name="configLocation" value="classpath:/mybatis_config.xml"/>
+        <!-- mybatis mapper의 위치와 네이밍 규칙설정 -->
+        <!-- classpath : src/main/resources를 의미 -->
+        <!-- ** : 디렉토리를 의미 -->
+        <!-- * : 파일명을 의미 -->
+       <property name="mapperLocations" value="classpath:mappers/**/*Mapper.xml"></property>
 	</bean>
+
+<bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate" destroy-method="clearCache">
+  <constructor-arg name="sqlSessionFactory" ref="sqlSessionFactory"></constructor-arg>
+ </bean>
+	
 	<!-- /.Add sql session factory for mybatis -->
 
 	
 	<!-- Make a particular path for mybatis and component scan -->	
 	<mybatis-spring:scan base-package="com.globalin.bulletinmapper"/>
 	<context:component-scan base-package="com.globalin.bulletinservice"></context:component-scan>
+	  <context:component-scan
+      base-package="com.globalin.service"></context:component-scan>
+   <context:component-scan
+      base-package="com.globalin.model"></context:component-scan>
+   <context:component-scan
+      base-package="com.globalin.dao"></context:component-scan>
+
+	
+	
+	
+    
+       <context:component-scan base-package="com.globalin.itTeamproject"/>
 	<!-- /.Make a particular path for mybatis and component scan -->
 		
 	

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace="member">
+  
+	<!-- 01. 회원목록 -->
+	<select id="memberList" resultType="com.globalin.model.dto.MemberVO">
+		SELECT 
+		  user_id AS userId, 
+		  user_name AS userName,
+		  user_email AS userEmail,
+		  user_regdate AS userRegdate
+		FROM coding_member
+		ORDER BY userId
+	</select>
+	
+	<!-- 02. 회원 등록 -->
+	<insert id="insertMember">
+		INSERT INTO CODING_MEMBER
+			(USER_ID, USER_PW, USER_NAME, USER_EMAIL)
+		VALUES 
+			(#{userId}, #{userPw}, #{userName}, #{userEmail})	
+	</insert>
+	
+	<!-- 03. 회원정보 상세조회 -->
+	<select id="viewMember" resultType="com.globalin.model.dto.MemberVO">
+		SELECT 
+		  user_id AS userId, 
+		  user_name AS userName,
+		  user_email AS userEmail,
+		  user_regdate AS userRegdate,
+		  user_regdate AS userUpdatedate
+		FROM coding_member
+		WHERE user_id = #{userId}
+	</select>
+	
+	<!-- 04. 회원정보 수정처리 -->
+	<update id="updateMember">
+		UPDATE coding_member
+		SET
+			user_pw = #{userPw},
+			user_name = #{userName},
+			user_email = #{userEmail},
+			user_updatedate = SYSDATE
+		WHERE
+			user_id = #{userId}	
+	</update>
+	
+	<!-- 05. 회원정보 삭제 처리 -->
+	<delete id="deleteMember">
+		DELETE FROM coding_member
+		WHERE user_id = #{userId}
+	</delete>
+	
+<!-- 06. 비밀번호 체크 -->
+	<select id="checkPw" resultType="int">
+		SELECT 
+			COUNT(*) 
+		FROM coding_member
+		WHERE user_id = #{userId} AND user_pw = #{userPw}
+	</select>
+	
+	<select id="loginCheck" resultType="String">
+		SELECT user_name AS userName FROM coding_member
+		WHERE user_id = #{userId} AND user_pw = #{userPw}
+	</select>
+	
+
+	
+
+  </mapper>
