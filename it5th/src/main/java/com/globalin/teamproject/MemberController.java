@@ -1,4 +1,4 @@
-package com.globalin.itTeamProject;
+package com.globalin.teamproject;
 
 
 import java.util.HashMap;
@@ -47,6 +47,7 @@ public class MemberController {
 		// controller => service => dao 요청
 			List<MemberVO> list = memberService.memberList();
 			model.addAttribute("list", list);
+			
 			return "member/member_list";
 		}
 		
@@ -141,7 +142,7 @@ public class MemberController {
 	         if (result == true) { // 로그인 성공
 	            // main.jsp로 이동
 
-	           
+	        	
 	            mav.setViewName("main");
 	            mav.addObject("msg", "success");
 	         } else {   // 로그인 실패
