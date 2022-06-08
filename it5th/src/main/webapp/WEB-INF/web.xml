@@ -72,5 +72,8 @@
 	</servlet-mapping>
 	<!-- /.Processes application requests -->
 
-
+  <welcome-file-list>
+    <welcome-file>./WEB-INF/views/mainpage.jsp</welcome-file>
+  </welcome-file-list>
+  
 </web-app>
