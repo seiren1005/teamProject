@@ -32,9 +32,11 @@
 </head>
 <body>
 <%@ include file="../include/member_menu.jsp" %>
+<div style="text-align:center; margin: 10% auto; position: relative; justify-content: center; display: grid; ">
 <h2>로그인</h2>
-	<form name="form1" method="post">
-		<table border="1" width="400px">
+	<form name="form1" method="post" >
+		<table style="border:1px; width:500px; height:134px; margin: 20px auto;" >
+	
 			<tr>
 				<td>아이디</td>
 				<td><input name="userId" id="userId"></td>
@@ -43,9 +45,11 @@
 				<td>비밀번호</td>
 				<td><input type="password" name="userPw" id="userPw"></td>
 			</tr>
+			</div>
 			<tr>
 				<td colspan="2" align="center">
 					<button type="button" id="btnLogin">로그인</button>
+					
 				<c:if test="${msg == 'failure'}">
 					<div style="color: red">
 						아이디 또는 비밀번호가 일치하지 않습니다.
