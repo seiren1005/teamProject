@@ -19,7 +19,7 @@
     <div class="row">
         <div class="col-md-2"></div>
         <div class="col-md-8">
-         <br> <h1>생활 코딩 소개</h1> <br>
+         <br> <h1>생활 코딩 </h1> <br>
   
   			<p>이번에 소개할 사이트는 생활코딩 이라는 사이트 입니다.</p>
  			 <p>생활코딩은 개인적으로 강력 추천하는 코딩 페이지 입니다. 각 부분별로 설명이 세세하게 나누어져있고 언어의 종류도 넓습니다.
@@ -29,8 +29,8 @@
 		
  
  
-  <a onclick=test() href="https://www.opentutorials.org/course/1" target='_black' >
-    <img href="/board/list" class="img-concert" src="https://i.ytimg.com/vi/1ttLx9MbrCI/maxresdefault.jpg" />
+  <a onclick=test() href="https://www.opentutorials.org/course/1" target='_black' data-bs-toggle="tooltip" data-bs-placement="right" title="새창에 생할코딩페이지를 띄우고 공부일기장으로 이동합니다" >
+    <img href="/diaryBoard/list" class="img-concert" src="https://i.ytimg.com/vi/1ttLx9MbrCI/maxresdefault.jpg" style="display : block ; margin : auto;"/>
   </a>
   	
 
@@ -67,7 +67,7 @@
         } else {
             alert("공부 일기장으로 이동합니다");
             window.open("https://www.opentutorials.org/course/1");   
-            window.location = '/board/list';
+            window.location = '/diaryBoard/list';
         }
     }
 	</script>

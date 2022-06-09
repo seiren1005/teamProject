@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.globalin.diarymapper.diaryBoardMapper">
+
+<!-- 검색 조건문 -->
+	<sql id="criteria">
+		<trim prefix="AND (" suffix=")" prefixOverrides="OR">
+			<foreach collection="typeArr" item="type">
+				<trim prefix="OR">
+					<choose>
+						<when test="type == 'T'.toString()">
+							diarytitle like '%'||#{keyword}||'%' 
+						</when>
+						<when test="type == 'C'.toString()">
+							diarycontent like '%'||#{keyword}||'%' 
+						</when>
+						<when test="type == 'W'.toString()">
+							diarywriter like '%'||#{keyword}||'%' 
+						</when>
+						
+				
+					</choose>
+				</trim>
+			</foreach>
+		</trim>
+	</sql>
+
+
+ <insert id="enroll">
+        
+        insert into TBL_BOARD_DIARY(diarytitle, diarycontent, diarywriter) values (#{diarytitle}, #{diarycontent}, #{diarywriter})
+        
+    </insert>
+    
+     <!-- 게시판 목록 -->
+    <select id="getList" resultType="com.globalin.diarydomain.diaryVO">
+    
+        select * from TBL_BOARD_DIARY
+    
+    </select>
+    
+    <!-- 게시판 조회 -->
+    <select id="getPage" resultType="com.globalin.diarydomain.diaryVO">
+    
+        select * from TBL_BOARD_DIARY where diarybno = #{diarybno}
+    
+    </select>
+ 
+    <!-- 게시판 수정 -->
+    <update id="modify">
+        <!-- Oracle -->    
+        update TBL_BOARD_DIARY set diarytitle = #{diarytitle}, diarycontent = #{diarycontent}, diaryupdatedate = sysdate where diarybno = #{diarybno}
+    </update>
+ 
+  <!-- 게시판 삭제 -->
+    <delete id="delete">
+    
+        delete from TBL_BOARD_DIARY where diarybno = #{diarybno}
+    
+    </delete>
+    
+    <!-- 게시물 목록(페이징) 
+    <select id="getListPaging" resultType="com.globalin.diarydomain.diaryVO">
+    
+    <![CDATA[
+select
+	diarybno, diarytitle, diarycontent, diarywriter, diaryregdate, diaryupdatedate 
+from
+	(select /*+INDEX_DESC(TBL_BOARD_DIARY  pk_board_diary) */
+		rownum rn, diarybno, diarytitle, diarycontent, diarywriter, diaryregdate, diaryupdatedate 
+	 from
+		TBL_BOARD_DIARY
+	 where rownum <= #{pageNum} * #{amount})	 
+where rn > (#{pageNum}-1) * #{amount}
+]]>
+    
+    </select>
+    -->
+    
+    
+    <!-- 게시물 목록(페이징) -->
+    <select id="getListPaging" resultType="com.globalin.diarydomain.diaryVO">
+    
+    <![CDATA[
+        
+        select diarybno, diarytitle, diarycontent, diarywriter, diaryregdate, diaryupdatedate  from(
+        
+                select /*+INDEX_DESC(TBL_BOARD_DIARY  pk_board_diary) */ 
+                rownum  as rn, diarybno, diarytitle, diarycontent, diarywriter, diaryregdate, diaryupdatedate 
+                  
+                from TBL_BOARD_DIARY where rownum <= #{pageNum} * #{amount} 
+    ]]>            
+                <if test="keyword != null">
+                    <include refid="criteria"></include> 
+                </if>
+    
+    <![CDATA[
+                    
+                )
+                    
+        where rn > (#{pageNum} -1) * #{amount}
+        
+    ]]> 
+    
+    </select>
+ 
+
+   <!-- 게시물 총 개숫 -->
+    <select id="getTotal" resultType="int">
+    
+        select count(*) from TBL_BOARD_DIARY
+        
+        <if test="keyword != null">
+        
+            where diarybno > 0 <include refid="criteria"></include>
+        
+        </if>
+    
+    </select>    
+    
+    
+    </mapper>
