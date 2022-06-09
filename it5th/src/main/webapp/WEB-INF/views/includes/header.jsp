@@ -96,20 +96,31 @@
               <li class="nav-item px-2"><a class="nav-link" aria-current="page" href="/member/list.do">회원관리</a></li>
               <li class="nav-item px-2"><a class="nav-link" aria-current="page" href="/member/write.do">회원가입</a></li>
             </ul>
+            
+            <button class="loginbutton" type="button" style=
+            "position: relative;
+			  border: 0;
+			  padding: 15px 25px;
+			  display: inline-block;
+			  text-align: center;
+			  color: white;
+			  background: #ffff99;
+			  border-radius: 10px">
              <c:set var="path" value="${pageContext.request.contextPath}"/>
-	
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-	<c:choose>
-	<c:when test="${sessionScope.userId == null}">
-		<a href="${path}/member/login.do">로그인</a> 
-		 
-	</c:when>
-	<c:otherwise>
-		${sessionScope.userName}님이 로그인중입니다.
-		<a href="${path}/member/logout.do">로그아웃</a>
-	</c:otherwise>
-</c:choose>
+
+				<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+				<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+					<c:choose>
+					<c:when test="${sessionScope.userId == null}">
+						<a href="${path}/member/login.do">로그인</a> 
+						 
+					</c:when>
+					<c:otherwise>
+						${sessionScope.userName}님
+						<a href="${path}/member/logout.do">로그아웃</a>
+					</c:otherwise>
+				</c:choose>
+			</button>
 	</div>
 	<hr>
             <form class="d-flex my-3 d-block d-lg-none">
