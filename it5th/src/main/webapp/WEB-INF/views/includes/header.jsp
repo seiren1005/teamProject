@@ -92,6 +92,7 @@
               <li class="nav-item px-2"><a class="nav-link" aria-current="page" href="/detail/main">코딩사이트</a></li>
               <li class="nav-item px-2"><a class="nav-link" aria-current="page" href="user-research.html">게시판</a></li>
               <li class="nav-item px-2"><a class="nav-link" aria-current="page" href="/member/list.do">회원관리</a></li>
+              <li class="nav-item px-2"><a class="nav-link" aria-current="page" href="/member/write.do">회원가입</a></li>
             </ul><a class="btn btn-primary order-1 order-lg-0" href="/member/login.do">로그인</a>
             <form class="d-flex my-3 d-block d-lg-none">
               <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
