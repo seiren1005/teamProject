@@ -12,42 +12,21 @@
               <p class="text-light"> <i class="fas fa-envelope me-3"> </i><a class="text-light" href="mailto:Itproject5@samplmail.com">Itproject5@samplmail.com </a></p>
               <p class="text-light"> <i class="fas fa-phone-alt me-3"></i><a class="text-light" href="tel:1-000-000-0000">1-000-000-0000 (Support)</a></p>
             </div>
+            
             <div class="col-6 col-sm-4 col-lg-2 mb-3 order-2 order-sm-1">
-              <h5 class="lh-lg fw-bold mb-4 text-light font-sans-serif">Community </h5>
-              <ul class="list-unstyled mb-md-4 mb-lg-0">
-                <li class="lh-lg"><a class="text-200" href="#!">Learners</a></li>
-                <li class="lh-lg"><a class="text-200" href="#!">Partners</a></li>
-                <li class="lh-lg"><a class="text-200" href="#!">Developers</a></li>
-                <li class="lh-lg"><a class="text-200" href="#!">Beta Testers</a></li>
-                <li class="lh-lg"><a class="text-200" href="#!">Translators</a></li>
-                <li class="lh-lg"><a class="text-200" href="#!">Blog</a></li>
-                <li class="lh-lg"><a class="text-200" href="#!">Tech Blog</a></li>
-                <li class="lh-lg"><a class="text-200" href="#!">Teaching Center</a></li>
-              </ul>
+              <h5 class="lh-lg fw-bold mb-4 text-light font-sans-serif"><a href="/bulletin/bulletinList">게시판</a></h5>
+     
             </div>
             <div class="col-6 col-sm-4 col-lg-2 mb-3 order-3 order-sm-2">
-              <h5 class="lh-lg fw-bold text-light mb-4 font-sans-serif">Informations</h5>
-              <ul class="list-unstyled mb-md-4 mb-lg-0">
-                <li class="lh-lg"><a class="text-200" href="#!">About</a></li>
-                <li class="lh-lg"><a class="text-200" href="#!">Pricing</a></li>
-                <li class="lh-lg"><a class="text-200" href="#!">Blog</a></li>
-                <li class="lh-lg"><a class="text-200" href="#!">Careers</a></li>
-                <li class="lh-lg"><a class="text-200" href="#!">Contact</a></li>
-              </ul>
+              <h5 class="lh-lg fw-bold text-light mb-4 font-sans-serif"><a href="/infopage">사이트 소개</a></h5>
+            
             </div>
             <div class="col-6 col-sm-4 col-lg-2 mb-3 order-3 order-sm-2">
-              <h5 class="lh-lg fw-bold text-light mb-4 font-sans-serif"> More</h5>
+              <h5 class="lh-lg fw-bold text-light mb-4 font-sans-serif"><a href="/detail/main">코딩사이트</a></h5>
               <ul class="list-unstyled mb-md-4 mb-lg-0">
-                <li class="lh-lg"><a class="text-200" href="#!">Press</a></li>
-                <li class="lh-lg"><a class="text-200" href="#!">Investors</a></li>
-                <li class="lh-lg"><a class="text-200" href="#!">Terms</a></li>
-                <li class="lh-lg"><a class="text-200" href="#!">Privacy</a></li>
-                <li class="lh-lg"><a class="text-200" href="#!">Help</a></li>
-                <li class="lh-lg"><a class="text-200" href="#!">Accessibility</a></li>
-                <li class="lh-lg"><a class="text-200" href="#!">Contact</a></li>
-                <li class="lh-lg"><a class="text-200" href="#!">Articles</a></li>
-                <li class="lh-lg"><a class="text-200" href="#!">Directory</a></li>
-                <li class="lh-lg"><a class="text-200" href="#!">Affiliates</a></li>
+                <li class="lh-lg"><a class="text-200" href="/detail/detail-TCP">TCPSchool</a></li>
+                <li class="lh-lg"><a class="text-200" href="/detail/detail-Tohoho">Tohoho</a></li>
+                <li class="lh-lg"><a class="text-200" href="/detail/detail-LifeCoding">생활코딩</a></li>
               </ul>
             </div>
           </div>
@@ -63,7 +42,7 @@
         <div class="container bg-primary">
           <div class="row justify-content-md-between justify-content-evenly py-4">
             <div class="col-12 col-sm-8 col-md-6 col-lg-auto text-center text-md-start">
-              <p class="fs--1 my-2 fw-bold">All rights Reserved &copy; ITproject, 2022</p>
+              <p class="fs--1 my-2 fw-bold">박민석, 박우준, 엄혜원, 이다빈 &copy; ITproject, 2022</p>
             </div>
             <div class="col-12 col-sm-8 col-md-6">
               <p class="fs--1 my-2 text-center text-md-end"> Made with&nbsp;

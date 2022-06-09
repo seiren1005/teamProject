@@ -23,6 +23,7 @@
     <!-- ===============================================-->
     <title>Header</title>
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css">
+	
 
     <!-- ===============================================-->
     <!--    Favicons-->
@@ -30,7 +31,7 @@
     <link rel="apple-touch-icon" sizes="180x180" href="/resources/public/assets/img/favicons/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/resources/public/assets/img/favicons/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/resources/public/assets/img/favicons/favicon-16x16.png">
-    <link rel="shortcut icon" type="image/x-icon" href="/resources/public/assets/img/favicons/favicon.ico">
+    <link rel="shortcut icon" type="image/x-icon" href="/resources/img/favicon.ico">
     <link rel="manifest" href="/resources/public/assets/img/favicons/manifest.json">
     <meta name="msapplication-TileImage" content="/resources/public/assets/img/favicons/mstile-150x150.png">
     <meta name="theme-color" content="#ffffff">
@@ -40,7 +41,8 @@
     <!--    Stylesheets-->
     <!-- ===============================================-->
     <link href="/resources/public/assets/css/theme.css" rel="stylesheet" /> 
-    <link href="/resources/css/style.css" rel="stylesheet" /> 
+    <link href="/resources/css/style.css" rel="stylesheet" />
+   
    
   </head>
 
@@ -90,7 +92,7 @@
               <li class="nav-item px-2"><a class="nav-link active" aria-current="page" href="/mainpage">메인화면</a></li>
               <li class="nav-item px-2"><a class="nav-link" aria-current="page" href="/infopage">사이트소개</a></li>
               <li class="nav-item px-2"><a class="nav-link" aria-current="page" href="/detail/main">코딩사이트</a></li>
-              <li class="nav-item px-2"><a class="nav-link" aria-current="page" href="user-research.html">게시판</a></li>
+              <li class="nav-item px-2"><a class="nav-link" aria-current="page" href="/bulletin/bulletinList">게시판</a></li>
               <li class="nav-item px-2"><a class="nav-link" aria-current="page" href="/member/list.do">회원관리</a></li>
               <li class="nav-item px-2"><a class="nav-link" aria-current="page" href="/member/write.do">회원가입</a></li>
             </ul><a class="btn btn-primary order-1 order-lg-0" href="/member/login.do">로그인</a>

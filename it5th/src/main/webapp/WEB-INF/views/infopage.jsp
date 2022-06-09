@@ -5,9 +5,10 @@
 <head>
 <meta charset="UTF-8">
 <title>사이트 소개 페이지</title>
+<%@include file="/WEB-INF/views/includes/header.jsp" %>
+<link rel="stylesheet" href="resources/css/mainpage.css">
 </head>
 <body>
-<%@include file="/WEB-INF/views/includes/header.jsp" %>
 <!-- 안내박스 -->
 		<div class="container">
 			<div style="text-align:center">
@@ -125,7 +126,24 @@
     	 서울시 영등포구 영중로 56 신한빌딩 4, 5층 주식회사 글로벌인 <br>
       	영등포시장역 3번출구 도보 2분, 영등포역 3번출구 도보 10분이내 </h2> 
      </div>
+     
+    	<!-- 좋아요 버튼 -->
+		<div class="like-content">
+		  <button class="btn-secondary like-review">
+		    <i class="fa fa-heart" aria-hidden="true"></i> Like
+		  </button>
+		</div>
+		</br>
 </div>
+
+<script>
+			$(function(){
+				  $(document).one('click', '.like-review', function(e) {
+				    $(this).html('<i class="fa fa-heart" aria-hidden="true"></i> You liked this site');
+				    $(this).children('.fa-heart').addClass('animate-like');
+				  });
+				});
+</script>
 </body>
 </html>
 

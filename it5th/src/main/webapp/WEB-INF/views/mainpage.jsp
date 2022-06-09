@@ -17,27 +17,33 @@
 </head>
 <body>
 		<div class="content_area">
-		<!-- 슬라이드쇼 -->
+			
 		<div class="slide_div">
 			<div>
 				<a> <!-- 첫번째 슬라이드: TCP -->
-					<a href="/detail/detail-TCP"><img src="../resources/img/sample1.jpg">
+					<a href="/detail/detail-TCP"><img src="../resources/img/TCPSchool.jpg">
 				</a>
 				</a>
 			</div>
 			<div>
 				<a> <!-- 두번째 슬라이드: 토호호 -->
-					<a href="/detail/detail-Tohoho"><img src="../resources/img/sample2.jpg">
+					<a href="/detail/detail-Tohoho"><img src="../resources/img/Tohoho.jpg">
 				</a>
 				</a>
 			</div>
 		<div>
 			<a> <!-- 세번째 슬라이드: 생활코딩 -->
-				<a href="/detail/detail-LifeCoding"><img src="../resources/img/sample3.jpg">
+				<a href="/detail/detail-LifeCoding"><img src="../resources/img/lifecoding.jpg">
 			</a>
 			</a>
 		</div>
 		</div> 
+			<!-- 글자 꾸미기 -->
+			<div style="text-align:center">
+			<span class="half_HL">슬라이드 클릭시 해당 페이지로 이동</span>
+			</div>
+		</br>
+			
 					<!-- 글자 꾸미기 -->
 					<div style="text-align:center">
 					<a style=
@@ -53,6 +59,7 @@
 					display:inline-block; 
 					margin: 7px 7px 7px 7px; 
 					font-variant:small-caps;">추천 동영상</a>
+					</div>
 					
 					<!-- 유튜브 영상 -->
 					<div class="video-container">
@@ -61,11 +68,9 @@
 					frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
 					allowfullscreen></iframe>
 					</p>
-				</div>
-		</div>
-	</div>
+					</div>
+		</div>	
 
-<%@include file="/WEB-INF/views/includes/footer.jsp" %>
 
 	<script>
 	$(document).ready(function(){
@@ -77,7 +82,10 @@
 				}		
 		);
 	});
+	
 	</script>
 	
 </body>
 </html>
+
+<%@include file="/WEB-INF/views/includes/footer.jsp" %>
