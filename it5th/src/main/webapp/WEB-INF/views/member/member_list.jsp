@@ -7,7 +7,7 @@
 <%@ include file="../includes/header.jsp" %>
 </head>
 <body>
-<%@ include file="../include/member_menu.jsp" %>
+<div style="text-align:center; margin: 10% auto; position: relative; justify-content: center; display: grid; ">
 	<h2>회원 목록</h2>
 	<input type="button" value="회원등록" onclick="location.href='${path}/member/write.do'">
 	<table border="1" width="700px">

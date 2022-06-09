@@ -31,7 +31,7 @@
 </script>
 </head>
 <body>
-<%@ include file="../include/member_menu.jsp" %>
+
 <div style="text-align:center; margin: 10% auto; position: relative; justify-content: center; display: grid; ">
 <h2>로그인</h2>
 	<form name="form1" method="post" >
