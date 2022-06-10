@@ -6,14 +6,40 @@ import java.util.Date;
 public class BulletinReplyVO {
 	
 	
-	private int rno, bno;
+	private int rno, bno, gno, gorder, deep;
 	private String reply, replyer;
 	private String adoption;
 	private Date replyRegDate;
 	private Date replyModDate;
 	
 	
+	// 기본 생성자
+	public BulletinReplyVO() {
+		this.gno = 0;
+		this.gorder = 0;
+		this.deep = 0;
+		this.adoption = "null";
+	}
 	
+	
+	public int getGno() {
+		return gno;
+	}
+	public void setGno(int gno) {
+		this.gno = gno;
+	}
+	public int getGorder() {
+		return gorder;
+	}
+	public void setGorder(int gorder) {
+		this.gorder = gorder;
+	}
+	public int getDeep() {
+		return deep;
+	}
+	public void setDeep(int deep) {
+		this.deep = deep;
+	}
 	public String getAdoption() {
 		return adoption;
 	}
@@ -60,8 +86,9 @@ public class BulletinReplyVO {
 	
 	@Override
 	public String toString() {
-		return "ReplyVO [rno=" + rno + ", bno=" + bno + ", reply=" + reply + ", replyer=" + replyer + ", adoption="
-				+ adoption + ", replyRegDate=" + replyRegDate + ", replyModDate=" + replyModDate + "]";
+		return "BulletinReplyVO [rno=" + rno + ", bno=" + bno + ", gno=" + gno + ", gorder=" + gorder + ", deep=" + deep
+				+ ", reply=" + reply + ", replyer=" + replyer + ", adoption=" + adoption + ", replyRegDate="
+				+ replyRegDate + ", replyModDate=" + replyModDate + "]";
 	}
 		
 	

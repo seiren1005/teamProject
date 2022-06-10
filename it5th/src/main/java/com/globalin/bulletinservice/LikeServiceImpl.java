@@ -1,8 +1,11 @@
 package com.globalin.bulletinservice;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.globalin.bulletindomain.LikeVO;
 import com.globalin.bulletinmapper.LikeMapper;
 
 @Service
@@ -13,9 +16,9 @@ public class LikeServiceImpl implements LikeService {
 	
 	
 	@Override
-	public boolean clickGood(int bno) {
+	public boolean clickGood(LikeVO lvo) {
 		// TODO Auto-generated method stub
-		if(mapper.clickGood(bno) == 1) {
+		if(mapper.clickGood(lvo) == 1) {
 			
 			return true;
 			
@@ -26,9 +29,9 @@ public class LikeServiceImpl implements LikeService {
 
 	
 	@Override
-	public boolean clickBad(int bno) {
+	public boolean clickBad(LikeVO lvo) {
 		// TODO Auto-generated method stub
-		if(mapper.clickBad(bno) == 1) {
+		if(mapper.clickBad(lvo) == 1) {
 			
 			return true;
 			
@@ -41,8 +44,9 @@ public class LikeServiceImpl implements LikeService {
 	@Override
 	public int countGood(int bno) {
 		// TODO Auto-generated method stub
-				
+		
 		return mapper.countGood(bno);
+		
 	}
 
 	
@@ -51,6 +55,7 @@ public class LikeServiceImpl implements LikeService {
 		// TODO Auto-generated method stub
 		
 		return mapper.countBad(bno);
+				
 	}
 
 
@@ -66,5 +71,73 @@ public class LikeServiceImpl implements LikeService {
 		
 		return false;
 	}
+
+
+	@Override
+	public boolean goodChecker(LikeVO lvo) {
+		// TODO Auto-generated method stub
+		
+		if(mapper.goodCheck(lvo) != null) {
+			
+			if (mapper.goodCheck(lvo).getGood() == 1) {
+				
+				return true;
+			
+			} 
+			
+		}
+		
+		return false;		
+		
+	}
+
+
+	@Override
+	public boolean badChecker(LikeVO lvo) {
+		// TODO Auto-generated method stub
+
+		if(mapper.badCheck(lvo) != null) {
+			
+			if (mapper.badCheck(lvo).getBad() == 1) {
+				
+				return true;
+			
+			} 
+			
+		}
+		
+		return false;	
+		
+	}
+	
+
+	@Override
+	public boolean deleteGood(LikeVO lvo) {
+		// TODO Auto-generated method stub
+		
+		if(mapper.deleteGood(lvo) == 1) {
+			
+			return true;
+			
+		}
+		
+		return false;
+		
+	}
+
+
+	@Override
+	public boolean deleteBad(LikeVO lvo) {
+		// TODO Auto-generated method stub
+		if(mapper.deleteBad(lvo) == 1) {
+			
+			return true;
+			
+		}
+		
+		return false;
+		
+	}
+	
 
 }

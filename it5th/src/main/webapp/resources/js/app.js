@@ -49,6 +49,7 @@ var replyService = (function () {
 			
 //			console.log("app list: " + data.replyList);
 			
+			// callback: 성공시 보내줄 data (controller 에서 data 리턴이 있을 경우)
 			if(callback) {
 //				console.log("app.js checkValue: " + data.checkValuecheckValue)
 				callback(data.replyCnt, data.replyList, data.checkValue);				
@@ -137,10 +138,14 @@ var replyService = (function () {
 	// 댓글 하나 조회
 	function get(rno, callback, error) {
 		
-		$.get("/replies/" + rno + ".json", 
+		console.log("is accessed?")
+		
+		$.get("/replies/selectOne/" + rno, 
 			function(result) {
 			
-				if(callbak) {
+				if(callback) {
+					
+					console.log("is loaded?")
 					
 					callback(result);
 					
@@ -156,6 +161,65 @@ var replyService = (function () {
 		});
 		
 	}; // end get
+	
+	
+	// 대댓글 추가 기능
+	function addToReply(reply, callback, error) {
+		
+		console.log("add a reply to reply.");
+		
+		$.ajax({
+			type: 'post',
+			url: '/replies/toReplyRegister',
+			data: JSON.stringify(reply),
+			contentType: "application/json; charset=utf-8",
+			success: function(result, status, xhr) {
+				
+				if(callback) {
+					
+					callback(result);
+					
+				}
+				
+			},
+			error: function(xhr, staus, err) {
+				
+				if(error) {
+					
+					error(err);
+					
+				}
+			}
+			
+		})		
+		
+	}; // end addToReply
+	
+	
+	/* 댓글에 달린 하위 댓글 가져오기 */
+	function getToReply(rno, callback, error) {
+		
+		$.get("/replies/getToReply/" + rno,
+			
+			function(result) {
+				
+				if(callback) {
+					
+					callback(result);
+					
+				}			
+				
+		}).fail(function(xhr, status, error) {
+			
+			if(error) {
+				
+				error(error);
+				
+			}
+		});
+		
+	}; // end getToReply
+	/* /.댓글에 달린 하위 댓글 가져오기 */
 	
 	
 	// 시간 포맷 설정
@@ -213,7 +277,23 @@ var replyService = (function () {
 		remove: remove,
 		update: update,
 		get: get,
-		displayTime: displayTime		
+		displayTime: displayTime,
+		addToReply: addToReply,
+		getToReply: getToReply
 	};	
 	
 })();
+
+$(document).ready(function() {
+	
+	// enable tooltips
+	const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+	const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+
+	
+	// enable popovers
+	const popoverTriggerList = document.querySelectorAll('[data-bs-toggle="popover"]')
+	const popoverList = [...popoverTriggerList].map(popoverTriggerEl => new bootstrap.Popover(popoverTriggerEl))
+	
+})
+

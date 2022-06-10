@@ -34,23 +34,24 @@
 		<!-- /.hidden input tag -->
 	
 		<hr>
+	
 		
 		<div class="modifyPageForm">
-				<div class="input-group mb-3">
+				<div class="input-group mb-3 menu">
 				  <span class="input-group-text col-2" id="basic-addon1">no.</span>
-				  <input type="text" class="form-control boardTitle" name="bno" id="back-bno"
-						value="<c:out value='${board.bno }' />" 
+				  <input type="text" class="form-control border border-4" name="bno" id="back-bno" 
+						value="<c:out value='${board.bno }' />" data-bs-toggle="tooltip" data-bs-placement="top" title="unmodifiable"
 						readonly />
 				</div>
-				<div class="input-group mb-3">
+				<div class="input-group mb-3 ">
 				  <span class="input-group-text col-2" id="basic-addon1">TITLE</span>
 				  <input type="text" class="form-control boardTitle" name="title" value="<c:out value='${board.title }' />" />
 				</div>
 				<div class="input-group mb-3">
 					  <span class="input-group-text col-2" id="basic-addon1">WRITER</span>
-					  <input type="text" class="form-control boardTitle boardWriter" name="writer" 
-						value="<c:out value='${board.writer }' />" 
-						readonly />
+					  <input type="text" class="form-control border border-4" name="writer" 
+						value="<c:out value='${board.writer }' />" data-bs-toggle="tooltip" data-bs-placement="top" title="unmodifiable"
+						readonly = />
 					</div>
 				<div class="input-group mb-3">
 				  <span class="input-group-text col-2">CONTENT</span>
@@ -58,15 +59,17 @@
 				</div>
 				<div class="input-group mb-3">
 					  <span class="input-group-text col-2" id="basic-addon1">REGDATE</span>
-					  <input type="text" class="form-control boardTitle" name="regDate" 
+					  <input type="text" class="form-control border border-4" name="regDate" 
 						value="<fmt:formatDate pattern='yyyy/MM/dd HH:mm:ss' 
-						value='${board.regDate }' />" readonly />
+						value='${board.regDate }' />" data-bs-toggle="tooltip" data-bs-placement="top" title="unmodifiable"
+						readonly />
 					</div>
 					<div class="input-group mb-3">
 					  <span class="input-group-text col-2" id="basic-addon1">MODDATE</span>
-					  <input type="text" class="form-control boardTitle" name="modDate" 
+					  <input type="text" class="form-control border border-4" name="modDate" 
 						value="<fmt:formatDate pattern='yyyy/MM/dd HH:mm:ss' 
-						value='${board.regDate }' />" readonly />
+						value='${board.regDate }' />" data-bs-toggle="tooltip" data-bs-placement="top" title="unmodifiable"
+						readonly />
 					</div>
 				</div>
 		
@@ -75,7 +78,7 @@
 					</div>
 					<div class="input-group uploadDiv">
 					  <input type="file" class="form-control" name="attachFile" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04" aria-label="Upload" multiple />
-					  <button class="btn btn-outline-secondary uploadBtn" type="button" id="inputGroupFileAddon04">UPLOAD</button>
+					  <button class="btn btn-outline-secondary uploadBtn" type="button" onclick="fileUpload();" id="inputGroupFileAddon04">UPLOAD</button>
 					</div>
 		<div id="uploadResult">
 			<ul>
@@ -91,7 +94,26 @@
 	</form>
 </div>
 
+
 <script type="text/javascript">
+
+	var userid = '${member.userId }'
+	
+	/* 로그인 여부 판단 */
+	$(document).ready(function() {
+		
+		if((userid == '' || userid == null) || userid != '${board.writer }') {
+			// 로그인한 상태가 아니면 login 페이지로 보내기
+			alert("You need to login!!");
+			location.href = "/bulletin/login";
+							
+		}
+		
+	});
+	/* /.로그인 여부 판단 */
+	
+	var uploadResult = $("#uploadResult ul");
+	
 	$(document).ready(function() {
 		// 어떤 submit 눌렀는지 확인 후 종류에 맞는 요청을 보냄
 		
@@ -102,7 +124,6 @@
 		//삭제 대상 파일의 타입
 		let type = new Array();
 		
-		var uploadResult = $("#uploadResult ul");	
 		
 		showUploadFile();
 		
@@ -187,80 +208,8 @@
 			// submit
 			formObj.submit();
 						
-		});
-		
-		
-		/* show files attaced */
-		
-				
-		function showUploadFile() {		
+		});		
 			
-			let nameArr = '${fvo.fileName}';
-			let uuidArr = '${fvo.uuid}';		
-			let checkArr = '${fvo.imageChecker}';
-			
-			let uploadHtml = "";			
-			
-			// 업로드 파일 한개 당 li tag 한 개
-			if (nameArr == '') {
-						
-		} else {
-
-			nameArr = nameArr.split("/");			
-			uuidArr = uuidArr.split("/");			
-			checkArr = checkArr.split("/");
-			
-			// 업로드 파일 한개 당 li tag 한 개
-			for(let i = 0; i < nameArr.length; i++) {
-											
-				if(checkArr[i] == "false") {
-					// 이미지 파일이 아님
-					// li tag 앞에 파일 아이콘
-					let fileCallPath = encodeURIComponent("/" + uuidArr[i].uuid
-							+ "_" + nameArr[i].fileName);
-					
-					uploadHtml += "<li class='uploadLi'>"
-						+ "<img src='/resources/img/file_icon2.png'>"
-						+ nameArr[i]
-						+ "<span data-file=\'" + fileCallPath + "\' data-type='file'>"
-						+ " x </span>"
-						+ "<input type='hidden' name='fileName' value='" + nameArr[i] + "' />"
-						+ "<input type='hidden' name='uuid' value='" + uuidArr[i] + "' />"
-						+ "<input type='hidden' name='imageChecker' value='" + checkArr[i] + "' />"
-						+ "</li>";
-										
-				} else {
-					// 이미지 파일
-					// thumbnail 이미지 사용
-					let fileCallPath = encodeURIComponent("/s_" + uuidArr[i]
-							+ "_" + nameArr[i]);
-					
-					let originPath = uuidArr[i] + "_" + nameArr[i];
-					
-					originPath = originPath.replace(new RegExp(/\\/g), "/");
-					
-					uploadHtml += "<li class='uploadLi'>"
-							+ nameArr[i]
-							+ "<img src='/display?fileName=" + fileCallPath + "'>"
-							+ "<span data-file=\'" + fileCallPath + "\' data-type='image'>"
-							+ " x </span>"
-							+ "<input type='hidden' name='fileName' value='" + nameArr[i] + "' />"
-							+ "<input type='hidden' name='uuid' value='" + uuidArr[i] + "' />"
-							+ "<input type='hidden' name='imageChecker' value='" + checkArr[i] + "' />"
-							+ "</li>";
-					
-				}
-								
-			}
-			
-		}
-						
-			uploadResult.append(uploadHtml);
-			
-		} // end function showUploadFile()
-		
-		/* /.show files attaced */
-		
 		
 		/* 업로드 파일 삭제 */				
 		$("#uploadResult").on("click", "span", function(e){				
@@ -274,107 +223,28 @@
 		})
 		/* /.업로드 파일 삭제 */	
 		
-			
-		/* upload file and show */
-		
-		// 파일 확장자 제한
-		let regex = new RegExp("(.*?)\(exe|sh|zip|alz)$");
-		
-		let maxSize = 5242880; // 파일 크기 5 mb 로 제한
-		
-		var cloneObj = $(".uploadDiv").clone();
 	
-		let lastPathNew;
-		let jnum = 0;		
-				
-		
-	function showUploadFileNew(uploadArr) {			
-			
-			let uploadHtml = "";			
-			
-			// 업로드 파일 한개 당 li tag 한 개
-			for(let i = 0; i < uploadArr.length; i++) {
-				
-				if(uploadArr[i].imageChecker == false) {
-					// 이미지 파일이 아님
-					// li tag 앞에 파일 아이콘
-					let fileCallPath = encodeURIComponent("/" + uploadArr[i].uuid
-							+ "_" + uploadArr[i].fileName);
-					
-					uploadHtml += "<li class='uploadLi'>"
-						+ "<img src='/resources/img/file_icon2.png'>"
-						+ uploadArr[i].fileName
-						+ "<span data-file=\'" + fileCallPath + "\' data-type='file'>"
-						+ " x </span>"
-						+ "<input type='hidden' name='fileName' value='" + uploadArr[i].fileName + "' />"
-						+ "<input type='hidden' name='uuid' value='" + uploadArr[i].uuid + "' />"
-						+ "<input type='hidden' name='imageChecker' value='" + uploadArr[i].imageChecker + "' />"
-						+ "</li>";
-										
-				} else {
-					// 이미지 파일
-					// thumbnail 이미지 사용
-					let fileCallPath = encodeURIComponent("/s_" + uploadArr[i].uuid
-							+ "_" + uploadArr[i].fileName);
-					
-					let originPath = uploadArr[i].uuid + "_" + uploadArr[i].fileName;
-					
-					originPath = originPath.replace(new RegExp(/\\/g), "/");
-					
-					uploadHtml += "<li class='uploadLi'>"
-							+ uploadArr[i].fileName
-							+ "<img src='/display?fileName=" + fileCallPath + "'>"
-							+ "<span data-file=\'" + fileCallPath + "\' data-type='image'>"
-							+ " x </span>"
-							+ "<input type='hidden' name='fileName' value='" + uploadArr[i].fileName + "' />"
-							+ "<input type='hidden' name='uuid' value='" + uploadArr[i].uuid + "' />"
-							+ "<input type='hidden' name='imageChecker' value='" + uploadArr[i].imageChecker + "' />"
-							+ "</li>";
-					
-				}
-								
-			}
-						
-			uploadResult.append(uploadHtml);
-			
-		} // end function showUploadFile()
+			// declare variables for tooltip
+			const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+			const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
 		
 		
-		/* inpect files */
-		function checkFile(fileName, fileSize) {
-			// 파일 크기 검사
-			if(fileSize > maxSize) {
-				
-				alert("파일 최대 크기 초과");
-				return false;
-				
-			}
-			
-			// 파일 확장자 검사 ( 정규식과 파일 이름이 일치하는 패턴이면 false)
-			if(regex.test(fileName)) {
-				
-				alert("해당 종류의 파일은 업로드 불가");
-				return false;
-				
-			}
-			
-			return true;
-			
-		}
+	}); // end $(document).ready	
+	
+	
+	function fileUpload() {
 		
-				
-		$("#uploadBtn").on("click", function(e) {
-			
-			e.preventDefault();
-			console.log("test1");
-			
-			// form tag 없이 form 보내기
-			let formData = new FormData();
-			
-			// input tag 가져오기
-			let file = $("input[name='attachFile']");
-			let files = file[0].files;
-								
+		console.log("clicked")
+		
+		// form tag 없이 form 보내기
+		let formData = new FormData();
+		
+		// input tag 가져오기
+		let file = $("input[name='attachFile']");
+		let files = file[0].files;
+							
+		if(files.length > 0) {
+			// input tag 내에 파일이 존재할 경우
 			// formData 에 파일 추가
 			for(let i = 0; i < files.length; i++) {
 				// 파일 검사 중에 false 가 나오면 파일 업로드 중단
@@ -415,12 +285,171 @@
 			
 			/* /.File upload and initialize input tag */
 			
+		} else {
+			
+			alert("Please select files!!");
+			
+		}
+		
+					
+	} // end $("#uploadBtn").on()
+	
+	
+	
+	/* inpect files */
+	// 파일 확장자 제한
+		let regex = new RegExp("(.*?)\(exe|sh|zip|alz)$");
+		
+		let maxSize = 5242880; // 파일 크기 5 mb 로 제한
+		
+		function checkFile(fileName, fileSize) {
+			// 파일 크기 검사
+			if(fileSize > maxSize) {
+				
+				alert("파일 최대 크기 초과");
+				return false;
+				
+			}
+			
+			// 파일 확장자 검사 ( 정규식과 파일 이름이 일치하는 패턴이면 false)
+			if(regex.test(fileName)) {
+				
+				alert("해당 종류의 파일은 업로드 불가");
+				return false;
+				
+			}
+			
+			return true;
+			
+		}	
+	
+	
+	
+	function showUploadFile() {		
+		
+		let nameArr = '${fvo.fileName}';
+		let uuidArr = '${fvo.uuid}';		
+		let checkArr = '${fvo.imageChecker}';
+		
+		let uploadHtml = "";			
+		
+		// 업로드 파일 한개 당 li tag 한 개
+		if (nameArr == '') {
+					
+	} else {
+
+		nameArr = nameArr.split("/");			
+		uuidArr = uuidArr.split("/");			
+		checkArr = checkArr.split("/");
+		
+		// 업로드 파일 한개 당 li tag 한 개
+		for(let i = 0; i < nameArr.length; i++) {
+										
+			if(checkArr[i] == "false") {
+				// 이미지 파일이 아님
+				// li tag 앞에 파일 아이콘
+				let fileCallPath = encodeURIComponent("/" + uuidArr[i].uuid
+						+ "_" + nameArr[i].fileName);
+				
+				uploadHtml += "<li class='uploadLi'>"
+					+ "<img src='/resources/img/file_icon2.png' width='20px'>"
+					+ nameArr[i]
+					+ "<span data-file=\'" + fileCallPath + "\' data-type='file'>"
+					+ " x </span>"
+					+ "<input type='hidden' name='fileName' value='" + nameArr[i] + "' />"
+					+ "<input type='hidden' name='uuid' value='" + uuidArr[i] + "' />"
+					+ "<input type='hidden' name='imageChecker' value='" + checkArr[i] + "' />"
+					+ "</li>";
+									
+			} else {
+				// 이미지 파일
+				// thumbnail 이미지 사용
+				let fileCallPath = encodeURIComponent("/s_" + uuidArr[i]
+						+ "_" + nameArr[i]);
+				
+				let originPath = uuidArr[i] + "_" + nameArr[i];
+				
+				originPath = originPath.replace(new RegExp(/\\/g), "/");
+				
+				uploadHtml += "<li class='uploadLi'>"
+						+ nameArr[i]
+						+ "<img src='/display?fileName=" + fileCallPath + "'>"
+						+ "<span data-file=\'" + fileCallPath + "\' data-type='image'>"
+						+ " x </span>"
+						+ "<input type='hidden' name='fileName' value='" + nameArr[i] + "' />"
+						+ "<input type='hidden' name='uuid' value='" + uuidArr[i] + "' />"
+						+ "<input type='hidden' name='imageChecker' value='" + checkArr[i] + "' />"
+						+ "</li>";
+				
+			}
+							
+		}
+		
+	}
+					
+		uploadResult.append(uploadHtml);
+		
+	} // end function showUploadFile()
+	
+	/* /.show files attaced */
+	
+	
+	/* upload file and show */		
+		var cloneObj = $(".uploadDiv").clone();
+		
+	function showUploadFileNew(uploadArr) {			
+			
+			let uploadHtml = "";			
+			
+			// 업로드 파일 한개 당 li tag 한 개
+			for(let i = 0; i < uploadArr.length; i++) {
+				
+				if(uploadArr[i].imageChecker == "false") {
+					// 이미지 파일이 아님
+					// li tag 앞에 파일 아이콘
+					let fileCallPath = encodeURIComponent("/" + uploadArr[i].uuid
+							+ "_" + uploadArr[i].fileName);
+					
+					uploadHtml += "<li class='uploadLi'>"
+						+ "<img src='/resources/img/file_icon2.png' width='20px'>"
+						+ uploadArr[i].fileName
+						+ "<span data-file=\'" + fileCallPath + "\' data-type='file'>"
+						+ " x </span>"
+						+ "<input type='hidden' name='fileName' value='" + uploadArr[i].fileName + "' />"
+						+ "<input type='hidden' name='uuid' value='" + uploadArr[i].uuid + "' />"
+						+ "<input type='hidden' name='imageChecker' value='" + uploadArr[i].imageChecker + "' />"
+						+ "</li>";
+										
+				} else {
+					// 이미지 파일
+					// thumbnail 이미지 사용
+					let fileCallPath = encodeURIComponent("/s_" + uploadArr[i].uuid
+							+ "_" + uploadArr[i].fileName);
+					
+					let originPath = uploadArr[i].uuid + "_" + uploadArr[i].fileName;
+					
+					originPath = originPath.replace(new RegExp(/\\/g), "/");
+					
+					uploadHtml += "<li class='uploadLi'>"
+							+ uploadArr[i].fileName
+							+ "<img src='/display?fileName=" + fileCallPath + "'>"
+							+ "<span data-file=\'" + fileCallPath + "\' data-type='image'>"
+							+ " x </span>"
+							+ "<input type='hidden' name='fileName' value='" + uploadArr[i].fileName + "' />"
+							+ "<input type='hidden' name='uuid' value='" + uploadArr[i].uuid + "' />"
+							+ "<input type='hidden' name='imageChecker' value='" + uploadArr[i].imageChecker + "' />"
+							+ "</li>";
+					
+				}
+								
+			}
 						
-		}); // end $("#uploadBtn").on()			
+			uploadResult.append(uploadHtml);
+			
+		} // end function showUploadFile()
 		
-		
-	}); // end $(document).ready
 	
 </script>
+
 
 <%@ include file="../includes/footer.jsp" %>

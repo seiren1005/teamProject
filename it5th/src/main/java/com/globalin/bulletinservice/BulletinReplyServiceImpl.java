@@ -122,4 +122,48 @@ public class BulletinReplyServiceImpl implements BulletinReplyService {
 	}
 
 
+	// increment of gorder
+	@Override
+	public int gorderIncrement(BulletinReplyVO rvo) {
+		// TODO Auto-generated method stub
+		
+		if(rMapper.updateGOrder(rvo) == 1) {
+			// updateGOrder query 실행 결과가 1 이면 (update 성공하면)
+			
+			return 1;
+			// 1 return
+			
+		}
+		
+		return 0;
+		// update 실패시 0 return
+		
+	}
+
+
+	@Override
+	public List<BulletinReplyVO> selectSubGroup(int rno) {
+		// TODO Auto-generated method stub
+			
+		return rMapper.selectSubGroup(rno);
+	}
+
+
+	@Override
+	public int insertToReply(BulletinReplyVO rvo) {
+		// TODO Auto-generated method stub
+		log.info("toReply: " + rvo);
+		
+		int result = rMapper.insertToReply(rvo);
+		
+		if (result == 1) {			
+			// bno 의 댓글수 +1
+			bMapper.updateReplyCnt(rvo.getBno(), 1);
+			
+		}
+		
+		return result;
+	}
+
+
 }

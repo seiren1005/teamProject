@@ -3,6 +3,7 @@ package com.globalin.bulletincontroller;
 
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,6 +15,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
+import org.springframework.web.context.request.ServletWebRequest;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.globalin.bulletindomain.BulletinPage;
@@ -24,6 +28,7 @@ import com.globalin.bulletindomain.BulletinFileVO;
 import com.globalin.bulletinservice.BulletinService;
 import com.globalin.bulletinservice.BulletinUploadService;
 import com.globalin.bulletinservice.LikeService;
+import com.globalin.model.dto.MemberVO;
 
 @Controller
 @RequestMapping("/bulletin/*")
@@ -46,7 +51,7 @@ public class BulletinController {
 	
 	// /board/list get 요청
 	@GetMapping("/bulletinList")
-	public void list(BulletinCriteria cri, Model model) {
+	public void list(BulletinCriteria cri, Model model, HttpServletRequest req) {
 		
 //		log.info("list ");
 		System.out.println(cri);
@@ -57,7 +62,15 @@ public class BulletinController {
 		int total = service.getTotal(cri);
 		
 		log.info("total: " + total);
+		
 		model.addAttribute("pageMaker", new BulletinPage(cri, total));
+		
+		// 로그인 상태인지 체크하기 위해서 로그인에 성공하면 session 에 정보를 남김 
+		HttpSession session = req.getSession();
+		MemberVO member = new MemberVO();
+//		member.setUserId("admin");
+		member.setUserId("member");
+		session.setAttribute("member", member);
 	
 	}
 		
@@ -66,7 +79,6 @@ public class BulletinController {
 	@GetMapping("/bulletinRegister")
 	public void register() {
 		
-		// register.jsp 로 이동
 		
 	}
 	
@@ -83,7 +95,7 @@ public class BulletinController {
 			String[] nameArr = req.getParameterValues("fileName");
 			String[] uuidArr = req.getParameterValues("uuid");
 			String[] checkArr = req.getParameterValues("imageChecker");
-			
+						
 			BulletinFileVO fvo = new BulletinFileVO();
 			
 			fvo.setFileName(String.join("/", nameArr));
@@ -255,5 +267,13 @@ public class BulletinController {
 		
 	}
 
+	
+	// move to login page
+	@GetMapping("/bulletin/login")
+	public String login() {
+		
+		return "redirect:/member/login.do";
+		
+	}
 	
 }

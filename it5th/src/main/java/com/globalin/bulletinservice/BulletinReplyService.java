@@ -11,7 +11,11 @@ public interface BulletinReplyService {
 
 	public int register(BulletinReplyVO rvo);
 	
+	public int insertToReply(BulletinReplyVO rvo);
+	
 	public BulletinReplyVO selectOne(int rno);
+	
+	public List<BulletinReplyVO> selectSubGroup(int rno);
 	
 	public int update(BulletinReplyVO rvo);
 	
@@ -23,5 +27,7 @@ public interface BulletinReplyService {
 	// 리스트 + 총 댓글 갯수 (해당 게시물만)
 	public BulletinReplyPage getReplyListWithPage(BulletinCriteria cri, int bno);
 	
+	// gorder 값 증가
+	public int gorderIncrement(BulletinReplyVO rvo);	
 	
 }

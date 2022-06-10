@@ -1,17 +1,27 @@
 package com.globalin.bulletinmapper;
 
+import java.util.List;
+
+import com.globalin.bulletindomain.LikeVO;
+
 public interface LikeMapper {
 
-	public int clickGood(int bno);
+	public int clickGood(LikeVO lvo);
 	
-	public int clickBad(int bno);
+	public int clickBad(LikeVO lvo);
 	
-	public int deleteRec(int bno);
+	public int deleteGood(LikeVO lvo);
+	
+	public int deleteBad(LikeVO lvo);
 	
 	public int countGood(int bno);
 	
 	public int countBad(int bno);
 	
 	public int nullChecker(int bno);
+	
+	public LikeVO goodCheck(LikeVO lvo);
+	
+	public LikeVO badCheck(LikeVO lvo);
 	
 }

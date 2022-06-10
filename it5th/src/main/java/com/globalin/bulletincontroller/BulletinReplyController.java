@@ -1,6 +1,8 @@
 package com.globalin.bulletincontroller;
 
 
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,6 +46,7 @@ public class BulletinReplyController {
 		// produces server -> browser
 	public ResponseEntity<String> register(@RequestBody BulletinReplyVO rvo) {
 		
+		rvo.setAdoption("null");
 		int result = service.register(rvo);
 						
 		return result == 1 ? 
@@ -54,7 +57,20 @@ public class BulletinReplyController {
 	
 	
 	// 조회
-	// /replies/rno
+	// /replies/selectOne/rno
+	@GetMapping(value="/selectOne/{rno}",
+			produces= {MediaType.APPLICATION_JSON_UTF8_VALUE})
+	public ResponseEntity<BulletinReplyVO> selectOne(@PathVariable("rno") int rno) {
+		
+		System.out.println("================================================");
+		System.out.println("selectOne test");
+		System.out.println(rno);
+		System.out.println(service.selectOne(rno));
+		System.out.println("================================================");
+		
+		return new ResponseEntity<>(
+				service.selectOne(rno), HttpStatus.OK);
+	}
 	
 	
 	// 삭제
@@ -63,6 +79,7 @@ public class BulletinReplyController {
 			produces= {MediaType.TEXT_PLAIN_VALUE})
 	public ResponseEntity<String> remove(@RequestBody BulletinReplyVO rvo,
 			@PathVariable("rno") int rno) {
+		// @PathVariable 과 @RequestBody 가 같이 쓰이는 요청은 put, delete
 		
 		return service.delete(rno) == 1 ?
 				new ResponseEntity<>("success", HttpStatus.OK) :
@@ -94,7 +111,8 @@ public class BulletinReplyController {
 			produces= {MediaType.APPLICATION_JSON_UTF8_VALUE})
 	public ResponseEntity<BulletinReplyPage> getList(
 			@PathVariable("bno") int bno, 
-			@PathVariable("page") int page, Model model) {
+			@PathVariable("page") int page) {
+		// 주소에서 parameter 가져오려면 @PathVariable
 		
 //		System.out.println("is getList working?");
 //		System.out.println("controller bno: " + bno);
@@ -104,11 +122,56 @@ public class BulletinReplyController {
 		cri.setAmount(10);
 						
 //		System.out.println("controller return: " + service.getReplyListWithPage(cri, bno));
-		
+				
 		return new ResponseEntity<>(
 				service.getReplyListWithPage(cri, bno), HttpStatus.OK);
 		
 	}
 	
+	
+	// 대댓글 등록
+	@PostMapping(value="/toReplyRegister", consumes="application/json",
+			produces= {MediaType.TEXT_PLAIN_VALUE})
+	public ResponseEntity<String> toReply(@RequestBody BulletinReplyVO rvo) {
+		// post 요청에서 parameter 가져오려면 @RequestBody
+		
+		System.out.println("==============================");
+		System.out.println("rvo check");
+		System.out.println(rvo);
+				
+		BulletinReplyVO rtemp = service.selectOne(rvo.getRno());
+		System.out.println(rtemp);
+		System.out.println(rvo.getRno());
+		
+		// 댓글에 하위 댓글이 달릴 때 하위로 차수가 늘어날수록 1 씩 deep 증가
+		rvo.setDeep(rtemp.getDeep() + 1);
+		
+		// 댓글에 대댓글이 몇개 있는지 확인하기 위해서 대댓글이 달릴 경우 1 씩 상위 댓글의 gorder 증가
+		int gorder = rtemp.getGorder() + 1;
+		rtemp.setGorder(gorder);
+		int gresult = service.gorderIncrement(rtemp);
+		
+		int result = service.insertToReply(rvo);
+		
+		// result, gresult 둘 다 1 이면 true, 아니면 false
+		return result == 1 || gresult == 1 ? 
+				new ResponseEntity<>("success", HttpStatus.OK) :
+				new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		
+	}
+	
+	// 대댓글 가져오기
+	@GetMapping(value="/getToReply/{rno}", 
+			produces= {MediaType.APPLICATION_JSON_UTF8_VALUE})
+	public ResponseEntity<List<BulletinReplyVO>> getList(
+			@PathVariable("rno") int rno) {
+		
+		System.out.println("rno test");
+		System.out.println(rno);
+		
+		return new ResponseEntity<>(
+				service.selectSubGroup(rno), HttpStatus.OK);
+		
+	}
 
 }

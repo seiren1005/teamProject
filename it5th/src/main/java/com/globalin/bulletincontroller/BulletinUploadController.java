@@ -199,6 +199,7 @@ public class BulletinUploadController {
 				// create thumbnail when file is an image type
 				if(checkImageType(saveFile) == true) {
 					
+					
 					fvo.setImageChecker("true");
 					
 					FileOutputStream thumbnail = new FileOutputStream(
@@ -209,6 +210,10 @@ public class BulletinUploadController {
 							thumbnail, 100, 100);
 					
 					thumbnail.close();
+					
+				} else {
+					
+					fvo.setImageChecker("false");
 					
 				}
 				
