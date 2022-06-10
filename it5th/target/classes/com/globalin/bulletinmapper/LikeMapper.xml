@@ -3,25 +3,46 @@
 <mapper namespace="com.globalin.bulletinmapper.LikeMapper">
 
 	<insert id="clickGood">
-		INSERT INTO tbl_like(bno, good)
-		VALUES(#{bno}, 1)
+		INSERT INTO tbl_like(bno, userid, good)
+		VALUES(#{bno}, #{userid}, 1)
 	</insert>
 	
 	<insert id="clickBad">
-		INSERT INTO tbl_like(bno, bad)
-		VALUES(#{bno}, 1)
+		INSERT INTO tbl_like(bno, userid, bad)
+		VALUES(#{bno}, #{userid}, 1)
 	</insert>
 	
 	<select id="countGood" resultType="int">
-		SELECT SUM(good)
+		SELECT COUNT(*)
 		FROM tbl_like
 		WHERE bno = #{bno}
+					AND good = 1
 	</select>
 	
-	<select id="countBad" resultType="int">
-		SELECT SUM(bad)
+	
+	<!-- 한 아이디로 같은 글에 좋아요/싫어요가 한 번만 가능하게 -->
+	<select id="goodCheck" resultType="com.globalin.bulletindomain.LikeVO">
+		SELECT *
 		FROM tbl_like
 		WHERE bno = #{bno}
+					AND userid = #{userid}
+	</select>
+	
+	
+	<select id="badCheck" resultType="com.globalin.bulletindomain.LikeVO">
+		SELECT *
+		FROM tbl_like
+		WHERE bno = #{bno}
+					AND userid = #{userid}
+	</select>
+	<!-- 한 아이디로 좋아요/싫어요가 한 번만 가능하게 -->
+	
+	
+	<select id="countBad" resultType="int">
+		SELECT COUNT(*)
+		FROM tbl_like
+		WHERE bno = #{bno}
+					AND bad = 1
 	</select>
 	
 	<select id="nullChecker" resultType="int">
@@ -30,10 +51,21 @@
 		WHERE bno = #{bno}
 	</select>
 	
-	<delete id="deleteRec">
+	<delete id="deleteGood">
 		DELETE 
 		FROM tbl_like
 		WHERE bno = #{bno}
+					AND userid = #{userid}
+					AND good = 1
+	</delete>
+	
+	
+	<delete id="deleteBad">
+		DELETE 
+		FROM tbl_like
+		WHERE bno = #{bno}
+					AND userid = #{userid}
+					AND bad = 1
 	</delete>
 
 </mapper>

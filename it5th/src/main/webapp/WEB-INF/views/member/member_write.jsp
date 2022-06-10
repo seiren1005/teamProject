@@ -7,10 +7,26 @@
 <%@ include file="../includes/header.jsp" %>
 </head>
 <body>
-<div style="text-align:center; margin: 10% auto; position: relative; justify-content: center; display: grid; ">
-	<h2>회원등록폼</h2>
+	<h2 style="
+text-decoration: none; 
+font-family: 'Comic Sans MS', 'Comic Sans', 'Independence_hall';
+text-align: center; 
+display: inline-block; 
+color: #001d48;
+letter-spacing: -1px; 
+border-radius: 20px; 
+padding: 5px 15px;
+margin-left: -4px;
+background-color:#bebebe;
+display: table; 
+margin-left: auto; 
+margin-right: auto;
+margin: 10% auto;
+margin-bottom:2%;
+">✷USER REGISTER ✷</h2>
+<div style="text-align:center; margin: 10% auto;margin-top:50px; position: relative; border-radius: 20px; justify-content: center; display: grid; background-color: #bebebe; width:600px; height:400px;">
 	<form name="form1" method="post" action="${path}/member/insert.do">
-		<table border="1" width="400px">
+			<table style= "margin-top:50px; border:1; width:400px; ">
 			<tr>
 				<td>아이디</td>
 				<td><input name="userId"></td>

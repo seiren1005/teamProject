@@ -4,8 +4,16 @@
 	
 	<!-- insert method at ReplyMapper -->
 	<insert id="insert">
-		INSERT INTO tbl_reply(rno, bno, reply, replyer)
-		VALUES(seq_reply.NEXTVAL, #{bno}, #{reply}, #{replyer})
+		INSERT INTO tbl_reply(rno, bno, reply, replyer, adoption, gorder, deep)
+		VALUES(seq_reply.NEXTVAL, #{bno}, #{reply}, #{replyer}, #{adoption}, #{gorder}, #{deep})
+	</insert>	
+	<!-- /.insert method at ReplyMapper -->
+	
+	
+	<!-- insert reply to reply -->
+	<insert id="insertToReply">
+		INSERT INTO tbl_toreply(tno, rno, reply, replyer, adoption, gorder, deep)
+		VALUES(seq_toreply.NEXTVAL, #{rno}, #{reply}, #{replyer}, #{adoption}, #{gorder}, #{deep})
 	</insert>	
 	<!-- /.insert method at ReplyMapper -->
 	
@@ -19,12 +27,21 @@
 	<!-- /.selectOne method at ReplyMapper -->
 	
 	
+	<!-- selectAll for reply to reply -->
+	<select id="selectSubGroup" resultType="com.globalin.bulletindomain.BulletinReplyVO">
+		SELECT *
+		FROM tbl_toreply
+		WHERE rno = #{rno}
+	</select>
+	<!-- /.selectAll for reply to reply -->
+	
+
 	<!-- selectAllWithPaging method at ReplyMapper -->
 	<select id="selectAllWithPaging" resultType="com.globalin.bulletindomain.BulletinReplyVO">
 		<![CDATA[
-			SELECT rno, bno, reply, replyer, replyregdate, replymoddate, adoption
+			SELECT rno, bno, reply, replyer, gorder, deep, replyregdate, replymoddate, adoption
 			FROM (SELECT /*+ INDEX(tbl_reply pk_reply) */
-						rownum rn, rno, bno, reply, replyer, replyregdate, replymoddate, adoption
+						rownum rn, rno, bno, reply, replyer, gorder, deep, replyregdate, replymoddate, adoption
 					FROM tbl_reply
 					WHERE bno = #{bno}
 								AND rno > 0
@@ -46,6 +63,16 @@
 		WHERE rno = #{rno}
 	</update>	
 	<!-- /.update method at ReplyMapper -->
+	
+	
+	<!-- gorder at reply update -->
+	<update id="updateGOrder">
+		UPDATE tbl_reply
+		SET gorder = #{gorder}
+		WHERE rno = #{rno}
+	</update>	
+	<!-- gorder at reply update  -->
+	
 	
 	
 	<!-- delete method at ReplyMapper -->
