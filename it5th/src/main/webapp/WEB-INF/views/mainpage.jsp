@@ -40,7 +40,7 @@
 		</div> 
 			<!-- 글자 꾸미기 -->
 			<div style="text-align:center">
-			<span class="half_HL">슬라이드 클릭시 해당 페이지로 이동</span>
+			<span class="half_HL">슬라이드 클릭시 소개 페이지로 이동</span>
 			</div>
 		</br>
 			

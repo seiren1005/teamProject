@@ -91,7 +91,6 @@
             <ul class="navbar-nav ms-auto pt-2 pt-lg-0 font-base">
               <li class="nav-item px-2"><a class="nav-link active" aria-current="page" href="/mainpage">메인화면</a></li>
               <li class="nav-item px-2"><a class="nav-link" aria-current="page" href="/infopage">사이트소개</a></li>
-              <li class="nav-item px-2"><a class="nav-link" aria-current="page" href="/detail/main">코딩사이트</a></li>
               <li class="nav-item px-2"><a class="nav-link" aria-current="page" href="/bulletin/bulletinList">게시판</a></li>
               <li class="nav-item px-2"><a class="nav-link" aria-current="page" href="/member/list.do">회원관리</a></li>
               <li class="nav-item px-2"><a class="nav-link" aria-current="page" href="/member/write.do">회원가입</a></li>

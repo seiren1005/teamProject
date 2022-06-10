@@ -22,7 +22,7 @@
             
             </div>
             <div class="col-6 col-sm-4 col-lg-2 mb-3 order-3 order-sm-2">
-              <h5 class="lh-lg fw-bold text-light mb-4 font-sans-serif"><a href="/detail/main">코딩사이트</a></h5>
+              <h5 class="lh-lg fw-bold text-light mb-4 font-sans-serif">코딩 사이트 소개</a></h5>
               <ul class="list-unstyled mb-md-4 mb-lg-0">
                 <li class="lh-lg"><a class="text-200" href="/detail/detail-TCP">TCPSchool</a></li>
                 <li class="lh-lg"><a class="text-200" href="/detail/detail-Tohoho">Tohoho</a></li>
