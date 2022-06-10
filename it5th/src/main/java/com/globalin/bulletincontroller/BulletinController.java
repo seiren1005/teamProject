@@ -64,14 +64,7 @@ public class BulletinController {
 		log.info("total: " + total);
 		
 		model.addAttribute("pageMaker", new BulletinPage(cri, total));
-		
-		// 로그인 상태인지 체크하기 위해서 로그인에 성공하면 session 에 정보를 남김 
-		HttpSession session = req.getSession();
-		MemberVO member = new MemberVO();
-//		member.setUserId("admin");
-		member.setUserId("member");
-		session.setAttribute("member", member);
-	
+					
 	}
 		
 	
