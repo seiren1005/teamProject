@@ -40,7 +40,9 @@
 		     border: 2px solid black; 
 		     box-shadow: 2px 2px 0px ; 
 		     display: inline-block;">이 웹 사이트는 글로벌인 IT 5기 팀프로젝트로 만든 <br>
-		     							 코딩 학습 사이트 안내 웹 사이트입니다.</h2>
+		     							 코딩 학습 사이트 안내 웹 사이트입니다. <br>
+		     							 학습을 도울 수 있는 각종 사이트를 안내하며 <br>
+		     							 게시판과 공부 일기장 기능을 제공합니다.</h2>
 					<br>
 				</div>
 			</div>
