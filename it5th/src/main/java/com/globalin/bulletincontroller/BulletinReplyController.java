@@ -140,21 +140,21 @@ public class BulletinReplyController {
 		System.out.println(rvo);
 				
 		BulletinReplyVO rtemp = service.selectOne(rvo.getRno());
-		System.out.println(rtemp);
-		System.out.println(rvo.getRno());
+//		System.out.println(rtemp);
+//		System.out.println(rvo.getRno());
 		
 		// 댓글에 하위 댓글이 달릴 때 하위로 차수가 늘어날수록 1 씩 deep 증가
 		rvo.setDeep(rtemp.getDeep() + 1);
 		
-		// 댓글에 대댓글이 몇개 있는지 확인하기 위해서 대댓글이 달릴 경우 1 씩 상위 댓글의 gorder 증가
-		int gorder = rtemp.getGorder() + 1;
-		rtemp.setGorder(gorder);
-		int gresult = service.gorderIncrement(rtemp);
+//		// 댓글에 대댓글이 몇개 있는지 확인하기 위해서 대댓글이 달릴 경우 1 씩 상위 댓글의 gorder 증가
+//		int gorder = rtemp.getGorder() + 1;
+//		rtemp.setGorder(gorder);
+//		int gresult = service.gorderIncrement(rtemp);
 		
 		int result = service.insertToReply(rvo);
 		
-		// result, gresult 둘 다 1 이면 true, 아니면 false
-		return result == 1 || gresult == 1 ? 
+		// result 가 1 이면 true, 아니면 false
+		return result == 1 ? 
 				new ResponseEntity<>("success", HttpStatus.OK) :
 				new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		
@@ -173,5 +173,41 @@ public class BulletinReplyController {
 				service.selectSubGroup(rno), HttpStatus.OK);
 		
 	}
+	
+	
+	// 대댓글 수정
+	// /replies/toreplies/tno
+	@PutMapping(value="/toreplies/{tno}",
+			consumes="application/json",
+			produces= {MediaType.TEXT_PLAIN_VALUE})
+	public ResponseEntity<String> tModify(
+			@PathVariable("tno") int tno, @RequestBody BulletinReplyVO rvo) {
+		
+		rvo.setTno(tno);
+		
+		System.out.println("rvo: " + rvo);
+		
+		return service.tUpdate(rvo) == 1 ? 
+				new ResponseEntity<>("success", HttpStatus.OK) :
+				new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+				
+	}
+	
+	
+	// 대댓글 삭제
+	// /replies/tRomove/tno
+	@DeleteMapping(value="/tRemove/{tno}", 
+			produces= {MediaType.TEXT_PLAIN_VALUE})
+	public ResponseEntity<String> tRemove(@PathVariable("tno") int tno,
+			@RequestBody BulletinReplyVO rvo) {
+		
+		System.out.println("delete toreply: " + tno);
+				
+		return service.tDelete(tno) == 1 ?
+				new ResponseEntity<>("success", HttpStatus.OK) :
+				new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		
+	}
+	
 
 }

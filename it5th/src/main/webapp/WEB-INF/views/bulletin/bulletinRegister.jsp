@@ -50,11 +50,11 @@
 					<div class="input-group mb-3">
 					  <span class="input-group-text boardTitle" id="basic-addon1">WRITER</span>
 					  <input type="text" class="form-control boardTitle boardWriter" name="writer" 
-					  	value="<c:out value='${userid }' />" readonly />
+					  	value="<c:out value='${userId }' />" readonly />
 					</div>
 					<div class="input-group">
 					  <span class="input-group-text">CONTENT</span>
-					  <textarea class="form-control boardContent" name="content" aria-label="CONTENT"></textarea>
+					  <textarea class="form-control boardContent" name="content" aria-label="CONTENT" rows="10"></textarea>
 					</div>					
 					<div class="">
 						<label>FILE UPLOAD</label>
@@ -173,7 +173,7 @@
 			self.location = "/bulletin/bulletinList";
 							
 		})
-		
+				
 					
 	}); // end $(document).ready()
 	
@@ -315,7 +315,7 @@ function showUploadFile(uploadArr) {
 			uploadHtml +=			"<span data-file=\'" + fileCallPath + "\' data-type='file'>"
 			uploadHtml +=		  	" x </span>"
 			uploadHtml +=			"<img src='/display?fileName=" + fileCallPath + "' class='card-img-top' data-bs-toggle='popover' title='"
-				uploadHtml += 			uploadArr[i].fileName + "' data-bs-content='And here\'s some amazing content. It's very engaging. Right?'>";
+			uploadHtml += 			uploadArr[i].fileName + "' data-bs-content='And here\'s some amazing content. It's very engaging. Right?'>";
 			uploadHtml +=			"<input type='hidden' name='fileName' value='" + uploadArr[i].fileName + "' />"
 			uploadHtml +=			"<input type='hidden' name='uuid' value='" + uploadArr[i].uuid + "' />"
 			uploadHtml +=			"<input type='hidden' name='imageChecker' value='" + uploadArr[i].imageChecker + "' />"

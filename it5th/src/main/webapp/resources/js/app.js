@@ -220,11 +220,74 @@ var replyService = (function () {
 	/* /.댓글에 달린 하위 댓글 가져오기 */
 	
 	
+	// 대댓글 수정
+	function tUpdate(reply, callback, error) {
+		
+		console.log("tno: " + reply.tno);
+		
+		$.ajax({
+			type: 'put',
+			url: '/replies/toreplies/' + reply.tno,
+			data: JSON.stringify(reply),
+			contentType: "application/json; charset=utf-8",
+			success: function(result, status, xhr) {
+				
+				if(callback) {
+					
+					callback(result);
+					
+				}
+			},
+			error: function(xhr, status, err) {
+				
+				if(error) {
+					
+					error(err);
+					
+				}
+			}			
+			
+		});		
+		
+	}; // end tUpdate
+	
+	
+	// 대댓글 지우기
+	// 대댓글 번호 (tno) 필요
+	function tRemove(tno, callback, error) {
+				
+		$.ajax({
+			type: 'delete',
+			url: '/replies/tRemove/' + tno,			
+			data: JSON.stringify({
+				tno: tno
+			}),
+			contentType: "application/json; charset=utf-8",
+			success: function(result, status, xhr) {
+				
+				if(callback) {
+					
+					callback(result);
+					
+				}
+			},
+			error: function(xhr, status, err) {
+				
+				if(error) {
+					
+					error(err);
+					
+				}
+			}
+			
+		});		
+		
+	}; // end remove
+	
+	
+	
 	// 회원 정보가 있는지 확인
 	function idCheck(userid, callback, error) {
-		
-		console.log("??");
-		
 		
 		$.get("/loginCheck/" + userid,
 				
@@ -306,7 +369,9 @@ var replyService = (function () {
 		displayTime: displayTime,
 		addToReply: addToReply,
 		getToReply: getToReply,
-		idCheck: idCheck
+		idCheck: idCheck,
+		tUpdate: tUpdate,
+		tRemove: tRemove
 	};	
 	
 })();
@@ -322,4 +387,5 @@ $(document).ready(function() {
 	const popoverList = [...popoverTriggerList].map(popoverTriggerEl => new bootstrap.Popover(popoverTriggerEl))
 	
 })
+
 

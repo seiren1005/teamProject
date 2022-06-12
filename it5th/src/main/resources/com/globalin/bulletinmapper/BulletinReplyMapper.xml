@@ -12,8 +12,8 @@
 	
 	<!-- insert reply to reply -->
 	<insert id="insertToReply">
-		INSERT INTO tbl_toreply(tno, rno, reply, replyer, adoption, gorder, deep)
-		VALUES(seq_toreply.NEXTVAL, #{rno}, #{reply}, #{replyer}, #{adoption}, #{gorder}, #{deep})
+		INSERT INTO tbl_toreply(tno, rno, reply, replyer, gorder, deep)
+		VALUES(seq_toreply.NEXTVAL, #{rno}, #{reply}, #{replyer}, #{gorder}, #{deep})
 	</insert>	
 	<!-- /.insert method at ReplyMapper -->
 	
@@ -68,7 +68,7 @@
 	<!-- gorder at reply update -->
 	<update id="updateGOrder">
 		UPDATE tbl_reply
-		SET gorder = #{gorder}
+		SET gorder = gorder + #{amount}
 		WHERE rno = #{rno}
 	</update>	
 	<!-- gorder at reply update  -->
@@ -99,9 +99,36 @@
 		FROM tbl_reply
 		WHERE (bno = #{bno})
 				AND adoption IS NOT NULL
-	</select>
-	
+	</select>	
 	<!-- /.답변 선택 여부 -->
+	
+	
+	<!-- 대댓글 수정 -->
+	<update id="tUpdate">
+		UPDATE tbl_toreply
+		SET reply = #{reply}, 
+				replymoddate = SYSDATE
+		WHERE tno = #{tno}
+	</update>	
+	<!-- /.대댓글 수정 -->
+	
+	
+	<!-- 대댓글 삭제 -->
+	<delete id="tDelete">
+		DELETE
+		FROM tbl_toreply
+		WHERE tno = #{tno}
+	</delete>
+	<!-- /.대댓글 삭제 -->
+	
+	
+	<!-- 대댓글 하나 불러오기 -->
+	<select id="tSelectOne" resultType="com.globalin.bulletindomain.BulletinReplyVO">
+		SELECT *
+		FROM tbl_toreply
+		WHERE tno = #{tno}
+	</select>
+	<!-- 대댓글 하나 불러오기 -->
 	
 
 </mapper>

@@ -49,7 +49,7 @@
 					</div>
 				<div class="input-group">
 				  <span class="input-group-text col-2">CONTENT</span>
-				  <textarea class='form-control' name='content' id='exampleFormControlTextarea1' rows='2'><c:out value='${board.content }' /></textarea>
+				  <textarea class='form-control' name='content' id='exampleFormControlTextarea1' rows='10'><c:out value='${board.content }' /></textarea>
 				</div>
 				<hr>
 				<div id="uploadResult">
@@ -62,7 +62,7 @@
 				
 				<div>
 				<!-- Button for locating to modify.jsp -->
-				<c:if test='${userid eq board.writer }'>
+				<c:if test='${userId eq board.writer }'>
 					<button type="button" data-oper="update" class="btn btn-sm btn-outline-warning">MODIFY</button>
 				</c:if>
 				
@@ -126,11 +126,11 @@
 			<div class="input-group mb-3">
 			<!-- 로그인한 사용자면 writer 에 id가 저장, 로그인하지 않을 경우 guest -->
 				<c:choose>
-					<c:when test="${userid == '' || userid == null}">
+					<c:when test="${userId == '' && userId == null}">
 						<input type="text" class="form-control" name="replyer" placeholder="guest" aria-label="Replyer" value="<c:out value='guest' />" readonly />
 					</c:when>
 					<c:otherwise>
-						<input type="text" class="form-control" name="replyer" placeholder='${userid }' aria-label="Replyer" value="<c:out value='${userid }' />" readonly />
+						<input type="text" class="form-control" name="replyer" placeholder='${userId }' aria-label="Replyer" value="<c:out value='${userId }' />" readonly />
 					</c:otherwise>
 				</c:choose> 				  
 			</div>
@@ -167,7 +167,7 @@
 <div class="offcanvas offcanvas-bottom" tabindex="-1" id="offcanvasBottom" aria-labelledby="offcanvasBottomLabel"
 data-bs-scroll="true"
 data-bs-backdrop="false"
-style="height: 60vh;">
+style="height: 40vh;">
   <div class="offcanvas-header" style='padding: 5px;'>
     <div class="offcanvas-title col-11" id="offcanvasBottomLabel" ></div>
     <button type="button" class="btn-close btn-sm text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
@@ -192,7 +192,7 @@ style="height: 60vh;">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
-        <a id="img-download"><h5 class="modal-title" id="exampleModalLabel" data-bs-toggle="tooltip" data-bs-placement="top" title="file download"></h5></a>
+        <a href="#" id="img-download"><h5 class="modal-title" id="exampleModalLabel" data-bs-toggle="tooltip" data-bs-placement="right" title="file download"></h5></a>
         <button type="button" class="btn-close btn-sm" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
@@ -220,11 +220,15 @@ style="height: 60vh;">
 	var updateRno = -1;
 	// console.log("updateRno 0: " + updateRno);
 	
+	// 대댓글용
+	var updateTno = -1;
+	
 	// 로그인한 사용자의 id
 	var userid = '${userId }'
 	
 	console.log(userid)
 		
+			
 	$(document).ready(function() {
 		
 		var bnoValue = '<c:out value="${board.bno}" />';
@@ -306,7 +310,7 @@ style="height: 60vh;">
 							}
 							
 							comments += "<div class=''>";
-							comments += "<strong class='replyReplyerInfo'>" + list[i].replyer + "  </strong>";
+							comments += "<strong class='replyReplyerInfo'>" + list[i].replyer + "</strong>";
 							comments += "<small class=''>";
 							comments += replyService.displayTime(list[i].replyRegDate);
 							comments += "</small></div>";
@@ -319,13 +323,13 @@ style="height: 60vh;">
 								if(list[i].replyer == userid) {
 									
 									comments += "<div class='btnDiv'>"
-									comments += "<button id='updateReplyFormBtn' type='button' class='btn btn-sm btn-outline-primary' name='" + list[i].rno + "'>UPDATE</button>"
-									comments += "<button id='deleteReplyBtn' type='button' class='btn btn-sm btn-outline-primary'>REMOVE</button>"
+									comments += "<button type='button' class='btn btn-sm btn-outline-primary updateReplyFormBtn' name='" + list[i].rno + "'>UPDATE</button>"
+									comments += "<button type='button' class='btn btn-sm btn-outline-primary deleteReplyBtn'>REMOVE</button>"
 									
 								}
 																
 								// 로그인된 상태고 자신의 댓글이 아닐 경우
-								if((userid != '' || userid != null) && list[i].replyer != userid) {
+								if((userid != '' && userid != null) && list[i].replyer != userid) {
 							
 									// qna 게시판이면서 채택된 댓글이 아닐 경우
 									if ('${board.purpose}' == "Q" && checkValue != 1) {
@@ -351,8 +355,8 @@ style="height: 60vh;">
 								comments += list[i].reply + "</textarea>"
 								comments += "</div>";
 								comments += "<div class='btnDiv'>"
-								comments += "<button id='updateReplyBtn' type='button' class='btn btn-sm btn-outline-primary' value='" + list[i].rno + "'>UPDATE</button>"
-								comments += "<button id='cancelBtn' type='button' class='btn btn-sm btn-outline-primary'>CANCEL</button>";
+								comments += "<button type='button' class='btn btn-sm btn-outline-primary updateReplyBtn' value='" + list[i].rno + "'>UPDATE</button>"
+								comments += "<button type='button' class='btn btn-sm btn-outline-primary cancelBtn'>CANCEL</button>";
 								
 								// updateRno 초기화
 								updateRno = -1;
@@ -516,7 +520,7 @@ style="height: 60vh;">
 		
 	// update 버튼 누르면 updateForm 나타내기
 	// event delegation
-	replyUL.on("click", "#updateReplyFormBtn", function(e) {
+	replyUL.on("click", ".updateReplyFormBtn", function(e) {
 		// 나중에 동적으로 생기는 #updateReplyFormBtn tag 에 
 		// 이벤트 대상 변경
 		
@@ -529,7 +533,7 @@ style="height: 60vh;">
 	});
 	
 	
-		replyUL.on("click", "#updateReplyBtn", function(e) {
+		replyUL.on("click", ".updateReplyBtn", function(e) {
 		// 댓글 수정
 		
 		console.log("button clicked")
@@ -565,7 +569,7 @@ style="height: 60vh;">
 	
 	
 	/* cancelation to update a reply */
-	replyUL.on("click", "#cancelBtn", function(e) {
+	replyUL.on("click", ".cancelBtn", function(e) {
 		
 		showList(pageNum);
 		
@@ -575,7 +579,7 @@ style="height: 60vh;">
 	
 		
 	/* Delete a reply */
-	replyUL.on("click", "#deleteReplyBtn", function(e) {
+	replyUL.on("click", ".deleteReplyBtn", function(e) {
 		
 		// let originalReplyer = formInputReplyer.val();
 		
@@ -776,6 +780,9 @@ style="height: 60vh;">
 	});
 	/* /.recommendation button */
 	
+	// for accordion pagination
+	var targetrno = 0;
+	var divId = '';
 	
 	// image 파일을 클릭시 모달 내부에 해당 파일의 정보 넣어주기
 			$("#uploadResult").on("click", ".img-modal", function() {
@@ -788,7 +795,7 @@ style="height: 60vh;">
 				document.querySelector("#exampleModalLabel").innerText = nameArr[iname];
 				
 				// 로그인한 유저면 다운로드 기능을 제공하고 아니면 경고창 띄우기
-				if(userid != '' || userid != null) {
+				if(userid != '' && userid != null) {
 					
 					$("#img-download").attr("href", "/download?fileName=" + filePath);
 									
@@ -812,7 +819,7 @@ style="height: 60vh;">
 				let filePath = encodeURI(uuidArr[iname] + "_" + nameArr[iname]);
 				
 				// 로그인한 유저면 다운로드 기능을 제공하고 아니면 경고창 띄우기
-				if(userid != '' || userid != null) {
+				if(userid != '' && userid != null) {
 					
 					$(".fileDownload").attr("href", "/download?fileName=" + filePath);
 									
@@ -829,36 +836,8 @@ style="height: 60vh;">
 			replyUL.on("click", ".offCanvasShow", function(e) {
 			
 				e.preventDefault();
-				var forms = "";
-				
-				// 대댓글 달기 폼
-				forms += "<div class='toReplyForm'>";
-				forms += 	"<div class='input-group-sm mb-3'>";
-
-				//로그인한 사용자면 writer 에 id가 저장, 로그인하지 않을 경우 guest
-				if('${userid == "" || userid == null}') {
-					forms +=    "<input type='hidden' name='gno' value=" + $(this).parents(".replyLiTag").data("rno") + " />";
-					forms += 		"<input type='text' class='form-control' name='replyer' placeholder='guest' aria-label='Replyer' value='guest' readonly />";
-										
-				} else {
-					
-					forms += 		"<input type='text' class='form-control' name='replyer' placeholder='guest' aria-label='Replyer' value=" + userid + " readonly />";
-					
-				}
-				
-				forms += 		"</div>";
-				forms += 		"<div class='mb-3'>";
-				forms += 			"<textarea class='form-control' name='reply' id='exampleFormControlTextarea1' rows='2'></textarea>";
-				forms += 		"</div>";
-				forms += 		"<button type='button' class='btn btn-sm btn-outline-primary toReplyBtn'>REGISTER</button>";
-				forms += 		"<hr>";
-				forms += 	"</div>";
-				forms += "</div>";
-				//comments += "</form>";
-				
-				// button 을 누른 댓글의 다음에 복사한 폼을 붙여넣기함
-				$(".offcanvas-middle").html(forms);
 								
+				// button 을 누른 댓글의 다음에 복사한 폼을 붙여넣기함								
 				var clickedReply = "";
 				var rno = $(this).parents(".replyLiTag").data("rno");
 				console.log(rno)
@@ -877,7 +856,7 @@ style="height: 60vh;">
 												
 					}
 					clickedReply += "<div class=''>";
-					clickedReply += "<strong class='replyReplyerInfo'>" + result.replyer + "  </strong>";
+					clickedReply += "<strong class='replyReplyerInfo'>" + result.replyer + "</strong>";
 					clickedReply += "<small class=''>";
 					clickedReply += replyService.displayTime(result.replyRegDate);
 					clickedReply += "</small></div>";
@@ -894,7 +873,7 @@ style="height: 60vh;">
 							
 						}
 						
-						if((userid != '' || userid != null) && result.replyer != userid) {
+						if((userid != '' && userid != null) && result.replyer != userid) {
 							
 							if ('${board.purpose}' == "Q" && result.adoption != "null") {
 								
@@ -945,112 +924,38 @@ style="height: 60vh;">
 					$(".offcanvas-title").html(clickedReply);
 			});
 				
-			
-				/* show under reply */				
-				// 하위 댓글 보기 클릭하면 클릭한 댓글의 rno 값을 보내줌
-				replyService.getToReply(rno, function(list) {
+				
+				// 대댓글 달기 폼
+				var forms = "";
 							
-							console.log("=================================");
-							console.log("===========toReplyList===========")
-							console.log(list)
-							console.log("=================================")
-							
-							var comments = "";
-							
-							for (let i = 0; i < list.length; i++) {
-								// 수정하려는 댓글인지 아닌지 판단하기 위해서 각 i 번째의 rno 값을 부여
-								comments += "<li class='replyLiTag' data-rno='" + list[i].rno + "'>";
-								
-								if(list[i].adoption != "null") {
-									// if adopted reply (채택된 댓글일 경우)
-									
-									// apply border effect				
-									comments += "<div class='replyDiv border border-warning border-5'>";
-									
-								} else {
-									// 채택된 댓글이 아닐경우								
-									comments += "<div class='replyDiv'>";
-									
-								}
-								
-								comments += "<div class=''>";
-								comments += "<strong class='replyReplyerInfo'>" + list[i].replyer + "  </strong>";
-								comments += "<small class=''>";
-								comments += replyService.displayTime(list[i].replyRegDate);
-								comments += "</small></div>";
-								
-								// 수정하려고 update 버튼을 누른 댓글이 아닌 일반 댓글
-								if(list[i].rno != updateRno) {
-									
-									comments += "<p class=''>" + list[i].reply + "</p></div>";
+				forms += "<div class='toReplyForm'>";
+				forms += 	"<div class='input-group-sm mb-3'>";
 
-									if(list[i].replyer == userid) {
+				forms +=    "<input type='hidden' name='gno' value=" + $(this).parents(".replyLiTag").data("rno") + " />";
+				//로그인한 사용자면 writer 에 id가 저장, 로그인하지 않을 경우 guest
+				if('${userId != "" && userId != null}') {
+					// 로그인한 경우
+					forms += 		"<input type='text' class='form-control' name='replyer' placeholder='" + userid + "' aria-label='Replyer' value=" + userid + " readonly />";
 										
-										comments += "<div class='btnDiv'>";
-										comments += "<button id='updateReplyFormBtn' type='button' class='btn btn-sm btn-outline-primary' name='" + list[i].rno + "'>UPDATE</button>";
-										comments += "<button id='deleteReplyBtn' type='button' class='btn btn-sm btn-outline-primary'>REMOVE</button>";
-										
-									}
-																	
-									// 로그인된 상태고 자신의 댓글이 아닐 경우
-									if((userid != '' || userid != null) && list[i].replyer != userid) {
-								
-										// qna 게시판이면서 채택된 댓글이 아닐 경우
-										if ('${board.purpose}' == "Q" && list[i].adoption != "null") {
-											
-											comments += "<div class='btnDiv'>";
-											// 채택버튼 보이기
-											comments += "<button id='selectReplyBtn' class='btn btn-sm btn-outline-primary' name='" + list[i].rno + "'>SELECT</button>"
-											// comments += "<button id='cancelSelectBtn' class=''>CANCEL</button></li>"
-											
-										}
-										
-										//comments += "<button class='btn btn-outline-primary toReplyRegBtn offCanvasShow' name='" + list[i].rno + "'>REPLY</button>"
-										comments += "</div>"
-										
-									}
-										
-								} else {
-									// 수정하기위해서 update 버튼을 누른 경우
-									
-									comments += "<div class='form-floating'>"
-									comments += "<textarea class='form-control' name='reply' id='exampleFormControlTextarea1' rows='2'>";
-									  
-									comments += list[i].reply + "</textarea>"
-									comments += "</div>";
-									comments += "<div class='btnDiv'>"
-									comments += "<button id='updateReplyBtn' type='button' class='btn btn-sm btn-outline-primary' value='" + list[i].rno + "'>UPDATE</button>"
-									comments += "<button id='cancelBtn' type='button' class='btn btn-sm btn-outline-primary'>CANCEL</button>";
-									
-									// updateRno 초기화
-									updateRno = -1;
-									
-								}											
-
-								comments += "</div>"
-								
-								if(list[i].gorder == 0) {
-									// 대댓글이 없을 경우
-																							
-									comments += "</li>";
-									
-								} else {
-									// 대댓글이 존재
-																
-									//comments += "<a href='#' class='accordionShow'>" + list[i].gorder + "개의 댓글</a>";								
-									comments += "</li>";
-									
-								}
-								comments += "<hr>";
-								
-								// console.log("updateRno 1: " + updateRno);
-						}
-						
-						$(".lower-reply").html(comments);		
+				} else {
+					// 로그인 하지 않은 경우
+					forms += 		"<input type='text' class='form-control' name='replyer' placeholder='guest' aria-label='Replyer' value='guest' readonly />";
 					
-				}); // end getToReply(function () {});
-				/* /.show under reply */
-								
+				}
+				
+				forms += 		"</div>";
+				forms += 		"<div class='mb-3'>";
+				forms += 			"<textarea class='form-control' name='reply' id='exampleFormControlTextarea1' rows='2'></textarea>";
+				forms += 		"</div>";
+				forms += 		"<button type='button' class='btn btn-sm btn-outline-primary toReplyBtn'>REGISTER</button>";
+				forms += 		"<hr>";
+				forms += 	"</div>";
+				forms += "</div>";
+				//comments += "</form>";
+				
+				// 대댓글 달기 폼 넣어주기
+				$(".offcanvas-middle").html(forms);
+				/* /.show under reply */												
 				
 			}) // end on("click", "#replyToReplyBtn")
 			/* /.reply to reply */
@@ -1091,7 +996,9 @@ style="height: 60vh;">
 					//replyForm.find("input").val("");
 					
 					// textarea 태그 초기화
-					toReplyForm.find("textarea[name='reply']").val("");			
+					toReplyForm.find("textarea[name='reply']").val("");	
+					
+					location.reload();
 					
 				});
 				
@@ -1104,13 +1011,22 @@ style="height: 60vh;">
 			replyUL.on("click", ".accordionShow", function () {
 			  
 				// 클릭한 요소의 부모 tag 중 class="replyLiTag" 인 요소의 data-rno 값을 저장
-			  var rno = $(this).parents(".replyLiTag").data("rno");
+			  rno = $(this).parents(".replyLiTag").data("rno");
 				
 				// 클릭한 요소에서 data-bs-target 이라는 속성을 가져옴
 				// 문자열의 index 1 부터 끝까지 반환해서 저장 
-			  var divId = $(this).attr("data-bs-target").substring(1);
+			  divId = $(this).attr("data-bs-target").substring(1);
 			  
-			  replyService.getToReply(rno, function(list) {
+				accordionHandler(rno, divId)
+			  
+			  
+			}) // end replyUL.on("click", ".accordionShow", function () {})
+			/* /.대댓글 보기 using accordion */	
+			
+			
+			/* accordion function */
+			function accordionHandler(rno, divId) {
+			replyService.getToReply(rno, function(list) {
 			    
 			    console.log("=================================");
 			    console.log("===========toReplyList===========")
@@ -1120,54 +1036,25 @@ style="height: 60vh;">
 			    var comments = "";
 			    
 			    for (let i = 0; i < list.length; i++) {
-			      // 수정하려는 댓글인지 아닌지 판단하기 위해서 각 i 번째의 rno 값을 부여
-			      comments += "<li class='replyLiTag' data-rno='" + list[i].rno + "'>";
-			      
-			      if(list[i].adoption != "null") {
-			        // if adopted reply (채택된 댓글일 경우)
-			        
-			        // apply border effect				
-			        comments += "<div class='replyDiv border border-warning border-5'>";
-			        
-			      } else {
-			        // 채택된 댓글이 아닐경우								
-			        comments += "<div class='replyDiv'>";
-			        
-			      }
-			      
+			      // 수정하려는 댓글인지 아닌지 판단하기 위해서 각 i 번째의 tno 값을 부여
+			      comments += "<li class='toreplyLiTag' data-tno='" + list[i].tno + "'>";						
+			      comments += "<div class='replyDiv'>";			      
 			      comments += "<div class=''>";
-			      comments += "<strong class='replyReplyerInfo'>" + list[i].replyer + "  </strong>";
+			      comments += "<strong class='replyReplyerInfo'>" + list[i].replyer + "</strong>";
 			      comments += "<small class=''>";
 			      comments += replyService.displayTime(list[i].replyRegDate);
 			      comments += "</small></div>";
 			      
 			      // 수정하려고 update 버튼을 누른 댓글이 아닌 일반 댓글
-			      if(list[i].rno != updateRno) {
+			      if(list[i].tno != updateTno) {
 			        
 			        comments += "<p class=''>" + list[i].reply + "</p></div>";
 
 			        if(list[i].replyer == userid) {
 			          
 			          comments += "<div class='btnDiv'>";
-			          comments += "<button id='updateReplyFormBtn' type='button' class='btn btn-sm btn-outline-primary' name='" + list[i].rno + "'>UPDATE</button>";
-			          comments += "<button id='deleteReplyBtn' type='button' class='btn btn-sm btn-outline-primary'>REMOVE</button>";
-			          
-			        }
-			                        
-			        // 로그인된 상태고 자신의 댓글이 아닐 경우
-			        if((userid != '' || userid != null) && list[i].replyer != userid) {
-			      
-			          // qna 게시판이면서 채택된 댓글이 아닐 경우
-			          if ('${board.purpose}' == "Q" && list[i].adoption != "null") {
-			            
-			            comments += "<div class='btnDiv'>";
-			            // 채택버튼 보이기
-			            comments += "<button id='selectReplyBtn' class='btn btn-sm btn-outline-primary' name='" + list[i].rno + "'>SELECT</button>"
-			            // comments += "<button id='cancelSelectBtn' class=''>CANCEL</button></li>"
-			            
-			          }
-			          
-			          //comments += "<button class='btn btn-outline-primary toReplyRegBtn offCanvasShow' name='" + list[i].rno + "'>REPLY</button>"
+			          comments += "<button type='button' class='btn btn-sm btn-outline-primary tUpdateFormBtn' name='" + list[i].tno + "'>UPDATE</button>";
+			          comments += "<button type='button' class='btn btn-sm btn-outline-primary tDeleteBtn'>REMOVE</button>";
 			          comments += "</div>"
 			          
 			        }
@@ -1181,11 +1068,11 @@ style="height: 60vh;">
 			        comments += list[i].reply + "</textarea>"
 			        comments += "</div>";
 			        comments += "<div class='btnDiv'>"
-			        comments += "<button id='updateReplyBtn' type='button' class='btn btn-sm btn-outline-primary' value='" + list[i].rno + "'>UPDATE</button>"
-			        comments += "<button id='cancelBtn' type='button' class='btn btn-sm btn-outline-primary'>CANCEL</button>";
+			        comments += "<button type='button' class='btn btn-sm btn-outline-primary tUpdateBtn' name='" + list[i].rno + "'>UPDATE</button>"
+			        comments += "<button type='button' class='btn btn-sm btn-outline-primary tCancelBtn'>CANCEL</button>";
 			        
-			        // updateRno 초기화
-			        updateRno = -1;
+			        // updateTno 초기화
+			        updateTno = -1;
 			        
 			      }											
 
@@ -1212,9 +1099,73 @@ style="height: 60vh;">
 			    $("div[id='" + divId + "'] > div").html(comments);
 
 			}); // end getToReply(function () {});
-			  
-			}) // end replyUL.on("click", ".accordionShow", function () {})
-			/* /.대댓글 보기 using accordion */	
+			
+			} // end function accordionHandler() {}
+			/* /.accordion function */
+			
+			
+			
+			/* 대댓글 버튼에 기능 주기 */
+			// update function
+			replyUL.on("click", ".tUpdateFormBtn", function() {
+				// 대댓글의 업데이트 버튼을 처음 눌르면 대댓글의 tno 값을 저장
+				updateTno = $(this).attr("name");
+				
+				accordionHandler(rno, divId);
+				
+			})
+			
+			replyUL.on("click", ".tUpdateBtn", function() {
+				
+				var reply = {
+					tno: $(this).parents(".toreplyLiTag").data("tno"),
+					reply: $(this).parents(".toreplyLiTag").find("textarea").val(),
+					replyer: $(this).parents(".toreplyLiTag").find("strong").text()					
+				}
+				
+				console.log(reply)						
+				
+			replyService.tUpdate(reply, function(result) {
+				
+				alert(result);
+				
+				accordionHandler(rno, divId);
+				//replyForm.find("input").val("");
+				
+				})				
+				
+			}) // end replyUL.on("click", ".tUpdateBtn", function() {})
+			
+			
+			// cancel button click
+			replyUL.on("click", ".tDeleteBtn", function() {
+				
+				accordionHandler(rno, divId);
+				
+			})
+			
+			
+			// delete button click
+			replyUL.on("click", ".tDeleteBtn", function() {
+				
+				let tno = $(this).parents(".toreplyLiTag").data("tno");
+				console.log("delete tno: " + tno);
+				
+				if(confirm("Do you really want to delete a reply?")) {
+					
+					replyService.tRemove(tno, function(result) {
+					
+					alert(result);
+					
+					showList(pageNum);
+					
+					})
+				}
+				
+			})
+						
+			/* 대댓글 버튼에 기능 주기 */
+			
 
 			
 			

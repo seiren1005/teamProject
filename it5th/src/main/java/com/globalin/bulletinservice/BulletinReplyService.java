@@ -28,6 +28,14 @@ public interface BulletinReplyService {
 	public BulletinReplyPage getReplyListWithPage(BulletinCriteria cri, int bno);
 	
 	// gorder 값 증가
-	public int gorderIncrement(BulletinReplyVO rvo);	
+//	public int gorderIncrement(BulletinReplyVO rvo);	
+	
+	// 대댓글 수정
+	public int tUpdate(BulletinReplyVO rvo);
+	
+	// 대댓글 삭제
+	public int tDelete(int tno);
+	
+	public BulletinReplyVO tSelectOne(int tno);
 	
 }

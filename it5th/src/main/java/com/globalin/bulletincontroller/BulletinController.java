@@ -177,17 +177,11 @@ public class BulletinController {
 
 		log.info("==================================");
 		log.info("fvo: " + fvo);
-		
-		if(service.modify(bvo) == true) {
-			
-			rttr.addFlashAttribute("result", "success");
-			
-			if(uService.get(bvo.getBno()) == null) {
-				// bvo 에 첨부 파일이 없음
-				bvo.setFileName("exist");
-				service.modify(bvo);
 				
-				if(fvo.getFileName() != null) {
+			if(uService.get(bvo.getBno()) == null) {
+				// bvo 에 첨부 파일이 없음				
+				
+				if(fvo.getFileName() != "null") {
 					
 					String[] nameArr = req.getParameterValues("fileName");
 					String[] uuidArr = req.getParameterValues("uuid");
@@ -206,10 +200,17 @@ public class BulletinController {
 					
 					fvo.setBno(bvo.getBno());
 					
-					uService.insert(fvo);					
+					uService.insert(fvo);
 					
-				}
-											
+					bvo.setFileName("exist");
+					service.modify(bvo);
+					
+				} else {
+					
+					service.modify(bvo);
+					
+				}											
+								
 			} else {
 				
 				String[] nameArr = req.getParameterValues("fileName");
@@ -230,9 +231,12 @@ public class BulletinController {
 				
 				uService.update(fvo);	
 				
+				bvo.setFileName("exist");
+				service.modify(bvo);
+				
 			}			
 			
-		}
+			rttr.addFlashAttribute("result", "success");			
 		
 		// 페이지 정보 전달
 		rttr.addFlashAttribute("cri", cri);

@@ -259,7 +259,9 @@ li {
 		/* reigster.jsp 페이지로 이동 using authority*/
 		$("#regBtn").on("click", function() {
 			
-			if(userid != '' || userid != null) {		
+			if(userid != '' && userid != null) {
+				console.log("if")
+				console.log(userid)
 				// userid 로 보안 검사
 				// 로그인한 유저인지
 				replyService.idCheck(userid, 
@@ -283,6 +285,8 @@ li {
 				}) // function(result)
 				
 			} else {				
+				console.log("else")
+				console.log(userid)
 				if(confirm("You need to login. Do you want to move at login page?")) {
 					// yes -> 로그인 창으로 이동
 					location.href = "/bulletin/login";
@@ -418,7 +422,7 @@ li {
 			
 			e.preventDefault();
 			
-			if((userid != '' || userid != null) && userid == $(this).attr("name")) {
+			if((userid != '' && userid != null) && userid == $(this).attr("name")) {
 				// 로그인한 상태이면서 로그인 정보가 비밀글 작성자 정보와 일치할 경우
 					
 				// page info 같이 전달

@@ -55,7 +55,7 @@
 					</div>
 				<div class="input-group mb-3">
 				  <span class="input-group-text col-2">CONTENT</span>
-				  <textarea class="form-control boardContent" name="content" aria-label="CONTENT"><c:out value='${board.content }' /></textarea>
+				  <textarea class="form-control boardContent" name="content" aria-label="CONTENT" rows="10"><c:out value='${board.content }' /></textarea>
 				</div>
 				<div class="input-group mb-3">
 					  <span class="input-group-text col-2" id="basic-addon1">REGDATE</span>

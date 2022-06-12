@@ -29,7 +29,9 @@ public interface BulletinReplyMapper {
 	public int update(BulletinReplyVO rvo);
 	
 	// update gno at reply
-	public int updateGOrder(BulletinReplyVO rvo);
+	// service 를 통하지 않고 바로 mapper 를 호출시 변수 두개 가능?
+	public int updateGOrder(@Param("rno") int rno,
+			@Param("amount") int amount);
 	
 	// view all replies with paging
 	public List<BulletinReplyVO> selectAllWithPaging(
@@ -41,5 +43,14 @@ public interface BulletinReplyMapper {
 
 	// check is there adopted valed in adoption column
 	public int checkAdoption(int bno);
+	
+	// 대댓글 수정
+	public int tUpdate(BulletinReplyVO rvo);
+	
+	// 대댓글 삭제
+	public int tDelete(int tno);
+	
+	// 대댓글 하나 불러오기
+	public BulletinReplyVO tSelectOne(int tno);
 	
 }

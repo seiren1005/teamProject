@@ -78,12 +78,24 @@ public class BulletinReplyServiceImpl implements BulletinReplyService {
 		
 		BulletinReplyVO rvo = rMapper.selectOne(rno);
 		
+		List<BulletinReplyVO> trvo = rMapper.selectSubGroup(rno);
+		// trvo 의 사이즈로 해당 댓글에 달려있는 대댓글 수를 계산
+		
 		int result = rMapper.delete(rno);
 		
 		if(result == 1) {
-			
-			// 삭제 시 해당 bno 의 댓글 수 -1
-			bMapper.updateReplyCnt(rvo.getBno(), -1);
+			System.out.println("size");
+			System.out.println(trvo.size());
+			if (trvo.size() > 0) {
+				// 대댓글이 존재할 경우
+				bMapper.updateReplyCnt(rvo.getBno(), -(1 + trvo.size()));
+				
+			} else {				
+				// 대댓글이 없을 경우
+				// 삭제 시 해당 bno 의 댓글 수 -1
+				bMapper.updateReplyCnt(rvo.getBno(), -1);
+				
+			}
 			
 		}
 		
@@ -123,22 +135,22 @@ public class BulletinReplyServiceImpl implements BulletinReplyService {
 
 
 	// increment of gorder
-	@Override
-	public int gorderIncrement(BulletinReplyVO rvo) {
-		// TODO Auto-generated method stub
-		
-		if(rMapper.updateGOrder(rvo) == 1) {
-			// updateGOrder query 실행 결과가 1 이면 (update 성공하면)
-			
-			return 1;
-			// 1 return
-			
-		}
-		
-		return 0;
-		// update 실패시 0 return
-		
-	}
+//	@Override
+//	public int gorderIncrement(BulletinReplyVO rvo) {
+//		// TODO Auto-generated method stub
+//		
+//		if(rMapper.updateGOrder(rvo, 1) == 1) {
+//			// updateGOrder query 실행 결과가 1 이면 (update 성공하면)
+//			
+//			return 1;
+//			// 1 return
+//			
+//		}
+//		
+//		return 0;
+//		// update 실패시 0 return
+//		
+//	}
 
 
 	@Override
@@ -154,16 +166,61 @@ public class BulletinReplyServiceImpl implements BulletinReplyService {
 		// TODO Auto-generated method stub
 		log.info("toReply: " + rvo);
 		
+		int rno = rvo.getRno();
 		int result = rMapper.insertToReply(rvo);
 		
 		if (result == 1) {			
 			// bno 의 댓글수 +1
 			bMapper.updateReplyCnt(rvo.getBno(), 1);
+			rMapper.updateGOrder(rno, 1);
 			
 		}
 		
 		return result;
 	}
 
+	// 대댓글 수정
+	@Override
+	public int tUpdate(BulletinReplyVO rvo) {
+		// TODO Auto-generated method stub
+		log.info("update toreply: " + rvo);
+		
+		return rMapper.tUpdate(rvo);
+		
+	}
+
+
+	@Override
+	public int tDelete(int tno) {
+		// TODO Auto-generated method stub
+		log.info("Delete toreply: " + tno);
+		
+		int rno = rMapper.tSelectOne(tno).getRno();
+		System.out.println(rMapper.tSelectOne(tno));
+		System.out.println(rno);
+		
+		int bno = rMapper.selectOne(rno).getBno();
+		System.out.println(bno);
+		
+		int result = rMapper.tDelete(tno);
+				
+		if (result == 1) {
+			
+			bMapper.updateReplyCnt(bno, -1);
+			rMapper.updateGOrder(rno, -1);
+			
+		}
+		
+		return result;
+	}
+	
+	
+	@Override
+	public BulletinReplyVO tSelectOne(int tno) {
+		// TODO Auto-generated method stub
+		
+		return rMapper.tSelectOne(tno);
+	}
+	
 
 }

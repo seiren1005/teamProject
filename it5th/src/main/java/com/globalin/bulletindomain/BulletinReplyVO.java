@@ -6,7 +6,7 @@ import java.util.Date;
 public class BulletinReplyVO {
 	
 	
-	private int rno, bno, gno, gorder, deep;
+	private int rno, bno, gno, gorder, deep, tno;
 	private String reply, replyer;
 	private String adoption;
 	private Date replyRegDate;
@@ -22,6 +22,13 @@ public class BulletinReplyVO {
 	}
 	
 	
+	
+	public int getTno() {
+		return tno;
+	}
+	public void setTno(int tno) {
+		this.tno = tno;
+	}
 	public int getGno() {
 		return gno;
 	}
@@ -87,8 +94,8 @@ public class BulletinReplyVO {
 	@Override
 	public String toString() {
 		return "BulletinReplyVO [rno=" + rno + ", bno=" + bno + ", gno=" + gno + ", gorder=" + gorder + ", deep=" + deep
-				+ ", reply=" + reply + ", replyer=" + replyer + ", adoption=" + adoption + ", replyRegDate="
-				+ replyRegDate + ", replyModDate=" + replyModDate + "]";
+				+ ", tno=" + tno + ", reply=" + reply + ", replyer=" + replyer + ", adoption=" + adoption
+				+ ", replyRegDate=" + replyRegDate + ", replyModDate=" + replyModDate + "]";
 	}
 		
 	
