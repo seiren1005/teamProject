@@ -59,7 +59,6 @@ var replyService = (function () {
 			
 			if (error) {
 				error(err);
-				console.log("do error occurs?");
 			}
 			
 		}); // end getJSON()

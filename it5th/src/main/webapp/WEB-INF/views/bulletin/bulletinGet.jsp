@@ -126,11 +126,11 @@
 			<div class="input-group mb-3">
 			<!-- 로그인한 사용자면 writer 에 id가 저장, 로그인하지 않을 경우 guest -->
 				<c:choose>
-					<c:when test="${userId == '' && userId == null}">
-						<input type="text" class="form-control" name="replyer" placeholder="guest" aria-label="Replyer" value="<c:out value='guest' />" readonly />
+					<c:when test="${userId != '' && userId != null}">
+						<input type="text" class="form-control" name="replyer" placeholder='${userId }' aria-label="Replyer" value="<c:out value='${userId }' />" readonly />
 					</c:when>
 					<c:otherwise>
-						<input type="text" class="form-control" name="replyer" placeholder='${userId }' aria-label="Replyer" value="<c:out value='${userId }' />" readonly />
+						<input type="text" class="form-control" name="replyer" placeholder="guest" aria-label="Replyer" value="<c:out value='guest' />" readonly />
 					</c:otherwise>
 				</c:choose> 				  
 			</div>
@@ -332,7 +332,7 @@ style="height: 40vh;">
 								if((userid != '' && userid != null) && list[i].replyer != userid) {
 							
 									// qna 게시판이면서 채택된 댓글이 아닐 경우
-									if ('${board.purpose}' == "Q" && checkValue != 1) {
+									if ('${board.purpose}' == "Q" && list[i].adoption != "adopted") {
 										
 										comments += "<div>";
 										// 채택버튼 보이기
@@ -733,48 +733,62 @@ style="height: 40vh;">
 			
 			let lvo;
 			
-			if($(this).hasClass("good") == true) {
+			if(userid != '' && userid != null) {
 				
-				console.log(userid)
-				
-				lvo = {
-					bno: '${board.bno }',
-					userid: userid,
-					isLike: 'true'
-						
-				}
-				
-			}
-			
-			if($(this).hasClass("bad") == true) {
-
-				console.log(userid)
-				
-				lvo = {
+				if($(this).hasClass("good") == true) {
 					
+					console.log(userid)
+					
+					lvo = {
 						bno: '${board.bno }',
 						userid: userid,
-						isLike: 'false'
+						isLike: 'true'
+							
+					}
+					
+				}
+				
+				if($(this).hasClass("bad") == true) {
+
+					console.log(userid)
+					
+					lvo = {
 						
-				}				
+							bno: '${board.bno }',
+							userid: userid,
+							isLike: 'false'
+							
+					}				
+					
+				}
+				
+				var element = document.getElementsByClassName('recommendCnt');
+				
+				$.ajax({
+					url: '/bulletin/bulletinRecommend',
+					type: 'GET',
+					data : lvo,
+					dataType : 'text',
+					success : function(result){
+						
+						alert(result);
+						location.replace(location.href);
+						
+					}			
+				
+				});
+				
+			} else {
+				
+				if(confirm("You need to login. Do you want to move to login page?")) {
+					// yes -> 로그인 창으로 이동
+					location.href = "/bulletin/login";
+				
+				}	
 				
 			}
 			
-			var element = document.getElementsByClassName('recommendCnt');
 			
-			$.ajax({
-				url: '/bulletin/bulletinRecommend',
-				type: 'GET',
-				data : lvo,
-				dataType : 'text',
-				success : function(result){
-					
-					alert(result);
-					location.replace(location.href);
-					
-				}			
-			
-			});
 			
 		
 	});
@@ -1175,7 +1189,7 @@ style="height: 40vh;">
 	// 비 로그인 상태로 다운로드 클릭시 로그인 화면으로 이동할지 여부
 	function loginChecker() {
 		
-		if(confirm("You need to login!! Would you want to move at login page?")) {
+		if(confirm("You need to login!! Would you want to move to login page?")) {
 			
 			location.href = "/bulletin/login";
 			

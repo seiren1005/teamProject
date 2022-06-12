@@ -274,7 +274,7 @@ li {
 							
 						} else {							
 							// id 가 존재하지 않을 경우 (url 로 부적절하게 접근할 경우)
-							if(confirm("You need to login. Do you want to move at login page?")) {
+							if(confirm("You need to login. Do you want to move to login page?")) {
 								// yes -> 로그인 창으로 이동
 								location.href = "/bulletin/login";
 							
@@ -287,7 +287,7 @@ li {
 			} else {				
 				console.log("else")
 				console.log(userid)
-				if(confirm("You need to login. Do you want to move at login page?")) {
+				if(confirm("You need to login. Do you want to move to login page?")) {
 					// yes -> 로그인 창으로 이동
 					location.href = "/bulletin/login";
 					
@@ -422,7 +422,7 @@ li {
 			
 			e.preventDefault();
 			
-			if((userid != '' && userid != null) && userid == $(this).attr("name")) {
+			if((userid != '' && userid != null) && (userid == $(this).attr("name") || userid == "admin")) {
 				// 로그인한 상태이면서 로그인 정보가 비밀글 작성자 정보와 일치할 경우
 					
 				// page info 같이 전달

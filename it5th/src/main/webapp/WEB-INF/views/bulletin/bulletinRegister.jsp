@@ -39,7 +39,7 @@
 					  </select>
 					</div>
 					<div class="input-group mb-3">
-					  <span class="input-group-text boardTitle" id="basic-addon1">TITLE</span>
+					  <span class="input-group-text boardTitle col-1" id="basic-addon1" style="text-align: center">TITLE</span>
 					  <input type="text" class="form-control boardTitle" name="title" />
 					</div>
 					
@@ -48,18 +48,18 @@
 					  <label class="form-check-label" for="flexSwitchCheckDefault">비밀글</label>
 					</div>
 					<div class="input-group mb-3">
-					  <span class="input-group-text boardTitle" id="basic-addon1">WRITER</span>
+					  <span class="input-group-text boardTitle col-1" id="basic-addon1" style="text-align: center">WRITER</span>
 					  <input type="text" class="form-control boardTitle boardWriter" name="writer" 
 					  	value="<c:out value='${userId }' />" readonly />
 					</div>
 					<div class="input-group">
-					  <span class="input-group-text">CONTENT</span>
+					  <span class="input-group-text col-1">CONTENT</span>
 					  <textarea class="form-control boardContent" name="content" aria-label="CONTENT" rows="10"></textarea>
 					</div>					
-					<div class="">
+					<div class="col-1">
 						<label>FILE UPLOAD</label>
 					</div>
-					<div class="input-group uploadDiv">
+					<div class="input-group uploadDiv ">
 					  <input type="file" class="form-control" name="attachFile" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04" aria-label="Upload" multiple />
 					  <button class="btn btn-sm btn-outline-secondary uploadBtn" type="button" onclick="fileUpload();" id="inputGroupFileAddon04">UPLOAD</button>
 					</div>				
@@ -129,19 +129,8 @@
 			
 		})
 		
-		// span 의 x 를 눌렀을 때 file 이면 li 태그 제거
-		if(type == "file") {
-			
-			$(this).closest("li").remove();
-			
-		}
-		
-		// span 의 x 를 눌렀을 때 image 이면 class="col" 인 div 태그 제거
-		if(type == "image") {
-			
-			$(this).parents("div[class='card']").remove();
-			
-		}
+		console.log($(this).closest("div"))
+			$(this).closest("div").remove();
 				
 	})	
 	/* /.업로드 파일 삭제 */

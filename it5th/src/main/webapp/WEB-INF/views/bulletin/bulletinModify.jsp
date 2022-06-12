@@ -37,6 +37,7 @@
 	
 		
 		<div class="modifyPageForm">
+			<input type="hidden" name='secret' value="<c:out value='${board.secret }' />" />
 				<div class="input-group mb-3 menu">
 				  <span class="input-group-text col-2" id="basic-addon1">no.</span>
 				  <input type="text" class="form-control border border-4" name="bno" id="back-bno" 
