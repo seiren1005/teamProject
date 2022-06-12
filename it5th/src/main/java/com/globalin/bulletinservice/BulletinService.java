@@ -35,5 +35,6 @@ public interface BulletinService {
 	// update total recommend
 	public boolean updateTotalRec(BulletinVO bvo);
 		
-
+	// check id in member DB
+	public boolean loginCheck(String userid);
 }

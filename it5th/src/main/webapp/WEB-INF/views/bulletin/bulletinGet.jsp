@@ -10,41 +10,7 @@
 		list-style: none;
 		
 	}
-	
-	.bigPictureWrapper {
-		position: absolute;
-		display: none;
-		justify-content: center;
-		align-items: center;
-		top: 0;
-		width: 100%;
-		height: 100%;
-		background-color: gray;
-		z-index: 100;
-	}
-	
-	.bigPicture {
-		position: realative;
-		display: flex;
-		justify-content: center;
-		align-items: center;
-	}
-	
-	.bigPicture img {
-		width: 600px;
-	}
-	
-	.uploadResult ul li span {
-		color: white;
-	}
-	
-	.getPageForm span {
-	
-	text-align: center;
-	display: inline-block;
-	
-	}
-	
+
 </style>
 
 
@@ -96,7 +62,7 @@
 				
 				<div>
 				<!-- Button for locating to modify.jsp -->
-				<c:if test='${member.userId eq board.writer }'>
+				<c:if test='${userid eq board.writer }'>
 					<button type="button" data-oper="update" class="btn btn-sm btn-outline-warning">MODIFY</button>
 				</c:if>
 				
@@ -160,11 +126,11 @@
 			<div class="input-group mb-3">
 			<!-- 로그인한 사용자면 writer 에 id가 저장, 로그인하지 않을 경우 guest -->
 				<c:choose>
-					<c:when test="${member.userId == '' || member.userId == null}">
+					<c:when test="${userid == '' || userid == null}">
 						<input type="text" class="form-control" name="replyer" placeholder="guest" aria-label="Replyer" value="<c:out value='guest' />" readonly />
 					</c:when>
 					<c:otherwise>
-						<input type="text" class="form-control" name="replyer" placeholder='${member.userId }' aria-label="Replyer" value="<c:out value='${member.userId }' />" readonly />
+						<input type="text" class="form-control" name="replyer" placeholder='${userid }' aria-label="Replyer" value="<c:out value='${userid }' />" readonly />
 					</c:otherwise>
 				</c:choose> 				  
 			</div>
@@ -255,7 +221,7 @@ style="height: 60vh;">
 	// console.log("updateRno 0: " + updateRno);
 	
 	// 로그인한 사용자의 id
-	var userid = '${member.userId }'
+	var userid = '${userId }'
 	
 	console.log(userid)
 		
@@ -714,7 +680,7 @@ style="height: 60vh;">
 							+ "_" + nameArr[i]);
 					
 					uploadHtml += "<li class='uploadLi'>"
-						+ "<img src='/resources/img/file_icon2.png' width='20px'>"
+						+ "<img src='/resources/img/file_icon.png' width='20px'>"
 						+ "<a href='#' class='fileDownload' name='" + i + "'>"
 						+ nameArr[i] + "</a>"
 						
@@ -765,11 +731,11 @@ style="height: 60vh;">
 			
 			if($(this).hasClass("good") == true) {
 				
-				console.log('${member.userId }')
+				console.log(userid)
 				
 				lvo = {
 					bno: '${board.bno }',
-					userid: '${member.userId }',
+					userid: userid,
 					isLike: 'true'
 						
 				}
@@ -778,12 +744,12 @@ style="height: 60vh;">
 			
 			if($(this).hasClass("bad") == true) {
 
-				console.log('${member.userId }')
+				console.log(userid)
 				
 				lvo = {
 					
 						bno: '${board.bno }',
-						userid: '${member.userId }',
+						userid: userid,
 						isLike: 'false'
 						
 				}				
@@ -870,7 +836,7 @@ style="height: 60vh;">
 				forms += 	"<div class='input-group-sm mb-3'>";
 
 				//로그인한 사용자면 writer 에 id가 저장, 로그인하지 않을 경우 guest
-				if('${member.userId == "" || member.userId == null}') {
+				if('${userid == "" || userid == null}') {
 					forms +=    "<input type='hidden' name='gno' value=" + $(this).parents(".replyLiTag").data("rno") + " />";
 					forms += 		"<input type='text' class='form-control' name='replyer' placeholder='guest' aria-label='Replyer' value='guest' readonly />";
 										

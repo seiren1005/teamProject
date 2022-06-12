@@ -97,7 +97,7 @@
 
 <script type="text/javascript">
 
-	var userid = '${member.userId }'
+	var userid = '${userId }'
 	
 	/* 로그인 여부 판단 */
 	$(document).ready(function() {
@@ -223,11 +223,6 @@
 		})
 		/* /.업로드 파일 삭제 */	
 		
-	
-			// declare variables for tooltip
-			const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
-			const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
-		
 		
 	}); // end $(document).ready	
 	
@@ -352,7 +347,7 @@
 						+ "_" + nameArr[i].fileName);
 				
 				uploadHtml += "<li class='uploadLi'>"
-					+ "<img src='/resources/img/file_icon2.png' width='20px'>"
+					+ "<img src='/resources/img/file_icon.png' width='20px'>"
 					+ nameArr[i]
 					+ "<span data-file=\'" + fileCallPath + "\' data-type='file'>"
 					+ " x </span>"
@@ -411,7 +406,7 @@
 							+ "_" + uploadArr[i].fileName);
 					
 					uploadHtml += "<li class='uploadLi'>"
-						+ "<img src='/resources/img/file_icon2.png' width='20px'>"
+						+ "<img src='/resources/img/file_icon.png' width='20px'>"
 						+ uploadArr[i].fileName
 						+ "<span data-file=\'" + fileCallPath + "\' data-type='file'>"
 						+ " x </span>"

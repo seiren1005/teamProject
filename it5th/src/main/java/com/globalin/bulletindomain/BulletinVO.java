@@ -6,7 +6,7 @@ import java.util.Date;
 public class BulletinVO {
 
 	private int bno, replyCnt, hit, totalRec;
-	private String purpose, title, content, writer;
+	private String purpose, title, content, writer, fileName;
 	
 	// 비밀글 컬럼
 	private String secret = "no";
@@ -14,6 +14,17 @@ public class BulletinVO {
 	private Date regDate, modDate;
 		
 	
+	public BulletinVO() {
+		this.fileName = "null";
+	}
+	
+	
+	public String getFileName() {
+		return fileName;
+	}
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
+	}
 	public int getHit() {
 		return hit;
 	}
@@ -86,7 +97,8 @@ public class BulletinVO {
 	public String toString() {
 		return "BulletinVO [bno=" + bno + ", replyCnt=" + replyCnt + ", hit=" + hit + ", totalRec=" + totalRec
 				+ ", purpose=" + purpose + ", title=" + title + ", content=" + content + ", writer=" + writer
-				+ ", secret=" + secret + ", regDate=" + regDate + ", modDate=" + modDate + "]";
+				+ ", fileName=" + fileName + ", secret=" + secret + ", regDate=" + regDate + ", modDate=" + modDate
+				+ "]";
 	}		
 	
 }

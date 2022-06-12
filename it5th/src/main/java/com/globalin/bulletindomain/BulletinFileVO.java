@@ -10,6 +10,9 @@ public class BulletinFileVO {
 	private Date regDate, modDate;
 	
 	
+	public BulletinFileVO() {
+		this.fileName = "null";
+	}
 	public int getFno() {
 		return fno;
 	}

@@ -138,8 +138,6 @@ var replyService = (function () {
 	// 댓글 하나 조회
 	function get(rno, callback, error) {
 		
-		console.log("is accessed?")
-		
 		$.get("/replies/selectOne/" + rno, 
 			function(result) {
 			
@@ -222,6 +220,34 @@ var replyService = (function () {
 	/* /.댓글에 달린 하위 댓글 가져오기 */
 	
 	
+	// 회원 정보가 있는지 확인
+	function idCheck(userid, callback, error) {
+		
+		console.log("??");
+		
+		
+		$.get("/loginCheck/" + userid,
+				
+				function(result) {
+					
+					if(callback) {
+						
+						callback(result);
+						
+					}			
+					
+			}).fail(function(xhr, status, error) {
+				
+				if(error) {
+					
+					error(error);
+					
+				}
+			});
+		
+	}; // end get
+	
+	
 	// 시간 포맷 설정
 	function displayTime(timeValue) {
 		
@@ -279,7 +305,8 @@ var replyService = (function () {
 		get: get,
 		displayTime: displayTime,
 		addToReply: addToReply,
-		getToReply: getToReply
+		getToReply: getToReply,
+		idCheck: idCheck
 	};	
 	
 })();
@@ -289,7 +316,6 @@ $(document).ready(function() {
 	// enable tooltips
 	const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
 	const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
-
 	
 	// enable popovers
 	const popoverTriggerList = document.querySelectorAll('[data-bs-toggle="popover"]')

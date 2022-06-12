@@ -124,6 +124,24 @@ public class BulletinServiceImpl implements BulletinService {
 		
 		return false;
 	}
+
+	// check information in member DB using userid
+	@Override
+	public boolean loginCheck(String userid) {
+		// TODO Auto-generated method stub
+		String idcheck = mapper.loginCheck(userid);
+		
+		System.out.println("idcheck");
+		System.out.println(idcheck);
+				
+		if(idcheck != null) {
+			
+			return true;
+			
+		}
+		
+		return false;
+	}
 	
 	
 }

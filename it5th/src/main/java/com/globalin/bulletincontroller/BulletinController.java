@@ -96,6 +96,7 @@ public class BulletinController {
 			fvo.setImageChecker(String.join("/", checkArr));
 			log.info("register: " + fvo);
 			
+			bvo.setFileName("exist");
 			service.register(bvo);
 			
 			// diposable storage object
@@ -182,6 +183,9 @@ public class BulletinController {
 			rttr.addFlashAttribute("result", "success");
 			
 			if(uService.get(bvo.getBno()) == null) {
+				// bvo 에 첨부 파일이 없음
+				bvo.setFileName("exist");
+				service.modify(bvo);
 				
 				if(fvo.getFileName() != null) {
 					
@@ -262,11 +266,12 @@ public class BulletinController {
 
 	
 	// move to login page
-	@GetMapping("/bulletin/login")
-	public String login() {
-		
-		return "redirect:/member/login.do";
-		
-	}
+		@GetMapping("/bulletin/login")
+		public String login() {
+			
+			return "redirect:/member/login.do";
+			
+		}
+	
 	
 }

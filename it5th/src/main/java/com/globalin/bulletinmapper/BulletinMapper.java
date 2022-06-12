@@ -43,6 +43,9 @@ public interface BulletinMapper {
 	
 	// update total recommend
 	public int updateTotalRec(BulletinVO bvo);
+	
+	// id 가 회원정보에 있는지 확인
+	public String loginCheck(String userid);
 		
 	
 }

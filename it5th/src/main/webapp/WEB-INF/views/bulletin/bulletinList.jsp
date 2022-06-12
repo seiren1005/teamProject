@@ -52,56 +52,69 @@ li {
 			<th scope="col">REGDATE</th>
 		</tr>
 	</thead>
-	<tbody>
-		
+	
+	<tbody>		
 			<c:forEach items="${list }" var="board">
-			<tr>
-				<td><c:out value="${board.bno }" /></td>
-				<td><c:choose>
-						<c:when test="${board.purpose eq 'Q' }">
-											Q&A
-										</c:when>
-						<c:otherwise>
-											FREE
-										</c:otherwise>
-					</c:choose></td>
-				
-					<c:choose>
-						<c:when test="${board.secret eq 'yes' }">
-					<td>					
-						<img class="secretIcon" src="/resources/img/lock_02.png" />
-					</td>					
-					<!-- 비밀글의 경우 클릭시 작성자와 로그인 유저의 정보가 일치하는지 체크 -->
-					<td><a style="color:black;" id="privateContent" href="<c:out value='${board.bno }' />"
-						name="<c:out value='${board.writer }' />"> 비밀글입니다.</a>
-						<c:if test="${board.replyCnt > 0 }">
-									<b>[<c:out value="${board.replyCnt }" />]</b>
-								</c:if>
-						<c:if test="${board.totalRec > 0 }">
-							<b style="color:blue;">[<c:out value="${board.totalRec }" />]</b>
-						</c:if>
-						<c:if test="${board.totalRec < 0 }">
-							<b style="color:red;">[<c:out value="${board.totalRec }" />]</b>
-						</c:if>
-					</td>
-					</c:when>					
-				<c:otherwise>
-					<td></td>
-					<td><a style="color:black;" class="moveDetails"
-						href="<c:out value='${board.bno }' />"> <c:out
-								value="${board.title }" /></a> 
-								<c:if test="${board.replyCnt > 0 }">
-									<b>[<c:out value="${board.replyCnt }" />]</b>
-								</c:if>
-						<c:if test="${board.totalRec > 0 }">
-							<b style="color:blue;">[<c:out value="${board.totalRec }" />]</b>
-						</c:if>
-						<c:if test="${board.totalRec < 0 }">
-							<b style="color:red;">[<c:out value="${board.totalRec }" />]</b>
-						</c:if>						
-					</td>
-					</c:otherwise>
-					</c:choose>
+				<tr>
+					<td><c:out value="${board.bno }" /></td>
+					<td>
+						<c:choose>
+							<c:when test="${board.purpose eq 'Q' }">Q&A</c:when>
+							<c:otherwise>FREE</c:otherwise>
+						</c:choose>
+					</td>				
+						<c:choose>
+							<%-- 비밀글인 경우 --%>	
+							<c:when test="${board.secret eq 'yes' }">
+								<td>
+									<img class="secretIcon" src="/resources/img/lock.png" />
+									
+									<%-- 첨부파일이 존재 --%>
+									<c:if test='${board.fileName != "null" }' >
+										<img class="attach-img" src="/resources/img/attach.png" style="width: 20px" />
+									</c:if>
+									
+								</td>													
+								<%-- 비밀글의 경우 클릭시 작성자와 로그인 유저의 정보가 일치하는지 체크 --%>
+								<td>
+									<a style="color:black;" id="privateContent" 
+										href="<c:out value='${board.bno }' />"
+										name="<c:out value='${board.writer }' />"> 비밀글입니다.</a>
+										<c:if test="${board.replyCnt > 0 }">
+											<b>[<c:out value="${board.replyCnt }" />]</b>
+										</c:if>
+										<c:if test="${board.totalRec > 0 }">
+											<b style="color:blue;">[<c:out value="${board.totalRec }" />]</b>
+										</c:if>
+										<c:if test="${board.totalRec < 0 }">
+											<b style="color:red;">[<c:out value="${board.totalRec }" />]</b>
+										</c:if>
+								</td>
+							</c:when>			
+								
+							<%-- 비밀글이 아닐경우 --%>	
+							<c:otherwise>
+								<td>
+									<%-- 첨부파일이 존재 --%>
+									<c:if test='${board.fileName != "null" }' >
+										<img class="attach-img" src="/resources/img/attach.png" style="width: 20px" />
+									</c:if>
+								</td>
+								<td><a style="color:black;" class="moveDetails"
+									href="<c:out value='${board.bno }' />"> <c:out
+									value="${board.title }" /></a> 
+									<c:if test="${board.replyCnt > 0 }">
+										<b>[<c:out value="${board.replyCnt }" />]</b>
+									</c:if>
+									<c:if test="${board.totalRec > 0 }">
+										<b style="color:blue;">[<c:out value="${board.totalRec }" />]</b>
+									</c:if>
+									<c:if test="${board.totalRec < 0 }">
+										<b style="color:red;">[<c:out value="${board.totalRec }" />]</b>
+									</c:if>						
+								</td>
+							</c:otherwise>
+						</c:choose>
 					
 					<td><c:out value="${board.hit }" /></td>				
 				<td><c:out value="${board.writer }" /></td>
@@ -209,9 +222,11 @@ li {
 	<!-- /.Page number button -->
 
 
+<script type="text/javascript" src="/resources/js/app.js"></script>
+
 <script type="text/javascript">
 
-	let userid = '${member.userId }';
+	let userid = '${userId }';
 	console.log(userid);
 
 	$(document).ready(function() {
@@ -244,30 +259,38 @@ li {
 		/* reigster.jsp 페이지로 이동 using authority*/
 		$("#regBtn").on("click", function() {
 			
-			// userId 로 보안 검사
-			// 로그인한 유저인지
-			$.ajax({
-				type: 'post',
-				url: '/member/view.do',
-				data: JSON.Stringify(reply),
-				contentType: 'application/json, charset=utf-8',
-				success: function(result) {					
-					// result(return) 이 0이 아니거나 null 이 아니면 
-					// userId 에 해당하는 회원정보가 존재 -> 허가
-					if(result != null || result != 0) {
-						// 새 글 등록 페이지로 이동
-						self.location = "/bulletin/bulletinRegister"						
-					}				
-					
-				}, fail: function() {
-					// 일치하는 정보가 없음 -> 부적절한 접속 
-					if(confirm("You need to login. Do you want to move at login page?")) {
+			if(userid != '' || userid != null) {		
+				// userid 로 보안 검사
+				// 로그인한 유저인지
+				replyService.idCheck(userid, 
+				
+					function(result) {
+						// idcheck 결과 member DB 에 id 가 존재할 경우						
+						if(result == "true") {
+							
+							self.location = "/bulletin/bulletinRegister"
+							
+						} else {							
+							// id 가 존재하지 않을 경우 (url 로 부적절하게 접근할 경우)
+							if(confirm("You need to login. Do you want to move at login page?")) {
+								// yes -> 로그인 창으로 이동
+								location.href = "/bulletin/login";
+							
+							}	
+							
+						}
+				
+				}) // function(result)
+				
+			} else {				
+				if(confirm("You need to login. Do you want to move at login page?")) {
 					// yes -> 로그인 창으로 이동
 					location.href = "/bulletin/login";
-					}					
-				}												
-			}) // end $.ajax					
-
+					
+				}
+				
+			}
+											
 		}); // end $("#regBtn").on("click", function() {})
 		/* /.reigster.jsp 페이지로 이동 */
 

@@ -50,7 +50,7 @@
 					<div class="input-group mb-3">
 					  <span class="input-group-text boardTitle" id="basic-addon1">WRITER</span>
 					  <input type="text" class="form-control boardTitle boardWriter" name="writer" 
-					  	value="<c:out value='${member.userId }' />" readonly />
+					  	value="<c:out value='${userid }' />" readonly />
 					</div>
 					<div class="input-group">
 					  <span class="input-group-text">CONTENT</span>
@@ -89,7 +89,7 @@
 
 <script type="text/javascript">
 	
-	var userid = '${member.userId }'
+	var userid = '${userId }'
 		
 	/* 로그인 여부 판단 */
 	$(document).ready(function() {
@@ -291,11 +291,11 @@ function showUploadFile(uploadArr) {
 			let fileCallPath = encodeURIComponent("/" + uploadArr[i].uuid
 					+ "_" + uploadArr[i].fileName);
 			
-			uploadHtml += 	"<div class='card' style='width: 5rem;''>";				
+			uploadHtml += 	"<div class='card border-primary' style='width: 5rem;'>";	
 			uploadHtml +=			"<span data-file=\'" + fileCallPath + "\' data-type='file'>"
 			uploadHtml +=		  	" x </span>"
-			uploadHtml +=			"<img src='/resources/img/file_icon2.png' class='card-img-top' data-bs-toggle='popover' title='"
-			uploadHtml += 			uploadArr[i].fileName + " data-bs-content='And here\'s some amazing content. It's very engaging. Right?'>";
+			uploadHtml +=			"<img src='/resources/img/file_icon.png' class='card-img-top' data-bs-toggle='popover' title='"
+			uploadHtml += 			uploadArr[i].fileName + "' data-bs-content='And here\'s some amazing content. It's very engaging. Right?'>";
 			uploadHtml +=			"<input type='hidden' name='fileName' value='" + uploadArr[i].fileName + "' />"
 			uploadHtml +=			"<input type='hidden' name='uuid' value='" + uploadArr[i].uuid + "' />"
 			uploadHtml +=			"<input type='hidden' name='imageChecker' value='" + uploadArr[i].imageChecker + "' />"
@@ -311,11 +311,11 @@ function showUploadFile(uploadArr) {
 			
 			originPath = originPath.replace(new RegExp(/\\/g), "/");
 						
-			uploadHtml += 	"<div class='card' style='width: 5rem;''>";				
+			uploadHtml += 	"<div class='card border-primary' style='width: 5rem;'>";				
 			uploadHtml +=			"<span data-file=\'" + fileCallPath + "\' data-type='file'>"
 			uploadHtml +=		  	" x </span>"
 			uploadHtml +=			"<img src='/display?fileName=" + fileCallPath + "' class='card-img-top' data-bs-toggle='popover' title='"
-				uploadHtml += 			uploadArr[i].fileName + " data-bs-content='And here\'s some amazing content. It's very engaging. Right?'>";
+				uploadHtml += 			uploadArr[i].fileName + "' data-bs-content='And here\'s some amazing content. It's very engaging. Right?'>";
 			uploadHtml +=			"<input type='hidden' name='fileName' value='" + uploadArr[i].fileName + "' />"
 			uploadHtml +=			"<input type='hidden' name='uuid' value='" + uploadArr[i].uuid + "' />"
 			uploadHtml +=			"<input type='hidden' name='imageChecker' value='" + uploadArr[i].imageChecker + "' />"

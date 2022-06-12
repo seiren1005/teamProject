@@ -70,8 +70,8 @@
 			<!-- dual 은 가상 테이블 -->
 		</selectKey>
 		
-		INSERT INTO tbl_board(bno, purpose, title, content, writer, secret, regdate, moddate)
-		VALUES (#{bno}, #{purpose}, #{title}, #{content}, #{writer}, #{secret}, SYSDATE, SYSDATE)
+		INSERT INTO tbl_board(bno, purpose, title, content, writer, secret, filename, regdate, moddate)
+		VALUES (#{bno}, #{purpose}, #{title}, #{content}, #{writer}, #{secret}, #{fileName}, SYSDATE, SYSDATE)
 	</insert>
 	
 	
@@ -98,9 +98,9 @@
 	<!-- Implement selectAll page processed method at BoardMapper interface -->
 	<select id="selectAllWithPage" resultType="com.globalin.bulletindomain.BulletinVO">
 	<![CDATA[
-		SELECT bno, purpose, title, content, writer, secret, regdate, moddate, replycnt, hit, totalrec
+		SELECT bno, purpose, title, content, writer, secret, filename, regdate, moddate, replycnt, hit, totalrec
 		FROM (SELECT /*+ INDEX_DESC(tbl_board pk_board) */
-					rownum rn, bno, purpose, title, content, writer, secret, regdate, moddate, replycnt, hit, totalrec
+					rownum rn, bno, purpose, title, content, writer, secret, filename, regdate, moddate, replycnt, hit, totalrec
 				FROM tbl_board
 				WHERE
 	]]>
@@ -141,6 +141,7 @@
 			content = #{content},
 			writer = #{writer},
 			secret = #{secret},
+			filename = #{fileName},
 			moddate = SYSDATE
 		WHERE bno = #{bno}
 	</update>
@@ -181,6 +182,15 @@
 			WHERE bno = #{bno}
 		</update>
 	<!-- /.update total recommend -->
+	
+	
+	<!-- check id in member DB -->
+		<select id="loginCheck" resultType="String">
+			SELECT user_id
+			FROM coding_member
+			WHERE user_id = #{userid}
+		</select>
+	<!-- /.check id in member DB -->
 	
 
 </mapper>
